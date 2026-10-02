@@ -1,0 +1,95 @@
+:root {
+  --font-primary: "Inter", sans-serif;
+  --color-navy-dark: #0b1f3a; 
+  --color-page-bg: rgb(26, 58, 110);
+  --color-navy-hero: #16305c; 
+  --color-green: #00a651; 
+  --color-gray-bg: #f8fafc; 
+  --color-text-dark: #111827;
+  --color-text-gray: #6b7280;
+  --color-white: #ffffff;
+}
+
+/* CSS Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-primary);
+  color: var(--color-text-dark);
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+
+.custom-navy-bg { background-color: var(--color-navy-dark) !important; }
+.custom-page-bg { background-color: var(--color-page-bg) !important; }
+.custom-hero-bg { background-color: var(--color-navy-hero) !important; }
+.custom-gray-bg { background-color: var(--color-gray-bg) !important; }
+
+.custom-btn-green {
+  background-color: var(--color-green) !important;
+  border-color: var(--color-green) !important;
+  color: var(--color-white) !important;
+  transition: all 0.3s ease-in-out;
+}
+.custom-btn-green:hover {
+  background-color: #008f45 !important;
+  border-color: #439a47 !important;
+}
+
+/* Header & Footer Utilities */
+.navbar-brand { font-size: 1.5rem; letter-spacing: 1px; }
+.nav-link { font-size: 0.85rem; font-weight: 500; letter-spacing: 0.5px; transition: color 0.3s ease; }
+.nav-link:hover { color: var(--color-green) !important; }
+.nav-link.active {
+  color: var(--color-green) !important;
+}
+.nav-text { font-size: 0.75rem !important; font-weight: 600 !important; }
+.tracking-wide { letter-spacing: 1.5px; }
+.fs-7 { font-size: 0.85rem; }
+
+/* Login Page Utilities */
+.login-card { border-top: 6px solid var(--color-green) !important; }
+.seamless-input .form-control { box-shadow: none; border-color: #dee2e6; }
+.seamless-input .input-group-text { border-color: #dee2e6; }
+.seamless-input .form-control:focus { border-color: var(--color-green); box-shadow: none; }
+.text-green { color: var(--color-green) !important; }
+.border-green { border-color: var(--color-green) !important; }
+.border-light-gray { border-color: #e5e7eb !important; }
+.custom-checkbox:checked { background-color: var(--color-green); border-color: var(--color-green); }
+.login-card-wrapper { width: 100%; max-width: 480px; }
+.text-micro { font-size: 0.8rem; }
+
+body {
+  font-family: var(--font-primary);
+  color: var(--color-text-dark);
+  text-decoration: none;
+  
+  overflow-x: hidden; 
+  width: 100%;
+}
+
+img, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.site-header .container,
+.site-footer .container {
+  max-width: 1200px !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
+.site-header .navbar {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}

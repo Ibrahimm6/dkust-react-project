@@ -1,0 +1,8 @@
+export const productsArray = [
+  { id: 1, name: "AI Analytics Dashboard", category: "Software", description: "Real-time analytics powered by machine learning. Monitor KPIs, detect anomalies, and get predictive insights from your data with an intuitive drag-and-drop interface.", price: 299, rating: 4.8, reviewsCount: 124, badge: "Best Seller" },
+  { id: 2, name: "RoboArm Pro X1", category: "Robotics", description: "Industrial-grade robotic arm with 6 degrees of freedom. Precision control with sub-millimeter accuracy, perfect for assembly lines and research labs.", price: 4999, rating: 4.6, reviewsCount: 38, badge: "New" },
+  { id: 3, name: "DataSync Cloud", category: "Software", description: "Seamlessly sync and manage your data across cloud providers. Supports AWS, Azure, and GCP with end-to-end encryption and real-time conflict resolution.", price: 49, rating: 4.5, reviewsCount: 210, badge: "Popular" },
+  { id: 4, name: "ML Training Suite", category: "AI", description: "End-to-end machine learning pipeline tool. From data preprocessing to model deployment, everything in one unified workspace built for teams.", price: 199, rating: 4.7, reviewsCount: 89, badge: null },
+  { id: 5, name: "SmartSensor Kit", category: "Hardware", description: "IoT sensor kit with 12 sensors including temperature, humidity, pressure, and motion. Pre-configured for instant plug-and-play integration.", price: 149, rating: 4.3, reviewsCount: 56, badge: "Sale" },
+  { id: 6, name: "CyberShield VPN", category: "Security", description: "Enterprise-grade VPN solution with zero-log policy. Military-grade AES-256 encryption, kill switch, and split tunneling for maximum security.", price: 79, rating: 4.9, reviewsCount: 305, badge: "Top Rated" }
+];
