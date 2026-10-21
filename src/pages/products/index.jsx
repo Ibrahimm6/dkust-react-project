@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { 
-  PageWrapper, HeroSection, HeroTitle, HeroSubtitle, ContentContainer, 
-  FilterBar, CategoriesWrapper, CategoryButton, ControlsWrapper, 
-  SortSelect, ViewToggle, IconButton, ResultsText, ProductsGrid, ProductsList 
+import { useSearchParams } from 'react-router-dom';
+import {
+  PageWrapper, HeroSection, HeroTitle, HeroSubtitle, ContentContainer,
+  FilterBar, CategoriesWrapper, CategoryButton, ControlsWrapper,
+  SortSelect, ViewToggle, IconButton, ResultsText, ProductsGrid, ProductsList
 } from './styles';
 import ProductCardGrid from '../../components/products/ProductCardGrid';
 import ProductCardList from '../../components/products/ProductCardList';
@@ -13,9 +14,34 @@ import PathConstants from '../../routes/pathConstants';
 const categories = ["All", "Software", "AI", "Hardware", "Robotics", "Security"];
 
 const ProductsPage = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [viewMode, setViewMode] = useState("grid");
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [sortOption, setSortOption] = useState("default");
+
+  const selectedCategory = searchParams.get("category") || "All";
+  const sortOption = searchParams.get("sort") || "default";
+
+  const handleCategoryChange = (category) => {
+    setSearchParams(prev => {
+      if (category === "All") {
+        prev.delete("category");
+      } else {
+        prev.set("category", category);
+      }
+      return prev;
+    });
+  };
+
+  const handleSortChange = (e) => {
+    const value = e.target.value;
+    setSearchParams(prev => {
+      if (value === "default") {
+        prev.delete("sort");
+      } else {
+        prev.set("sort", value);
+      }
+      return prev;
+    });
+  };
 
   const addToCart = (product) => {
     console.log("Added to cart", product);
@@ -49,20 +75,21 @@ const ProductsPage = () => {
                 <CategoryButton
                   key={category}
                   isActive={selectedCategory === category}
-                  onClick={() => setSelectedCategory(category)}
+                  onClick={() => handleCategoryChange(category)}
                 >
                   {category}
                 </CategoryButton>
               ))}
             </CategoriesWrapper>
+
             <ControlsWrapper>
-              <SortSelect value={sortOption} onChange={(e) => setSortOption(e.target.value)}>
+              <SortSelect value={sortOption} onChange={handleSortChange}>
                 <option value="default">Sort: Default</option>
                 <option value="price-asc">Price: Low to High</option>
                 <option value="price-desc">Price: High to Low</option>
                 <option value="rating">Top Rated</option>
               </SortSelect>
-              
+
               <ViewToggle>
                 <IconButton isActive={viewMode === "grid"} onClick={() => setViewMode("grid")}>
                   <i className="fas fa-th-large"></i>
@@ -73,8 +100,9 @@ const ProductsPage = () => {
               </ViewToggle>
             </ControlsWrapper>
           </FilterBar>
+
           <ResultsText>{filteredProducts.length} products found</ResultsText>
-          
+
           {filteredProducts.length === 0 ? (
             <div style={{textAlign: 'center', padding: '40px', color: '#888'}}>No products found.</div>
           ) : viewMode === "grid" ? (
