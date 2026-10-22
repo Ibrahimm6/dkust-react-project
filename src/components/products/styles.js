@@ -44,7 +44,7 @@ export const ListImageArea = styled.div`
 
 export const ListContentArea = styled.div`
   flex: 1;
-  min-width: 0; /* Prevents text overflow */
+  min-width: 0; 
 `;
 
 export const ListTopRow = styled.div`

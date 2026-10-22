@@ -22,9 +22,10 @@ export const Title = styled.h2`
 `;
 
 export const Description = styled.p`
-  font-size: 0.9rem;
-  color: #cbd5e1;
-  margin-bottom: 25px;
+  font-size: 14 px;
+  color: #d1d5dc;
+  text-align: center;
+  margin-bottom: 32px;
   max-width: 520px;
   margin-left: auto;
   margin-right: auto;
@@ -43,10 +44,10 @@ export const ButtonsGroup = styled.div`
 `;
 
 export const PrimaryButton = styled(Link)`
-  background-color: #00a651;
+  background-color: #00a63e;
   color: white !important;
-  padding: 10px 24px;
-  border-radius: 6px;
+  padding: 12px 32px;
+  border-radius: 14px;
   font-weight: 600;
   font-size: 0.9rem;
   text-decoration: none !important;
@@ -56,7 +57,7 @@ export const PrimaryButton = styled(Link)`
   transition: all 0.3s ease;
   
   &:hover {
-    background-color: #00e676;
+    background-color: #00c951;
     color: white !important;
     text-decoration: none !important;
     box-shadow: 0 4px 12px rgba(0, 166, 81, 0.4);
@@ -66,8 +67,8 @@ export const PrimaryButton = styled(Link)`
 export const SecondaryButton = styled(Link)`
   background-color: transparent;
   color: white !important;
-  padding: 10px 24px;
-  border-radius: 6px;
+  padding: 12px 32px;
+  border-radius: 14px;
   font-weight: 600;
   font-size: 0.9rem;
   text-decoration: none !important;

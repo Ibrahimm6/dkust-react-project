@@ -98,28 +98,6 @@ img, svg {
   max-width: 1200px !important;
 }
 
-.footer-heading {
-  font-size: 0.8rem;
-  letter-spacing: 1.2px;
-}
-
-.footer-text {
-  font-size: 0.85rem;
-}
-
-.footer-text li {
-  margin-bottom: 0.5rem;
-  color: #6b7280;
-}
-
-.footer-text a {
-  color: #6b7280 !important;
-  transition: color 0.2s ease;
-}
-
-.footer-text a:hover {
-  color: var(--color-green) !important;
-}
 
 /* Newsletter Input Focus */
 .newsletter-form .form-control {
