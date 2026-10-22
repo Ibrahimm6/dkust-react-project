@@ -47,9 +47,10 @@ export const TextContent = styled.div`
 export const Badge = styled.div`
   display: inline-block;
   background-color: rgba(0, 166, 81, 0.2);
-  color: #00a651;
-  padding: 6px 16px;
+  color: #7bf1a8;
+  padding: 3px 10px;
   border-radius: 20px;
+  border: 1px solid rgba(0, 166, 81, 0.4);
   font-size: 0.8rem; 
   font-weight: 600;
   letter-spacing: 1px;
@@ -102,7 +103,7 @@ export const PrimaryButton = styled(Link)`
   transition: all 0.3s ease;
   
   &:hover {
-    background-color: #00e676; 
+    background-color: #00c951; 
     color: white !important;
     text-decoration: none !important;
     box-shadow: 0 4px 12px rgba(0, 166, 81, 0.4);

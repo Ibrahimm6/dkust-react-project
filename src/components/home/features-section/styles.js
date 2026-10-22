@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const FeaturesContainer = styled.section`
-  padding: 60px 20px;
+  padding: 60px 10px;
   background-color: #ffffff;
 `;
 

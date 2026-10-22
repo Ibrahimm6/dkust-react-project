@@ -1,8 +1,8 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
-import Header from "../Header"; 
-import Footer from "../Footer";
+import Header from "../header"; 
+import Footer from "../footer";
 
 const AppTemplate = ({
   pageTitle,

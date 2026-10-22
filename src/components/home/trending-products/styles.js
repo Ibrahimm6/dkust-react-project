@@ -50,8 +50,8 @@ export const ViewAllButton = styled(Link)`
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 16px;
-  border-radius: 20px;
+  padding: 8px 20px;
+  border-radius: 14px;
   border: 1px solid #00a651;
   color: #00a651;
   font-size: 0.85rem;
@@ -59,6 +59,7 @@ export const ViewAllButton = styled(Link)`
   text-decoration: none;
   transition: all 0.2s ease;
   background-color: white;
+  margin-right: 10px;
 
   &:hover {
     background-color: #f0fdf4;
@@ -73,7 +74,7 @@ export const SwiperWrapper = styled.div`
   width: 100%;
 
   .swiper {
-    padding-bottom: 50px !important; 
+    padding-bottom: 20px!important; 
     padding-left: 20px !important;
     padding-right: 20px !important;
   }
