@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 
 export const HeroContainer = styled.section`
   position: relative;
-  background: linear-gradient(135deg, #0b1f3a 0%, #16305c 100%);
-  color: white;
+  background: linear-gradient(135deg, rgb(13, 27, 62) 0%, rgb(26, 58, 110) 50%, rgb(13, 27, 62) 100%);
+  color: var(--color-text-white);
   padding: 100px 0 150px;
   overflow: hidden;
-  
+
   &::before {
     content: '';
     position: absolute;
@@ -29,11 +29,10 @@ export const ContentWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 40px;
-  
-  max-width: 1200px;
+  max-width: var(--container-max-width);
   margin: 0 auto;
-  padding: 0 20px; 
-  
+  padding: var(--container-padding);
+
   @media (max-width: 992px) {
     flex-direction: column;
   }
@@ -51,70 +50,69 @@ export const Badge = styled.div`
   padding: 3px 10px;
   border-radius: 20px;
   border: 1px solid rgba(0, 166, 81, 0.4);
-  font-size: 0.8rem; 
+  font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 1px;
   margin-bottom: 20px;
 `;
 
 export const Title = styled.h1`
-  font-size: 2.75rem; 
+  font-size: 2.75rem;
   font-weight: 800;
   line-height: 1.2;
-  margin-bottom: 15px; 
-  
+  margin-bottom: 15px;
+
   span {
-    color: #00a651;
+    color: var(--color-primary);
   }
-  
+
   @media (max-width: 768px) {
     font-size: 2rem;
   }
 `;
 
 export const Description = styled.p`
-  font-size: 0.95rem; 
-  color: #cbd5e1;
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
   line-height: 1.6;
   margin-bottom: 30px;
 `;
 
 export const ButtonsGroup = styled.div`
   display: flex;
-  gap: 12px; 
-  
+  gap: 12px;
+
   @media (max-width: 576px) {
     flex-direction: column;
   }
 `;
 
 export const PrimaryButton = styled(Link)`
-  background-color: #00a651;
-  color: white !important;
-  padding: 10px 24px; 
-  border-radius: 6px;
+  background-color: var(--color-primary);
+  color: var(--color-text-white) !important;
+  padding: 12px 28px;
+  border-radius: var(--border-radius-btn);
   font-weight: 600;
-  font-size: 0.9rem; 
+  font-size: 0.9rem;
   text-decoration: none !important;
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
   gap: 8px;
   transition: all 0.3s ease;
-  
+
   &:hover {
-    background-color: #00c951; 
-    color: white !important;
+    background-color: var(--color-primary-hover);
+    color: var(--color-text-white) !important;
     text-decoration: none !important;
-    box-shadow: 0 4px 12px rgba(0, 166, 81, 0.4);
   }
 `;
 
 export const SecondaryButton = styled(Link)`
   background-color: transparent;
-  color: white !important;
-  padding: 10px 24px; 
-  border-radius: 6px;
+  color: var(--color-text-white) !important;
+  padding: 12px 28px;
+  border-radius: var(--border-radius-btn);
   font-weight: 600;
   font-size: 0.9rem;
   text-decoration: none !important;
@@ -123,11 +121,11 @@ export const SecondaryButton = styled(Link)`
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  
+
   &:hover {
     background-color: rgba(255, 255, 255, 0.05);
-    border-color: #ffffff;
-    color: white !important;
+    border-color: var(--color-text-white);
+    color: var(--color-text-white) !important;
     text-decoration: none !important;
   }
 `;
@@ -136,9 +134,9 @@ export const StatsGrid = styled.div`
   flex: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 15px; 
+  gap: 15px;
   max-width: 500px;
-  
+
   @media (max-width: 576px) {
     grid-template-columns: 1fr;
     width: 100%;
@@ -146,30 +144,24 @@ export const StatsGrid = styled.div`
 `;
 
 export const StatCard = styled.div`
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px; 
-  padding: 20px 15px; 
+  background: #ffffff1a;
+  backdrop-filter: blur(8px);
+  border: 1px solid #ffffff26;
+  border-radius: 16px;
+  padding: 20px 15px;
   text-align: center;
-  transition: transform 0.3s ease;
-  
-  &:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.08);
-  }
 `;
 
 export const StatNumber = styled.div`
-  font-size: 1.8rem; 
-  font-weight: 700;
-  color: #00a651;
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--color-accent);
   margin-bottom: 5px;
 `;
 
 export const StatText = styled.div`
-  font-size: 0.8rem; 
-  color: #cbd5e1;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
 `;
 
 export const WaveBottom = styled.div`
@@ -179,15 +171,15 @@ export const WaveBottom = styled.div`
   width: 100%;
   overflow: hidden;
   line-height: 0;
-  
+
   svg {
     position: relative;
     display: block;
     width: calc(100% + 1.3px);
     height: 60px;
   }
-  
+
   .shape-fill {
-    fill: #f8fafc;
+    fill: var(--color-bg-gray);
   }
 `;

@@ -11,6 +11,7 @@ import {
   RightSection,
   IconGroup,
   IconButton,
+  IconBadge,
   Divider,
   AuthGroup,
   LoginLink,
@@ -19,6 +20,7 @@ import {
   MobileMenu,
   MobileNavItem
 } from './styles';
+import { useWishlist } from '../../contexts/wishlistContext';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,6 +32,8 @@ const Header = () => {
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
+
+  const { wishlist } = useWishlist();
 
   return (
     <HeaderWrapper>
@@ -53,6 +57,7 @@ const Header = () => {
           <IconGroup>
             <IconButton to="/wishlist" aria-label="Wishlist">
               <FiHeart />
+              {wishlist.length > 0 && <IconBadge>{wishlist.length}</IconBadge>}
             </IconButton>
             <IconButton to="/cart" aria-label="Cart">
               <FiShoppingCart />

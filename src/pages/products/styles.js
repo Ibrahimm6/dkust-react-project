@@ -4,64 +4,79 @@ export const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  background-color: #f8fafc; 
+  background-color: var(--color-bg-gray);
 `;
 
 export const HeroSection = styled.div`
-  background-color: #0b1f3a;
-  padding: 60px 20px;
+  background: linear-gradient(135deg, rgb(13, 27, 62) 0%, rgb(26, 58, 110) 50%, rgb(13, 27, 62) 100%);
+  padding: 55px 33px;
   text-align: center;
-  color: white;
+  color: var(--color-text-white);
 `;
 
 export const HeroTitle = styled.h1`
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin-bottom: 15px;
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 4px;
 `;
 
 export const HeroSubtitle = styled.p`
-  color: #cbd5e1;
-  font-size: 1.1rem;
-  max-width: 650px;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  max-width: 512px;
   margin: 0 auto;
-  line-height: 1.5;
+  line-height: 1.6;
 `;
 
 export const ContentContainer = styled.div`
-  max-width: 1200px;
+  max-width: var(--container-max-width);
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 40px 33px;
   width: 100%;
 `;
 
-export const FilterBar = styled.div`
+export const FilterSection = styled.section`
+  position: sticky;
+  top: var(--header-height);
+  z-index: 1040; 
+  background-color: var(--color-bg-gray);
+  border-bottom: 1px solid #ebe6e7;
+  width: 100%;
+`;
+
+export const FilterContainer = styled.div`
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: var(--container-padding);
+  padding-top: 15px;
+  padding-bottom: 15px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
   flex-wrap: wrap;
   gap: 20px;
 `;
 
 export const CategoriesWrapper = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
 `;
 
 export const CategoryButton = styled.button`
-  padding: 8px 18px;
-  border-radius: 20px;
-  border: 1px solid ${(props) => (props.isActive ? '#00a651' : '#d1d5db')};
-  background-color: ${(props) => (props.isActive ? '#00a651' : '#fff')};
-  color: ${(props) => (props.isActive ? '#fff' : '#4b5563')};
-  font-size: 14px;
+  padding: 6px 16px;
+  border-radius: var(--border-radius-btn);
+  border: 1px solid ${(props) => (props.isActive ? 'var(--color-primary)' : '#d1d5db')};
+  background-color: ${(props) => (props.isActive ? 'var(--color-primary)' : 'var(--color-bg-white)')};
+  color: ${(props) => (props.isActive ? 'var(--color-text-white)' : 'var(--color-text-gray)')};
+  font-size: 12px;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
 
   &:hover {
-    background-color: ${(props) => (props.isActive ? '#00a651' : '#f3f4f6')};
+    background-color: ${(props) => (props.isActive ? 'var(--color-primary-hover)' : '#f3f4f6')};
   }
 `;
 
@@ -72,48 +87,55 @@ export const ControlsWrapper = styled.div`
 `;
 
 export const SortSelect = styled.select`
-  padding: 8px 15px;
+  padding: 6px 12px;
   border: 1px solid #d1d5db;
-  border-radius: 6px;
-  background-color: #fff;
-  color: #374151;
-  font-size: 14px;
+  border-radius: 8px;
+  background-color: var(--color-bg-white);
+  color: var(--color-text-gray);
+  font-size: 12px;
+  /* font-weight: 500; */
   outline: none;
   cursor: pointer;
 
   &:focus {
-    border-color: #00a651;
+    border-color: var(--color-primary);
   }
 `;
 
 export const ViewToggle = styled.div`
   display: flex;
-  background-color: #fff;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
+  background-color: var(--color-bg-white);
+  /* border: 1px solid #d1d5db; */
+  border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 0 0 1px #d1d5db;
 `;
 
 export const IconButton = styled.button`
   border: none;
-  background-color: ${(props) => (props.isActive ? '#00a651' : 'transparent')};
-  color: ${(props) => (props.isActive ? '#fff' : '#6b7280')};
-  width: 38px;
-  height: 36px;
+  background-color: ${(props) => (props.isActive ? 'var(--color-primary)' : 'transparent')};
+  color: ${(props) => (props.isActive ? 'var(--color-text-white)' : 'var(--color-text-gray)')};
+  width: 32px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s;
+  font-size: 14px;
+  transition: all 0.2s ease;
 
-  &:first-child {
+  /* &:first-child {
     border-right: 1px solid #d1d5db;
+  } */
+  
+  &:hover {
+    color: ${(props) => (props.isActive ? 'var(--color-text-white)' : 'var(--color-primary)')};
   }
 `;
 
 export const ResultsText = styled.p`
-  color: #9ca3af;
-  font-size: 14px;
+  color: #99a1af;
+  font-size: 12px;
   margin-bottom: 20px;
 `;
 

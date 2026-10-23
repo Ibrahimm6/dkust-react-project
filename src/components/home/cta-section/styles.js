@@ -2,15 +2,15 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const CtaContainer = styled.section`
-  background-color: #0b1f3a;
-  padding: 60px 20px;
+  background-color: var(--color-navy);
+  padding: 60px 0;
   text-align: center;
-  color: white;
-  
+  color: var(--color-text-white);
+
   .container {
-    max-width: 1200px;
+    max-width: var(--container-max-width);
     margin: 0 auto;
-    padding: 0;
+    padding: var(--container-padding);
     width: 100%;
   }
 `;
@@ -22,8 +22,8 @@ export const Title = styled.h2`
 `;
 
 export const Description = styled.p`
-  font-size: 14 px;
-  color: #d1d5dc;
+  font-size: 14px;
+  color: var(--color-text-muted);
   text-align: center;
   margin-bottom: 32px;
   max-width: 520px;
@@ -35,7 +35,7 @@ export const ButtonsGroup = styled.div`
   display: flex;
   justify-content: center;
   gap: 12px;
-  
+
   @media (max-width: 576px) {
     flex-direction: column;
     max-width: 300px;
@@ -44,10 +44,10 @@ export const ButtonsGroup = styled.div`
 `;
 
 export const PrimaryButton = styled(Link)`
-  background-color: #00a63e;
-  color: white !important;
+  background-color: var(--color-primary);
+  color: var(--color-text-white) !important;
   padding: 12px 32px;
-  border-radius: 14px;
+  border-radius: var(--border-radius-btn);
   font-weight: 600;
   font-size: 0.9rem;
   text-decoration: none !important;
@@ -55,20 +55,19 @@ export const PrimaryButton = styled(Link)`
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  
+
   &:hover {
-    background-color: #00c951;
-    color: white !important;
+    background-color: var(--color-primary-hover);
+    color: var(--color-text-white) !important;
     text-decoration: none !important;
-    box-shadow: 0 4px 12px rgba(0, 166, 81, 0.4);
   }
 `;
 
 export const SecondaryButton = styled(Link)`
   background-color: transparent;
-  color: white !important;
+  color: var(--color-text-white) !important;
   padding: 12px 32px;
-  border-radius: 14px;
+  border-radius: var(--border-radius-btn);
   font-weight: 600;
   font-size: 0.9rem;
   text-decoration: none !important;
@@ -77,11 +76,11 @@ export const SecondaryButton = styled(Link)`
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  
+
   &:hover {
     background-color: rgba(255, 255, 255, 0.05);
-    border-color: #ffffff;
-    color: white !important;
+    border-color: var(--color-text-white);
+    color: var(--color-text-white) !important;
     text-decoration: none !important;
   }
 `;
