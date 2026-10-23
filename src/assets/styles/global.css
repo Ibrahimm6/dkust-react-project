@@ -1,26 +1,24 @@
 :root {
   --font-primary: "Inter", sans-serif;
   --font-base: 16px;
-
   --color-navy: #0b1f3a;          
   --color-primary: #00a651;      
   --color-primary-hover: #00c951;
   --color-accent: #05df72;       
   --color-bg-white: #ffffff;
   --color-bg-gray: #f8fafc;
-  
   --color-text-white: #ffffff;
   --color-text-muted: #d1d5dc;    
   --color-text-dark: #111827;    
   --color-text-gray: #6b7280;    
-
   --container-max-width: 1200px;
   --container-padding: 0 33px;
   --header-height: 65px;
   --border-radius-btn: 14px;
+  --color-page-bg: #1a3a6e;
 }
 
-/* CSS Reset */
+/* CSS Reset & Globals */
 * {
   margin: 0;
   padding: 0;
@@ -31,6 +29,8 @@ body {
   font-family: var(--font-primary);
   color: var(--color-text-dark);
   text-decoration: none;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 ul {
@@ -38,121 +38,45 @@ ul {
   padding-left: 0;
 }
 
-
-.custom-navy-bg { background-color: var(--color-navy-dark) !important; }
-.custom-page-bg { background-color: var(--color-page-bg) !important; }
-.custom-hero-bg { background-color: var(--color-navy-hero) !important; }
-.custom-gray-bg { background-color: var(--color-gray-bg) !important; }
-
-.custom-btn-green {
-  background-color: var(--color-green) !important;
-  border-color: var(--color-green) !important;
-  color: var(--color-white) !important;
-  transition: all 0.3s ease-in-out;
-}
-.custom-btn-green:hover {
-  background-color: #008f45 !important;
-  border-color: #439a47 !important;
-}
-
-/* Header & Footer Utilities */
-.navbar-brand { font-size: 1.5rem; letter-spacing: 1px; }
-.nav-link { font-size: 0.85rem; font-weight: 500; letter-spacing: 0.5px; transition: color 0.3s ease; }
-.nav-link:hover { color: var(--color-green) !important; }
-.nav-link.active {
-  color: var(--color-green) !important;
-}
-.nav-text { font-size: 0.75rem !important; font-weight: 600 !important; }
-.tracking-wide { letter-spacing: 1.5px; }
-.fs-7 { font-size: 0.85rem; }
-
-/* Login Page Utilities */
-.login-card { border-top: 6px solid var(--color-green) !important; }
-.seamless-input .form-control { box-shadow: none; border-color: #dee2e6; }
-.seamless-input .input-group-text { border-color: #dee2e6; }
-.seamless-input .form-control:focus { border-color: var(--color-green); box-shadow: none; }
-.text-green { color: var(--color-green) !important; }
-.border-green { border-color: var(--color-green) !important; }
-.border-light-gray { border-color: #e5e7eb !important; }
-.custom-checkbox:checked { background-color: var(--color-green); border-color: var(--color-green); }
-.login-card-wrapper { width: 100%; max-width: 480px; }
-.text-micro { font-size: 0.8rem; }
-
-body {
-  font-family: var(--font-primary);
-  color: var(--color-text-dark);
-  text-decoration: none;
-  
-  overflow-x: hidden; 
-  width: 100%;
-}
-
 img, svg {
   max-width: 100%;
   height: auto;
 }
 
-.site-header .container,
-.site-footer .container {
+.container {
   max-width: 1200px !important;
   padding-left: 20px !important;
   padding-right: 20px !important;
+  margin: 0 auto;
 }
 
-.site-header .navbar {
-  padding-left: 0 !important;
-  padding-right: 0 !important;
+/* Login Page Utilities */
+.custom-page-bg { 
+  background-color: var(--color-page-bg) !important; 
 }
 
-.container {
-  max-width: 1200px !important;
+.login-card { 
+  border-top: 6px solid #00a63e !important; 
 }
 
-
-/* Newsletter Input Focus */
-.newsletter-form .form-control {
-  font-size: 0.85rem;
-  padding: 0.6rem 1rem;
+.login-card-wrapper { 
+  width: 100%; 
+  max-width: 480px; 
 }
 
-.newsletter-form .form-control:focus {
-  border-color: var(--color-green);
-  outline: none;
+.text-green { 
+  color: var(--color-primary) !important; 
 }
 
-.newsletter-btn i {
-  transform: rotate(45deg) translate(-2px, 1px);
-  font-size: 1rem;
+.border-light-gray { 
+  border-color: #e5e7eb !important; 
 }
 
-.footer-divider {
-  border-top: 1px solid #e5e7eb;
-  margin: 0;
-  opacity: 1;
+.custom-checkbox:checked { 
+  background-color: var(--color-primary); 
+  border-color: var(--color-primary); 
 }
 
-/* Social Icons Default & Hover Fix */
-.social-icons a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background-color: #f3f4f6; 
-  color: #4b5563 !important; 
-  text-decoration: none;
-  transition: all 0.3s ease;
-  font-size: 1rem;
-}
-
-.social-icons a:hover {
-  background-color: var(--color-green);
-  color: #ffffff !important;
-}
-
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 1050;
+.text-micro { 
+  font-size: 0.8rem; 
 }

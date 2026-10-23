@@ -7,6 +7,7 @@ const RegisterPage = React.lazy(() => import("../pages/register"));
 const ProductsPage = React.lazy(() => import("../pages/products"));
 const ProductDetailsPage = React.lazy(() => import("../pages/product-details"));
 const QuizPage = React.lazy(() => import("../pages/quiz"));
+const WishlistPage = React.lazy(() => import("../pages/wishlist"));
 
 const routes = [
   { path: PathConstants.HOME, element: <HomePage /> }, 
@@ -15,6 +16,7 @@ const routes = [
   { path: PathConstants.PRODUCTS, element: <ProductsPage /> },
   { path: PathConstants.PRODUCT_DETAILS, element: <ProductDetailsPage /> },
   { path: PathConstants.QUIZ, element: <QuizPage /> },
+  { path: PathConstants.WISHLIST, element: <WishlistPage /> },
 ];
 
 export default routes;
