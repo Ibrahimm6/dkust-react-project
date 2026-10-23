@@ -4,6 +4,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import Layout from './components/layout';
 import routes from './routes';
 import PageNotFound from './pages/page-not-found';
+import { WishlistProvider } from './contexts/wishlistContext';
 
 const router = createBrowserRouter([
   {
@@ -18,7 +19,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <HelmetProvider>
-      <RouterProvider router={router} />
+      <WishlistProvider>
+        <RouterProvider router={router} />
+      </WishlistProvider>
     </HelmetProvider>
   );
 }

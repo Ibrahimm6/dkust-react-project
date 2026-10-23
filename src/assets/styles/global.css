@@ -1,13 +1,23 @@
 :root {
   --font-primary: "Inter", sans-serif;
-  --color-navy-dark: #0b1f3a; 
-  --color-page-bg: rgb(26, 58, 110);
-  --color-navy-hero: #16305c; 
-  --color-green: #00a651; 
-  --color-gray-bg: #f8fafc; 
-  --color-text-dark: #111827;
-  --color-text-gray: #6b7280;
-  --color-white: #ffffff;
+  --font-base: 16px;
+
+  --color-navy: #0b1f3a;          
+  --color-primary: #00a651;      
+  --color-primary-hover: #00c951;
+  --color-accent: #05df72;       
+  --color-bg-white: #ffffff;
+  --color-bg-gray: #f8fafc;
+  
+  --color-text-white: #ffffff;
+  --color-text-muted: #d1d5dc;    
+  --color-text-dark: #111827;    
+  --color-text-gray: #6b7280;    
+
+  --container-max-width: 1200px;
+  --container-padding: 0 33px;
+  --header-height: 65px;
+  --border-radius-btn: 14px;
 }
 
 /* CSS Reset */

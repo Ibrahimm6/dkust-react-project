@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { 
-  PageWrapper, HeroSection, HeroTitle, HeroSubtitle, ContentContainer, 
-  FilterBar, CategoriesWrapper, CategoryButton, ControlsWrapper, 
-  SortSelect, ViewToggle, IconButton, ResultsText, ProductsGrid, ProductsList 
+import {
+  PageWrapper, HeroSection, HeroTitle, HeroSubtitle, ContentContainer,
+  FilterSection, FilterContainer, CategoriesWrapper, CategoryButton, ControlsWrapper,
+  SortSelect, ViewToggle, IconButton, ResultsText, ProductsGrid, ProductsList
 } from './styles';
 import ProductCardGrid from '../../components/products/ProductCardGrid';
 import ProductCardList from '../../components/products/ProductCardList';
@@ -42,8 +42,9 @@ const ProductsPage = () => {
             Explore our range of software, AI tools, hardware kits, and robotics solutions built for modern teams.
           </HeroSubtitle>
         </HeroSection>
-        <ContentContainer>
-          <FilterBar>
+
+        <FilterSection>
+          <FilterContainer>
             <CategoriesWrapper>
               {categories.map((category) => (
                 <CategoryButton
@@ -55,6 +56,7 @@ const ProductsPage = () => {
                 </CategoryButton>
               ))}
             </CategoriesWrapper>
+
             <ControlsWrapper>
               <SortSelect value={sortOption} onChange={(e) => setSortOption(e.target.value)}>
                 <option value="default">Sort: Default</option>
@@ -62,7 +64,7 @@ const ProductsPage = () => {
                 <option value="price-desc">Price: High to Low</option>
                 <option value="rating">Top Rated</option>
               </SortSelect>
-              
+
               <ViewToggle>
                 <IconButton isActive={viewMode === "grid"} onClick={() => setViewMode("grid")}>
                   <i className="fas fa-th-large"></i>
@@ -72,9 +74,12 @@ const ProductsPage = () => {
                 </IconButton>
               </ViewToggle>
             </ControlsWrapper>
-          </FilterBar>
+          </FilterContainer>
+        </FilterSection>
+
+        <ContentContainer>
           <ResultsText>{filteredProducts.length} products found</ResultsText>
-          
+
           {filteredProducts.length === 0 ? (
             <div style={{textAlign: 'center', padding: '40px', color: '#888'}}>No products found.</div>
           ) : viewMode === "grid" ? (

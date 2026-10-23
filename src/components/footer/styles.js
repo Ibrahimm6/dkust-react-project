@@ -2,14 +2,14 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const FooterWrapper = styled.footer`
-  background-color: #ffffff;
+  background-color: var(--color-bg-white);
   padding: 48px 0 16px;
 `;
 
 export const FooterContainer = styled.div`
-  max-width: 1200px;
+  max-width: var(--container-max-width);
   margin: 0 auto;
-  padding: 0 33px;
+  padding: var(--container-padding);
   width: 100%;
 `;
 
@@ -33,7 +33,7 @@ export const FooterCol = styled.div``;
 export const ColumnTitle = styled.h6`
   font-weight: 700;
   margin-bottom: 16px;
-  color: #111827;
+  color: var(--color-text-dark);
   font-size: 0.8rem;
   letter-spacing: 1.2px;
   text-transform: uppercase;
@@ -47,23 +47,23 @@ export const FooterList = styled.ul`
 
 export const FooterListItem = styled.li`
   margin-bottom: 8px;
-  color: #6b7280;
+  color: var(--color-text-gray);
   font-size: 12px;
   line-height: 1.6;
 `;
 
 export const StyledFooterLink = styled(Link)`
-  color: #6b7280;
+  color: var(--color-text-gray);
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color 0.3s ease;
 
   &:hover {
-    color: #00a651;
+    color: var(--color-primary);
   }
 `;
 
 export const NewsletterText = styled.p`
-  color: #6b7280;
+  color: var(--color-text-gray);
   font-size: 12px;
   margin-bottom: 16px;
 `;
@@ -79,7 +79,7 @@ export const EmailInput = styled.input`
   flex: 1;
   width: 100%;
   height: 100%;
-  padding: 0 12px; 
+  padding: 0 12px;
   font-size: 12px;
   border: 1px solid #e5e7eb;
   border-right: none;
@@ -87,13 +87,13 @@ export const EmailInput = styled.input`
   outline: none;
 
   &:focus {
-    border-color: #00c951;
+    border-color: var(--color-primary-hover);
   }
 `;
 
 export const SubmitButton = styled.button`
-  background-color: #00c951;
-  color: white;
+  background-color: var(--color-primary-hover);
+  color: var(--color-text-white);
   border: none;
   padding: 8px 12px;
   border-radius: 0 4px 4px 0;
@@ -104,7 +104,7 @@ export const SubmitButton = styled.button`
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #008f45;
+    background-color: var(--color-primary);
   }
 
   svg {
@@ -159,7 +159,7 @@ export const SocialIconLink = styled.a`
   font-size: 1rem;
 
   &:hover {
-    background-color: #00c951;
-    color: #ffffff;
+    background-color: var(--color-primary-hover);
+    color: var(--color-text-white);
   }
 `;

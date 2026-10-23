@@ -1,28 +1,26 @@
 import styled from 'styled-components';
 
-export const theme = {
-  green: '#16a34a',
-  greenHover: '#15803d',
-  lightGreen: '#dcfce7',
-  darkGreenText: '#15803d',
-  textDark: '#111827',
-  textGray: '#6b7280',
-  textLight: '#9ca3af',
-  border: '#e5e7eb',
+const handleBadgeColor = (text) => {
+  switch (text?.toLowerCase()) {
+    case 'best seller': return { bg: '#dcfce7', text: '#15803d' };
+    case 'new': return { bg: '#dbeafe', text: '#1d4ed8' };
+    case 'popular': return { bg: '#f3e8ff', text: '#7e22ce' };
+    case 'sale': return { bg: '#fee2e2', text: '#b91c1c' };
+    case 'top rated': return { bg: '#fef9c3', text: '#b45309' };
+    default: return { bg: '#f3f4f6', text: '#374151' };
+  }
 };
 
-// ==========================================
-// 1. List View Styles 
-// ==========================================
 export const ListCard = styled.div`
-  background-color: #fff;
-  border: 1px solid ${theme.border};
-  border-radius: 12px;
+  background-color: var(--color-bg-white);
+  border: 1px solid #ebe6e7;
+  border-radius: 14px;
   padding: 20px;
   display: flex;
   gap: 20px;
   align-items: flex-start;
   transition: box-shadow 0.3s ease;
+  position: relative;
 
   &:hover {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -30,21 +28,29 @@ export const ListCard = styled.div`
 `;
 
 export const ListImageArea = styled.div`
-  width: 96px;
-  height: 96px;
+  width: 100px;
+  height: 100px;
   flex-shrink: 0;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) => props.bgColor || '#1a3a6e'};
+  background-color: ${(props) => props.bgColor || 'var(--color-navy)'};
   color: rgba(255, 255, 255, 0.8);
-  font-size: 40px;
+  font-size: 55px; 
+  position: relative; 
+
+  & > button {
+    top: 4px !important;
+    right: 4px !important;
+    width: 28px !important; 
+    height: 28px !important;
+  }
 `;
 
 export const ListContentArea = styled.div`
   flex: 1;
-  min-width: 0; 
+  min-width: 0;
 `;
 
 export const ListTopRow = styled.div`
@@ -59,46 +65,46 @@ export const ListInfo = styled.div``;
 
 export const ListBadge = styled.span`
   display: inline-block;
-  background-color: ${theme.lightGreen};
-  color: ${theme.darkGreenText};
+  background-color: ${(props) => handleBadgeColor(props.text).bg};
+  color: ${(props) => handleBadgeColor(props.text).text};
   font-size: 12px;
   font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 9999px;
+  padding: 2px 8px; 
+  border-radius: 3.40282e38px;
   margin-bottom: 4px;
 `;
 
 export const ListTitle = styled.h3`
-  color: ${theme.textDark};
+  color: var(--color-text-dark);
   font-weight: 600;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.25;
   margin: 0;
 `;
 
 export const ListCategory = styled.p`
-  color: ${theme.textLight};
-  font-size: 12px;
-  margin-top: 2px;
+  color: var(--color-text-gray);
+  font-size: 11px;
+  margin-top: 4px;
   margin-bottom: 0;
 `;
 
 export const ListPrice = styled.p`
-  color: ${theme.green};
+  color: var(--color-primary);
   font-weight: 700;
   font-size: 18px;
   flex-shrink: 0;
   margin: 0;
 
   span {
-    color: ${theme.textLight};
+    color: var(--color-text-gray);
     font-size: 12px;
     font-weight: 400;
   }
 `;
 
 export const ListDesc = styled.p`
-  color: ${theme.textGray};
+  color: var(--color-text-gray);
   font-size: 14px;
   margin-top: 8px;
   margin-bottom: 0;
@@ -115,59 +121,121 @@ export const ListBottomRow = styled.div`
   margin-top: 12px;
   flex-wrap: wrap;
   gap: 8px;
+
+  & > div:last-child {
+    gap: 8px !important;
+  }
+
+  /* (View Details) */
+  & > div:last-child > button:first-child {
+    background-color: var(--color-bg-white) !important;
+    border: 1px solid var(--color-primary) !important;
+    color: var(--color-primary) !important;
+    padding: 6px 16px !important;
+    border-radius: 10px !important; 
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    width: fit-content !important;
+  }
+
+  & > div:last-child > button:first-child:hover {
+    background-color: #f0fdf4 !important;
+  }
+
+  /* (Add to Cart) */
+  & > div:last-child > button:last-child {
+    background-color: var(--color-primary) !important;
+    border: 1px solid var(--color-primary) !important;
+    color: var(--color-text-white) !important;
+    padding: 6px 16px !important;
+    border-radius: 10px !important; 
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    width: fit-content !important;
+  }
+
+  & > div:last-child > button:last-child:hover {
+    background-color: var(--color-primary-hover) !important;
+    border-color: var(--color-primary-hover) !important;
+  }
+`;
+
+export const ListWishlistButton = styled.button`
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #f3f4f6; 
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #e5e7eb;
+    color: var(--color-primary);
+  }
+
+  &.active {
+    color: #ef4444;
+    background-color: #fee2e2;
+  }
 `;
 
 export const RatingBox = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 
   .stars {
     display: flex;
     align-items: center;
     gap: 2px;
     color: #facc15;
-    font-size: 14px;
+    font-size: 12px;
   }
 
   .reviews {
-    font-size: 12px;
-    color: ${theme.textGray};
+    font-size: 11px;
+    color: var(--color-text-gray);
   }
 `;
 
-// ==========================================
-// 2. Action Buttons 
-// ==========================================
 export const ActionButtons = styled.div`
   display: flex;
   gap: 8px;
 
-  > div { margin-bottom: 0; } 
+  > div { margin-bottom: 0; }
+
   & > button:first-child,
   & > div:first-child button {
-    background-color: transparent !important;
-    border: 1px solid ${theme.green} !important;
-    color: ${theme.green} !important;
-    padding: 6px 16px !important;
+    border: 1px solid #d1d5dc !important; 
+    padding: 6px 12px !important;
     font-size: 12px !important;
-    border-radius: 8px !important;
+    border-radius: 10px !important;
     font-weight: 500 !important;
+    transition: all 0.2s ease;
   }
 
   & > button:first-child:hover,
   & > div:first-child button:hover {
-    background-color: ${theme.green} !important;
-    color: #fff !important;
+    /* background-color: var(--color-primary) !important; */
+    border-color: var(--color-primary) !important;
+    color: var(--color-primary) !important;
   }
 
   & > button:last-child,
   & > div:last-child button {
-    background-color: ${theme.green} !important;
-    border: 1px solid ${theme.green} !important;
-    color: #fff !important;
-    padding: 6px 16px !important;
-    font-size: 12px !important;
+    background-color: var(--color-primary) !important;
+    border: 1px solid var(--color-primary) !important;
+    color: var(--color-text-white) !important;
+    padding: 6px 12px !important;
+    font-size: 11px !important;
     border-radius: 8px !important;
     font-weight: 500 !important;
     display: flex !important;
@@ -178,75 +246,62 @@ export const ActionButtons = styled.div`
 
   & > button:last-child:hover,
   & > div:last-child button:hover {
-    background-color: ${theme.greenHover} !important;
-    border-color: ${theme.greenHover} !important;
+    background-color: var(--color-primary-hover) !important;
+    border-color: var(--color-primary-hover) !important;
   }
 `;
 
-// ==========================================
-// 3. Grid View Styles
-// ==========================================
 export const GridCard = styled.div`
-  background-color: #fff;
-  border: 1px solid ${theme.border};
+  background-color: var(--color-bg-white);
+  border: 1px solid #e5e7eb;
   border-radius: 12px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s ease, box-shadow 0.3s ease; 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
-    transform: translateY(-5px);
+    /* transform: translateY(-5px); */
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   }
 `;
 
-const handleBadgeColor = (text) => {
-  switch (text?.toLowerCase()) {
-    case 'best seller': return { bg: '#dcfce7', text: '#15803d' }; 
-    case 'new': return { bg: '#dbeafe', text: '#1d4ed8' }; 
-    case 'popular': return { bg: '#f3e8ff', text: '#7e22ce' };
-    case 'sale': return { bg: '#fee2e2', text: '#b91c1c' }; 
-    case 'top rated': return { bg: '#fef9c3', text: '#b45309' };
-    default: return { bg: '#f3f4f6', text: '#374151' }; 
-  }
-};
 
 export const GridImageArea = styled.div`
-  height: 160px;
+  height: 140px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) => props.bgColor || '#1a3a6e'};
+  background-color: ${(props) => props.bgColor || 'var(--color-navy)'};
   color: rgba(255, 255, 255, 0.8);
-  font-size: 50px;
-  position: relative; 
+  font-size: 40px;
+  position: relative;
 `;
 
 export const GridBadge = styled.span`
   position: absolute;
-  top: 12px;
-  left: 12px;
-  background-color: ${(props) => handleBadgeColor(props.text).bg}; 
+  top: 10px;
+  left: 10px;
+  background-color: ${(props) => handleBadgeColor(props.text).bg};
   color: ${(props) => handleBadgeColor(props.text).text};
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
-  padding: 4px 10px;
+  padding: 3px 8px;
   border-radius: 9999px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 `;
 
 export const GridContent = styled.div`
-  padding: 20px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 `;
 
 export const GridCategory = styled.p`
-  color: ${theme.textLight};
-  font-size: 12px;
-  margin-bottom: 8px;
+  color: var(--color-text-gray);
+  font-size: 11px;
+  margin-bottom: 6px;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -256,5 +311,48 @@ export const GridFooter = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 15px;
+  margin-top: 12px;
+
+  & > div:last-child {
+    gap: 8px !important;
+  }
+
+  & > div:last-child > button:first-child {
+    width: fit-content !important;
+    padding: 6px 12px !important;
+    border-radius: 10px !important; 
+    font-size: 12px !important;
+  }
+
+  & > div:last-child > button:last-child {
+    width: fit-content !important;
+    padding: 6px 12px !important;
+    border-radius: 10px !important;
+    font-size: 12px !important;
+  }
+`;
+
+export const WishlistButton = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2); 
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-white); 
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.3); 
+  }
+
+  &.active {
+    color: #ef4444; 
+  }
 `;
