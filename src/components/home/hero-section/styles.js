@@ -91,8 +91,8 @@ export const ButtonsGroup = styled.div`
 export const PrimaryButton = styled(Link)`
   background-color: #00a651;
   color: white !important;
-  padding: 10px 24px; 
-  border-radius: 6px;
+  padding: 12px 28px; 
+  border-radius: 16px;
   font-weight: 600;
   font-size: 0.9rem; 
   text-decoration: none !important;
@@ -106,15 +106,15 @@ export const PrimaryButton = styled(Link)`
     background-color: #00c951; 
     color: white !important;
     text-decoration: none !important;
-    box-shadow: 0 4px 12px rgba(0, 166, 81, 0.4);
+    /* box-shadow: 0 4px 12px rgba(0, 166, 81, 0.4); */
   }
 `;
 
 export const SecondaryButton = styled(Link)`
   background-color: transparent;
   color: white !important;
-  padding: 10px 24px; 
-  border-radius: 6px;
+  padding: 12px 28px; 
+  border-radius: 16px;
   font-weight: 600;
   font-size: 0.9rem;
   text-decoration: none !important;
@@ -146,24 +146,24 @@ export const StatsGrid = styled.div`
 `;
 
 export const StatCard = styled.div`
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px; 
+  background: #ffffff1a;
+  backdrop-filter: blur(8px);
+  border: 1px solid #ffffff26;
+  border-radius: 16px; 
   padding: 20px 15px; 
   text-align: center;
   transition: transform 0.3s ease;
   
-  &:hover {
+  /* &:hover {
     transform: translateY(-5px);
     background: rgba(255, 255, 255, 0.08);
-  }
+  } */
 `;
 
 export const StatNumber = styled.div`
-  font-size: 1.8rem; 
-  font-weight: 700;
-  color: #00a651;
+  font-size: 30px; 
+  font-weight: 800;
+  color: #05df72;
   margin-bottom: 5px;
 `;
 

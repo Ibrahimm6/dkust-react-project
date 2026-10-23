@@ -39,7 +39,7 @@ export const NavSection = styled.nav`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 25px;
+  gap: 20px;
 
   @media (max-width: 992px) {
     display: none;
@@ -55,7 +55,7 @@ export const NavItem = styled(NavLink)`
   transition: color 0.3s ease;
 
   &.active, &:hover {
-    color: #00a651;
+    color: #05df72;
   }
 `;
 
@@ -68,7 +68,7 @@ export const RightSection = styled.div`
 export const IconGroup = styled.div`
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 22px;
 `;
 
 export const IconButton = styled(Link)`
@@ -108,7 +108,7 @@ export const AuthGroup = styled.div`
 export const LoginLink = styled(Link)`
   color: #ffffff;
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 12px;
   font-weight: 500;
   transition: color 0.3s ease;
 
@@ -123,7 +123,7 @@ export const RegisterButton = styled(Link)`
   text-decoration: none;
   padding: 6px 12px;
   border-radius: 10px;
-  font-size: 0.9rem;
+  font-size: 12px;
   font-weight: 500;
   transition: background-color 0.3s ease;
 

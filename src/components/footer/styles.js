@@ -9,13 +9,13 @@ export const FooterWrapper = styled.footer`
 export const FooterContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 33px;
   width: 100%;
 `;
 
 export const FooterTop = styled.div`
   display: grid;
-  grid-template-columns: 1.2fr 1fr 1fr 1.5fr;
+  grid-template-columns: 1.2fr 1fr 1fr 1.2fr;
   gap: 24px;
   margin-bottom: 24px;
 
@@ -87,12 +87,12 @@ export const EmailInput = styled.input`
   outline: none;
 
   &:focus {
-    border-color: #00a651;
+    border-color: #00c951;
   }
 `;
 
 export const SubmitButton = styled.button`
-  background-color: #00a651;
+  background-color: #00c951;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -124,7 +124,7 @@ export const FooterBottom = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 16px;
+  padding-top: 10px;
   margin-top: 8px;
 
   @media (max-width: 768px) {
@@ -148,17 +148,18 @@ export const SocialIconLink = styled.a`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  background-color: #f3f4f6;
+  border-color: #0000001a;
+  background-color: #f6f3f4;
   color: #4b5563;
   text-decoration: none;
   transition: all 0.3s ease;
   font-size: 1rem;
 
   &:hover {
-    background-color: #00a651;
+    background-color: #00c951;
     color: #ffffff;
   }
 `;

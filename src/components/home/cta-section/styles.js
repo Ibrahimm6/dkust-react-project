@@ -60,7 +60,7 @@ export const PrimaryButton = styled(Link)`
     background-color: #00c951;
     color: white !important;
     text-decoration: none !important;
-    box-shadow: 0 4px 12px rgba(0, 166, 81, 0.4);
+    /* box-shadow: 0 4px 12px rgba(0, 166, 81, 0.4); */
   }
 `;
 

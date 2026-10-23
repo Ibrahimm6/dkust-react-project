@@ -8,8 +8,7 @@ export const PageWrapper = styled.div`
 `;
 
 export const HeroSection = styled.div`
-  background-color: #0b1f3a;
-  padding: 60px 20px;
+  background: linear-gradient(135deg, rgb(13, 27, 62) 0%, rgb(26, 58, 110) 50%, rgb(13, 27, 62) 100%);  padding: 60px 20px;
   text-align: center;
   color: white;
 `;
