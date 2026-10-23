@@ -6,8 +6,9 @@ export const PageContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40px 20px;
+  padding: 55px 20px;
   flex-grow: 1;
+  background-color: var(--color-page-bg);
 `;
 
 export const RegisterCard = styled.div`
@@ -17,7 +18,7 @@ export const RegisterCard = styled.div`
   width: 100%;
   max-width: 500px;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); 
-  border-top: 6px solid #00a651; 
+  border-top: 6px solid #00a63e; 
 `;
 
 export const Title = styled.h2`

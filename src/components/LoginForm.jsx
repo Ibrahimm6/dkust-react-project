@@ -25,7 +25,7 @@ const LoginForm = () => {
   return (
     <AppTemplate pageTitle="Login" path={PathConstants.LOGIN}>
       <main className="custom-page-bg flex-grow-1 d-flex flex-column align-items-center justify-content-center py-5">
-        <div className="card login-card shadow-lg border-0 rounded-4 p-4 p-md-5 mb-3 login-card-wrapper">
+        <div className="card login-card shadow-lg rounded-4 p-4 p-md-5 mb-3 login-card-wrapper" style={{ border: 'none', borderTop: '6px solid #00a63e' }}>
           <div className="card-body p-0">
             <div className="text-center mb-4">
               <h3 className="fw-bold text-dark mb-1">Welcome Back</h3>
