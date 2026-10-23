@@ -105,9 +105,10 @@ export const SortSelect = styled.select`
 export const ViewToggle = styled.div`
   display: flex;
   background-color: var(--color-bg-white);
-  border: 1px solid #d1d5db;
+  /* border: 1px solid #d1d5db; */
   border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 0 0 1px #d1d5db;
 `;
 
 export const IconButton = styled.button`
@@ -123,9 +124,9 @@ export const IconButton = styled.button`
   font-size: 14px;
   transition: all 0.2s ease;
 
-  &:first-child {
+  /* &:first-child {
     border-right: 1px solid #d1d5db;
-  }
+  } */
   
   &:hover {
     color: ${(props) => (props.isActive ? 'var(--color-text-white)' : 'var(--color-primary)')};
