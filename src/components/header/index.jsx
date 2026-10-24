@@ -21,6 +21,7 @@ import {
   MobileNavItem
 } from './styles';
 import { useWishlist } from '../../contexts/wishlistContext';
+import { useCart } from '../../contexts/cartContext';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -34,7 +35,7 @@ const Header = () => {
   };
 
   const { wishlist } = useWishlist();
-
+  const { cartCount } = useCart();
   return (
     <HeaderWrapper>
       <HeaderContainer>
@@ -55,15 +56,18 @@ const Header = () => {
 
         <RightSection>
           <IconGroup>
-            <IconButton to="/wishlist" aria-label="Wishlist">
-              <FiHeart />
-              {wishlist.length > 0 && <IconBadge>{wishlist.length}</IconBadge>}
+            <IconButton to={PathConstants.WISHLIST} aria-label="Wishlist">
+             <FiHeart />
+             {wishlist.length > 0 && <IconBadge>{wishlist.length}</IconBadge>}
             </IconButton>
-            <IconButton to="/cart" aria-label="Cart">
+
+            <IconButton to={PathConstants.CART} aria-label="Cart">
               <FiShoppingCart />
+             {cartCount > 0 && <IconBadge>{cartCount}</IconBadge>}
             </IconButton>
-            <IconButton to="/profile" aria-label="User Profile">
-              <FiUser />
+
+            <IconButton to={PathConstants.PROFILE} aria-label="User Profile">
+             <FiUser />
             </IconButton>
           </IconGroup>
 

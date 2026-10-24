@@ -9,6 +9,7 @@ import ProductCardList from '../../components/products/ProductCardList';
 import { productsArray } from '../../data';
 import AppTemplate from '../../components/app-template';
 import PathConstants from '../../routes/pathConstants';
+import { useCart } from '../../contexts/cartContext';
 
 const categories = ["All", "Software", "AI", "Hardware", "Robotics", "Security"];
 
@@ -17,9 +18,7 @@ const ProductsPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortOption, setSortOption] = useState("default");
 
-  const addToCart = (product) => {
-    console.log("Added to cart", product);
-  };
+  const { addToCart } = useCart();
 
   let filteredProducts = productsArray.filter(
     (product) => selectedCategory === "All" || product.category === selectedCategory
