@@ -4,8 +4,8 @@ export const SectionCard = styled.div`
   background-color: var(--color-bg-white);
   border: 1px solid #ebe6e7;
   border-radius: 14px;
-  padding: 26px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+  padding: 24px;
+  /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02); */
   display: flex;
   flex-direction: column;
 `;
@@ -14,7 +14,7 @@ export const CardHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 `;
 
 export const CardTitle = styled.h3`
@@ -28,11 +28,11 @@ export const EditButton = styled.button`
   background: none;
   border: none;
   color: var(--color-primary);
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 500;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   cursor: pointer;
   padding: 4px 8px;
   border-radius: 6px;
@@ -52,14 +52,14 @@ export const InfoList = styled.div`
 export const InfoItem = styled.div`
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
 `;
 
 export const InfoIconCircle = styled.div`
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background-color: #f8fafc;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background-color: #f6f3f4;
   color: var(--color-text-gray);
   display: flex;
   align-items: center;
@@ -74,9 +74,9 @@ export const InfoTextGroup = styled.div`
 `;
 
 export const InfoLabel = styled.span`
-  font-size: 11px;
-  color: #9ca3af;
-  margin-bottom: 2px;
+  font-size: 12px;
+  color: #99a1af;
+  margin-bottom: 4px;
 `;
 
 export const InfoValue = styled.span`
@@ -86,16 +86,16 @@ export const InfoValue = styled.span`
 `;
 
 export const BioWrapper = styled.div`
-  margin-top: 22px;
-  padding-top: 16px;
-  border-top: 1px solid #f3f4f6;
+  /* margin-top: 22px; */
+  padding-top: 14px;
+  /* border-top: 1px solid #f3f4f6; */
   display: flex;
   flex-direction: column;
 `;
 
 export const BioText = styled.p`
-  font-size: 13px;
-  color: var(--color-text-gray);
+  font-size: 14px;
+  color: #4a5565;
   margin: 6px 0 0 0;
   line-height: 1.6;
 `;
@@ -120,17 +120,17 @@ export const FormLabel = styled.label`
 
 export const EditInput = styled.input`
   width: 100%;
-  padding: 10px 14px;
+  padding: 8px 12px;
   font-size: 14px;
   border: 1px solid #d1d5db;
   border-radius: 10px;
   color: var(--color-text-dark);
   background-color: var(--color-bg-white);
   outline: none;
-  transition: border-color 0.2s ease;
+  /* transition: border-color 0.2s ease; */
 
   &:focus {
-    border-color: var(--color-primary);
+    border-color: var(--color-primary-hover);
   }
 `;
 
@@ -155,7 +155,7 @@ export const EditTextarea = styled.textarea`
 export const SaveChangesButton = styled.button`
   margin-top: 4px;
   width: 100%;
-  padding: 12px;
+  padding-block: 10px;
   background-color: var(--color-primary);
   color: var(--color-text-white);
   border: none;
@@ -163,9 +163,9 @@ export const SaveChangesButton = styled.button`
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  /* transition: background-color 0.2s ease; */
 
   &:hover {
-    background-color: var(--color-primary-hover);
+    background-color: #008236;
   }
 `;

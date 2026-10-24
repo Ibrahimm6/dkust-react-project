@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const StatsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  gap: 16px;
 
   @media (max-width: 992px) {
     grid-template-columns: repeat(2, 1fr);
@@ -18,16 +18,16 @@ export const StatCard = styled.div`
   background-color: var(--color-bg-white);
   border: 1px solid #ebe6e7;
   border-radius: 14px;
-  padding: 20px;
+  padding: 16px;
   display: flex;
   align-items: center;
-  gap: 15px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+  gap: 12px;
+  /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02); */
 `;
 
 export const StatIconWrapper = styled.div`
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   border-radius: 10px;
   background-color: ${(props) => props.$bg || "#f3f4f6"};
   color: ${(props) => props.$color || "var(--color-primary)"};
@@ -43,10 +43,10 @@ export const StatInfo = styled.div`
 `;
 
 export const StatNumber = styled.span`
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 700;
   color: var(--color-text-dark);
-  line-height: 1.2;
+  line-height: 1.3;
 `;
 
 export const StatLabel = styled.span`

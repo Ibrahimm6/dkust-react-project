@@ -5,7 +5,7 @@ export const SectionCard = styled.div`
   background-color: var(--color-bg-white);
   border: 1px solid #ebe6e7;
   border-radius: 14px;
-  padding: 26px;
+  padding: 24px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
   display: flex;
   flex-direction: column;
@@ -15,7 +15,7 @@ export const CardHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 22px;
+  margin-bottom: 16px;
 `;
 
 export const CardTitle = styled.h3`

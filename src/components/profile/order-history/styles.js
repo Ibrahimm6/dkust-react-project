@@ -5,8 +5,8 @@ export const SectionCard = styled.div`
   background-color: var(--color-bg-white);
   border: 1px solid #ebe6e7;
   border-radius: 14px;
-  padding: 26px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+  padding: 24px;
+  /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02); */
   display: flex;
   flex-direction: column;
 `;
@@ -15,7 +15,7 @@ export const CardHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 `;
 
 export const CardTitle = styled.h3`
@@ -48,8 +48,8 @@ export const OrderLeft = styled.div`
 `;
 
 export const OrderLogoBox = styled.div`
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 10px;
   background-color: var(--color-navy);
   color: var(--color-text-white);
@@ -102,21 +102,21 @@ export const OrderStatusBadge = styled.span`
 `;
 
 export const BrowseMoreButton = styled(Link)`
-  margin-top: 18px;
+  margin-top: 16px;
   width: 100%;
   padding: 10px;
   border: 1px solid var(--color-primary);
   border-radius: 10px;
   background-color: transparent;
   color: var(--color-primary);
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
   text-align: center;
   text-decoration: none;
   transition: all 0.2s ease;
 
   &:hover {
-    background-color: #f0fdf4;
-    color: var(--color-primary);
+    background-color: #00a63e;
+    color: #fff;
   }
 `;

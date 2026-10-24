@@ -11,7 +11,7 @@ export const PageWrapper = styled.div`
 export const ContentContainer = styled.div`
   max-width: 1020px;
   margin: 0 auto;
-  padding: 35px 20px 0;
+  padding: 40px 24px;
   width: 100%;
   display: flex;
   flex-direction: column;
