@@ -15,23 +15,23 @@ export const HeroSection = styled.div`
     rgb(26, 58, 110) 50%,
     rgb(13, 27, 62) 100%
   );
-  padding: 63px 33px;
+  padding: 56px 24px;
   text-align: center;
   color: var(--color-text-white);
 `;
 
 export const HeroTitle = styled.h1`
-  font-size: 36px;
+  font-size: 30px;
   font-weight: 700;
   margin-bottom: 8px;
 `;
 
 export const HeroSubtitle = styled.p`
   color: var(--color-text-muted);
-  font-size: 15px;
+  font-size: 14px;
   max-width: 512px;
   margin: 0 auto;
-  line-height: 1.6;
+  line-height: 1.4;
 `;
 
 export const ContentContainer = styled.div`
@@ -68,13 +68,13 @@ export const ItemsList = styled.div`
 export const ContinueShoppingLink = styled(Link)`
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   color: var(--color-primary);
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
   text-decoration: none;
   width: fit-content;
-  margin-top: 4px;
+  margin-top: 8px;
   transition: opacity 0.2s ease;
 
   &:hover {

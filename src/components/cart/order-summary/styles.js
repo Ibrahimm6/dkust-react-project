@@ -74,10 +74,10 @@ export const TotalRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
   color: var(--color-text-dark);
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 
   strong {
     font-size: 16px;
@@ -91,14 +91,14 @@ export const CheckoutButton = styled.button`
   background-color: var(--color-primary);
   color: var(--color-text-white);
   border: none;
-  border-radius: 10px;
-  font-size: 13px;
+  border-radius: 14px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: var(--color-primary-hover);
+    background-color: #008236;
   }
 `;
 
@@ -106,8 +106,8 @@ export const SecureNote = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
-  margin-top: 14px;
-  font-size: 11px;
+  gap: 4px;
+  margin-top: 12px;
+  font-size: 12px;
   color: #9ca3af;
 `;
