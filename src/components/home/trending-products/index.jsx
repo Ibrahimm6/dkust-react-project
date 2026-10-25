@@ -2,13 +2,12 @@ import React from 'react';
 import PathConstants from '../../../routes/pathConstants';
 import ProductCardGrid from '../../products/ProductCardGrid';
 import { productsArray } from '../../../data'; 
-
+import { useCart } from '../../../contexts/cartContext';
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-
 import {
   TrendingContainer,
   SectionHeader,
@@ -21,8 +20,10 @@ import {
 } from './styles';
 
 const TrendingProducts = () => {
+  const { addToCart } = useCart();
+
   const handleAddToCart = (product) => {
-    console.log("Added to cart from Home:", product);
+    addToCart(product, 1);
   };
 
   return (

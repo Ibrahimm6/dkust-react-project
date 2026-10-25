@@ -12,6 +12,8 @@ const PathConstants = {
   RESOURCES: "/resources",
   CONTACT: "/contact",
   WISHLIST: "/wishlist",
+  PROFILE: "/profile",
+  CART: "/cart",
 };
 
 export default PathConstants;

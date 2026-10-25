@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { productsArray } from '../../data';
 import { 
   PageWrapper, Breadcrumb, BackLink, ProductSection, 
@@ -16,6 +16,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import AppTemplate from '../../components/app-template';
 import PathConstants from '../../routes/pathConstants';
+import { useCart } from '../../contexts/cartContext';
 
 const getBgColor = (category) => {
   const colors = { Software: '#1e3a8a', Robotics: '#14532d', AI: '#1e40af', Hardware: '#451a03', Security: '#0f172a' };
@@ -24,18 +25,22 @@ const getBgColor = (category) => {
 
 const ProductDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const { addToCart } = useCart();
   const [quantity, setQuantity] = useState(1);
+
   const product = productsArray.find((p) => p.id === parseInt(id));
 
   const handleIncrease = () => setQuantity((prev) => prev + 1);
   const handleDecrease = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
   const handleAddToCart = () => {
-    console.log({ ...product, quantity });
+    addToCart(product, quantity);
   };
 
   const handleBuyNow = () => {
-    console.log({ ...product, quantity });
+    addToCart(product, quantity);
+    navigate(PathConstants.CART);
   };
 
   if (!product) {
@@ -55,9 +60,11 @@ const ProductDetails = () => {
           <Breadcrumb>
             Home / Products / <span>{product.name}</span>
           </Breadcrumb>
+
           <BackLink to="/products">
             <i className="fas fa-chevron-left"></i> Back to Products
           </BackLink>
+
           <ProductSection>
             <ProductImageArea bgColor={getBgColor(product.category)}>
               <i className="fas fa-cube"></i>
@@ -70,9 +77,11 @@ const ProductDetails = () => {
                 </span>
               )}
             </ProductImageArea>
+
             <ProductInfoArea>
               <CategoryTag>{product.category}</CategoryTag>
               <ProductTitle>{product.name}</ProductTitle>
+
               <RatingBox>
                 <div className="stars">
                   <i className="fas fa-star"></i><i className="fas fa-star"></i>
@@ -81,14 +90,18 @@ const ProductDetails = () => {
                 </div>
                 <span>{product.rating} ({product.reviewsCount} reviews)</span>
               </RatingBox>
+
               <Description>{product.description}</Description>
+
               <FeaturesList>
                 <li><i className="far fa-check-circle"></i> High-quality performance</li>
                 <li><i className="far fa-check-circle"></i> 24/7 technical support</li>
                 <li><i className="far fa-check-circle"></i> Secure payment integration</li>
                 <li><i className="far fa-check-circle"></i> Fast delivery and setup</li>
               </FeaturesList>
+
               <Price>${product.price} <span>/mo</span></Price>
+
               <QuantityControl>
                 <span>Qty</span>
                 <div className="controls">
@@ -97,6 +110,7 @@ const ProductDetails = () => {
                   <button onClick={handleIncrease}>+</button>
                 </div>
               </QuantityControl>
+
               <ActionButtons>
                 <CustomButton title={<><i className="fas fa-shopping-cart"></i> Add to Cart</>} onClickFunction={handleAddToCart} bgColor="#00a651" />
                 <CustomButton title="Buy Now" onClickFunction={handleBuyNow} />
@@ -122,7 +136,7 @@ const ProductDetails = () => {
                   <div style={{ height: '100%', paddingBottom: '10px' }}>
                     <ProductCardGrid 
                       product={relatedProd} 
-                      onAddToCart={() => console.log({ ...relatedProd, quantity: 1 })} 
+                      onAddToCart={() => addToCart(relatedProd, 1)} 
                     />
                   </div>
                 </SwiperSlide>

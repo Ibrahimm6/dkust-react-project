@@ -5,14 +5,13 @@ import Layout from './components/layout';
 import routes from './routes';
 import PageNotFound from './pages/page-not-found';
 import { WishlistProvider } from './contexts/wishlistContext';
+import { CartProvider } from './contexts/cartContext';
 
 const router = createBrowserRouter([
   {
-    element: <Layout />, 
+    element: <Layout />,
     errorElement: <PageNotFound />,
-    children: [
-      ...routes,
-    ],
+    children: [...routes],
   },
 ]);
 
@@ -20,7 +19,9 @@ function App() {
   return (
     <HelmetProvider>
       <WishlistProvider>
-        <RouterProvider router={router} />
+        <CartProvider>
+          <RouterProvider router={router} />
+        </CartProvider>
       </WishlistProvider>
     </HelmetProvider>
   );
