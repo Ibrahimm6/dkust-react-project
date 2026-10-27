@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   PageWrapper, HeroSection, HeroTitle, HeroSubtitle, ContentContainer,
   FilterSection, FilterContainer, CategoriesWrapper, CategoryButton, ControlsWrapper,
@@ -10,6 +10,7 @@ import { productsArray } from '../../data';
 import AppTemplate from '../../components/app-template';
 import PathConstants from '../../routes/pathConstants';
 import { useCart } from '../../contexts/cartContext';
+import { FiGrid, FiList } from 'react-icons/fi';
 
 const categories = ["All", "Software", "AI", "Hardware", "Robotics", "Security"];
 
@@ -17,20 +18,23 @@ const ProductsPage = () => {
   const [viewMode, setViewMode] = useState("grid");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortOption, setSortOption] = useState("default");
-
   const { addToCart } = useCart();
 
-  let filteredProducts = productsArray.filter(
-    (product) => selectedCategory === "All" || product.category === selectedCategory
-  );
+  const filteredProducts = useMemo(() => {
+    const filtered = productsArray.filter(
+      (product) => selectedCategory === "All" || product.category === selectedCategory
+    );
 
-  if (sortOption === "price-asc") {
-    filteredProducts.sort((a, b) => a.price - b.price);
-  } else if (sortOption === "price-desc") {
-    filteredProducts.sort((a, b) => b.price - a.price);
-  } else if (sortOption === "rating") {
-    filteredProducts.sort((a, b) => b.rating - a.rating);
-  }
+    if (sortOption === "price-asc") {
+      return [...filtered].sort((a, b) => a.price - b.price);
+    } else if (sortOption === "price-desc") {
+      return [...filtered].sort((a, b) => b.price - a.price);
+    } else if (sortOption === "rating") {
+      return [...filtered].sort((a, b) => b.rating - a.rating);
+    }
+
+    return filtered;
+  }, [selectedCategory, sortOption]);
 
   return (
     <AppTemplate pageTitle="Products" path={PathConstants.PRODUCTS}>
@@ -48,7 +52,7 @@ const ProductsPage = () => {
               {categories.map((category) => (
                 <CategoryButton
                   key={category}
-                  isActive={selectedCategory === category}
+                  $isActive={selectedCategory === category}
                   onClick={() => setSelectedCategory(category)}
                 >
                   {category}
@@ -65,11 +69,11 @@ const ProductsPage = () => {
               </SortSelect>
 
               <ViewToggle>
-                <IconButton isActive={viewMode === "grid"} onClick={() => setViewMode("grid")}>
-                  <i className="fas fa-th-large"></i>
+                <IconButton $isActive={viewMode === "grid"} onClick={() => setViewMode("grid")}>
+                  <FiGrid size={16} />
                 </IconButton>
-                <IconButton isActive={viewMode === "list"} onClick={() => setViewMode("list")}>
-                  <i className="fas fa-list-ul"></i>
+                <IconButton $isActive={viewMode === "list"} onClick={() => setViewMode("list")}>
+                 <FiList size={16} />
                 </IconButton>
               </ViewToggle>
             </ControlsWrapper>

@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { 
   PageContainer, RegisterCard, Title, Subtitle, Row, CheckboxContainer, 
-  DividerText, FooterText, StyledLink, 
-  BackLinkContainer, BackLink, GreenText,
+  DividerText, FooterText, StyledLink, BackLinkContainer, BackLink, GreenText,
   PasswordStrengthBar, StrengthSegment, StrengthLabel, SuccessMessage
 } from './styles';
 import InputComponent from '../../components/common/input-component';
 import CustomButton from '../../components/common/custom-button';
 import AppTemplate from '../../components/app-template';
 import PathConstants from '../../routes/pathConstants';
+import { FaFacebookF } from 'react-icons/fa';
+import { FiCheck } from 'react-icons/fi';
 
 const registerSchema = Yup.object().shape({
   firstName: Yup.string().required('First name is required'),
@@ -32,7 +34,7 @@ const calculateStrength = (password) => {
   if (/[A-Z]/.test(password) || /[a-z]/.test(password)) score += 1;
   if (/[0-9]/.test(password)) score += 1;
   if (/[\W_]/.test(password)) score += 1;
-  
+
   if (score <= 1) return { score: 1, label: 'Weak', color: '#ef4444' };
   if (score === 2) return { score: 2, label: 'Fair', color: '#f97316' };
   if (score === 3) return { score: 3, label: 'Good', color: '#eab308' };
@@ -40,6 +42,7 @@ const calculateStrength = (password) => {
 };
 
 const Register = () => {
+  const navigate = useNavigate();
   const [isSuccess, setIsSuccess] = useState(false);
 
   const formik = useFormik({
@@ -62,16 +65,16 @@ const Register = () => {
           {isSuccess ? (
             <SuccessMessage>
               <div className="icon-circle">
-                <i className="fas fa-check"></i>
+                <FiCheck color="#16a34a" size={24} />
               </div>
               <h2>Account Created!</h2>
               <p>Welcome, {formik.values.firstName}! Your account has been created successfully.</p>
-              <CustomButton title="Go to Login" onClickFunction={() => window.location.href = '/login'} bgColor="#00a651" />
+              <CustomButton title="Go to Login" onClickFunction={() => navigate(PathConstants.LOGIN)} bgColor="#00a651" />
             </SuccessMessage>
           ) : (
             <>
               <Title>Create Account</Title>
-              <Subtitle>Join DKUST today — it's free</Subtitle>
+              <Subtitle>Join DKUST today - it's free</Subtitle>
               
               <form onSubmit={formik.handleSubmit}>
                 <Row>
@@ -104,7 +107,7 @@ const Register = () => {
                   <div style={{ color: '#ef4444', fontSize: '12px', marginBottom: '15px' }}>{formik.errors.agreeTerms}</div>
                 )}
                 
-                <CustomButton title="CREATE ACCOUNT" onClickFunction={formik.handleSubmit} bgColor="#00a651" />
+                <CustomButton title="CREATE ACCOUNT" type="submit" bgColor="#00a651" />
                 
                 <DividerText>or continue with</DividerText>
                 <div className="row gx-3 mb-4">
@@ -116,20 +119,20 @@ const Register = () => {
                   </div>
                   <div className="col-6">
                     <button type="button" className="btn btn-outline-secondary w-100 bg-white text-dark py-2 rounded-3 border-light-gray d-flex justify-content-center align-items-center gap-2">
-                      <i className="fab fa-facebook text-primary fs-5"></i>
+                      <FaFacebookF className="text-primary fs-5" />
                       <span className="small fw-semibold">Facebook</span>
                     </button>
                   </div>
                 </div>
                 
-                <FooterText>Already have an account? <StyledLink to="/login">Sign In</StyledLink></FooterText>
+                <FooterText>Already have an account? <StyledLink to={PathConstants.LOGIN}>Sign In</StyledLink></FooterText>
               </form>
             </>
           )}
         </RegisterCard>
         
         <BackLinkContainer>
-          <BackLink to="/">Back to Home</BackLink>
+          <BackLink to={PathConstants.HOME}>Back to Home</BackLink>
         </BackLinkContainer>
       </PageContainer>
     </AppTemplate>

@@ -1,34 +1,26 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import { 
   ListCard, ListImageArea, ListContentArea, ListTopRow, 
   ListInfo, ListBadge, ListTitle, ListCategory, ListPrice, 
-  ListDesc, ListBottomRow, RatingBox, ActionButtons,
-  WishlistButton 
+  ListDesc, ListBottomRow, RatingBox, ActionButtons, WishlistButton 
 } from './styles';
-
 import CustomButton from '../common/custom-button';
-import { FiShoppingCart, FiHeart } from 'react-icons/fi';
+import { FiShoppingCart, FiHeart, FiBox } from 'react-icons/fi';
 import { FaHeart } from 'react-icons/fa';
 import { useWishlist } from '../../contexts/wishlistContext';
-
-const getBgColor = (category) => {
-  const colors = { Software: '#1e3a8a', Robotics: '#14532d', AI: '#1e40af', Hardware: '#451a03', Security: '#0f172a' };
-  return colors[category] || '#1e3a8a';
-};
+import { getBgColor } from '../../helpers/productHelpers';
+import StarRating from '../common/StarRating';
 
 const ProductCardList = ({ product, onAddToCart }) => {
   const navigate = useNavigate();
   const { toggleWishlist, isInWishlist } = useWishlist();
-  
   const isFavorite = isInWishlist(product.id);
 
   return (
     <ListCard>
-      <ListImageArea bgColor={getBgColor(product.category)}>
-        <i className="fas fa-cube"></i>
-        
+      <ListImageArea $bgColor={getBgColor(product.category)}>
+        <FiBox size={55} />
         <WishlistButton 
           className={isFavorite ? 'active' : ''} 
           onClick={() => toggleWishlist(product)}
@@ -53,13 +45,7 @@ const ProductCardList = ({ product, onAddToCart }) => {
         
         <ListBottomRow>
           <RatingBox>
-            <div className="stars">
-              <i className="fas fa-star"></i>
-              <i className="fas fa-star"></i>
-              <i className="fas fa-star"></i>
-              <i className="fas fa-star"></i>
-              <i className="fas fa-star"></i>
-            </div>
+            <StarRating rating={product.rating} />
             <span className="reviews">{product.rating} ({product.reviewsCount} reviews)</span>
           </RatingBox>
           

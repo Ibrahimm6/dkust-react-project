@@ -35,7 +35,7 @@ export const ListImageArea = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) => props.bgColor || 'var(--color-navy)'};
+  background-color: ${(props) => props.$bgColor || 'var(--color-navy)'};
   color: rgba(255, 255, 255, 0.8);
   font-size: 55px; 
   position: relative; 
@@ -272,7 +272,7 @@ export const GridImageArea = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) => props.bgColor || 'var(--color-navy)'};
+  background-color: ${(props) => props.$bgColor || 'var(--color-navy)'};
   color: rgba(255, 255, 255, 0.8);
   font-size: 40px;
   position: relative;

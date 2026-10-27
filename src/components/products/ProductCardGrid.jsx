@@ -1,55 +1,45 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import { 
   GridCard, GridImageArea, GridBadge, GridContent, 
   GridCategory, ListTitle, ListDesc, RatingBox, 
-  GridFooter, ListPrice, ActionButtons 
+  GridFooter, ListPrice, ActionButtons, WishlistButton 
 } from './styles';
 import CustomButton from '../common/custom-button';
-import { FiShoppingCart } from 'react-icons/fi';
-import { FiHeart } from 'react-icons/fi';
-import { WishlistButton } from './styles'; 
+import { FiShoppingCart, FiHeart, FiBox, FiTag } from 'react-icons/fi';
+import { FaHeart } from 'react-icons/fa';
 import { useWishlist } from '../../contexts/wishlistContext';
-import { FaHeart } from 'react-icons/fa'; 
-
-const getBgColor = (category) => {
-  const colors = { Software: '#1e3a8a', Robotics: '#14532d', AI: '#1e40af', Hardware: '#451a03', Security: '#0f172a' };
-  return colors[category] || '#1e3a8a';
-};
+import { getBgColor } from '../../helpers/productHelpers';
+import StarRating from '../common/StarRating';
 
 const ProductCardGrid = ({ product, onAddToCart }) => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const { toggleWishlist, isInWishlist } = useWishlist();
   const isFavorite = isInWishlist(product.id);
+
   return (
     <GridCard>
-      <GridImageArea bgColor={getBgColor(product.category)}>
+      <GridImageArea $bgColor={getBgColor(product.category)}>
         {product.badge && <GridBadge text={product.badge}>{product.badge}</GridBadge>}
-        <i className="fas fa-cube"></i>
+        <FiBox size={40} />
         <WishlistButton 
-           className={isFavorite ? 'active' : ''} 
-           onClick={() => toggleWishlist(product)}
-          >
+          className={isFavorite ? 'active' : ''} 
+          onClick={() => toggleWishlist(product)}
+        >
           {isFavorite ? <FaHeart size={14} /> : <FiHeart size={14} />}
         </WishlistButton>
       </GridImageArea>
       
       <GridContent>
         <GridCategory>
-          <i className="fas fa-tag"></i> {product.category}
+          <FiTag size={12} /> {product.category}
         </GridCategory>
         
         <ListTitle>{product.name}</ListTitle>
         <ListDesc>{product.description}</ListDesc>
         
         <RatingBox style={{ marginTop: '12px' }}>
-          <div className="stars">
-            <i className="fas fa-star"></i>
-            <i className="fas fa-star"></i>
-            <i className="fas fa-star"></i>
-            <i className="fas fa-star"></i>
-            <i className="fas fa-star"></i>
-          </div>
+          <StarRating rating={product.rating} />
           <span className="reviews">({product.reviewsCount})</span>
         </RatingBox>
 
@@ -57,18 +47,18 @@ const ProductCardGrid = ({ product, onAddToCart }) => {
           <ListPrice>
             ${product.price}<span>/mo</span>
           </ListPrice>
-        <ActionButtons>
-         <CustomButton 
-          title="Details" 
-          onClickFunction={() => navigate(`/products/${product.id}`)} 
-          bgColor="transparent"
-          color="var(--color-text-gray)"
-        />
-         <CustomButton 
-           title={<><FiShoppingCart /> Add</>} 
-           onClickFunction={() => onAddToCart(product)} 
-        />
-        </ActionButtons>
+          <ActionButtons>
+            <CustomButton 
+              title="Details" 
+              onClickFunction={() => navigate(`/products/${product.id}`)} 
+              bgColor="transparent" 
+              color="var(--color-text-gray)"
+            />
+            <CustomButton 
+              title={<><FiShoppingCart /> Add</>} 
+              onClickFunction={() => onAddToCart(product)} 
+            />
+          </ActionButtons>
         </GridFooter>
       </GridContent>
     </GridCard>

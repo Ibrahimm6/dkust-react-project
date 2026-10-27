@@ -67,16 +67,16 @@ export const CategoriesWrapper = styled.div`
 export const CategoryButton = styled.button`
   padding: 6px 16px;
   border-radius: var(--border-radius-btn);
-  border: 1px solid ${(props) => (props.isActive ? 'var(--color-primary)' : '#d1d5db')};
-  background-color: ${(props) => (props.isActive ? 'var(--color-primary)' : 'var(--color-bg-white)')};
-  color: ${(props) => (props.isActive ? 'var(--color-text-white)' : 'var(--color-text-gray)')};
+  border: 1px solid ${(props) => (props.$isActive ? 'var(--color-primary)' : '#d1d5db')};
+  background-color: ${(props) => (props.$isActive ? 'var(--color-primary)' : 'var(--color-bg-white)')};
+  color: ${(props) => (props.$isActive ? 'var(--color-text-white)' : 'var(--color-text-gray)')};
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
 
   &:hover {
-    background-color: ${(props) => (props.isActive ? 'var(--color-primary-hover)' : '#f3f4f6')};
+    background-color: ${(props) => (props.$isActive ? 'var(--color-primary-hover)' : '#f3f4f6')};
   }
 `;
 
@@ -113,8 +113,8 @@ export const ViewToggle = styled.div`
 
 export const IconButton = styled.button`
   border: none;
-  background-color: ${(props) => (props.isActive ? 'var(--color-primary)' : 'transparent')};
-  color: ${(props) => (props.isActive ? 'var(--color-text-white)' : 'var(--color-text-gray)')};
+  background-color: ${(props) => (props.$isActive ? 'var(--color-primary)' : 'transparent')};
+  color: ${(props) => (props.$isActive ? 'var(--color-text-white)' : 'var(--color-text-gray)')};
   width: 32px;
   height: 30px;
   display: flex;
@@ -129,7 +129,7 @@ export const IconButton = styled.button`
   } */
   
   &:hover {
-    color: ${(props) => (props.isActive ? 'var(--color-text-white)' : 'var(--color-primary)')};
+    color: ${(props) => (props.$isActive ? 'var(--color-text-white)' : 'var(--color-primary)')};
   }
 `;
 

@@ -7,7 +7,6 @@ export const useCart = () => useContext(CartContext);
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
 
-  // Accepts a product and an optional quantity (default 1)
   const addToCart = (product, quantityToAdd = 1) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find((item) => item.id === product.id);
@@ -35,7 +34,6 @@ export const CartProvider = ({ children }) => {
     );
   };
 
-  // Total number of items in the cart (sum of quantities)
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   return (

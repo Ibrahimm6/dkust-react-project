@@ -6,6 +6,7 @@ import InputComponent from './common/input-component';
 import CustomButton from './common/custom-button';
 import AppTemplate from './app-template';
 import PathConstants from '../routes/pathConstants';
+import { FaFacebookF } from 'react-icons/fa';
 
 const loginSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email address').required('Email is required'),
@@ -44,11 +45,9 @@ const LoginForm = () => {
                 error={formik.errors.email}
                 touched={formik.touched.email}
               />
-
               <div className="d-flex justify-content-end mb-3" style={{ marginTop: '-5px' }}>
                 <a href="#forgot" className="text-green text-decoration-none small fw-bold">Forgot password?</a>
               </div>
-
               <InputComponent
                 name="password"
                 fieldLabel="Password"
@@ -60,7 +59,6 @@ const LoginForm = () => {
                 error={formik.errors.password}
                 touched={formik.touched.password}
               />
-
               <div className="mb-4 form-check d-flex align-items-center gap-2 mt-1">
                 <input 
                   type="checkbox" 
@@ -72,13 +70,11 @@ const LoginForm = () => {
                 />
                 <label className="form-check-label text-muted small fw-medium mt-1" htmlFor="rememberMe">Remember me</label>
               </div>
-
-              <CustomButton title="SIGN IN" onClickFunction={formik.handleSubmit} bgColor="#00a651" />
+              <CustomButton title="SIGN IN" type="submit" bgColor="#00a651" />
               
               <div className="text-center my-3">
                 <span className="text-muted small text-micro">or continue with</span>
               </div>
-
               <div className="row gx-3 mb-4">
                 <div className="col-6">
                   <button type="button" className="btn btn-outline-secondary w-100 bg-white text-dark py-2 rounded-3 border-light-gray d-flex justify-content-center align-items-center gap-2">
@@ -88,19 +84,18 @@ const LoginForm = () => {
                 </div>
                 <div className="col-6">
                   <button type="button" className="btn btn-outline-secondary w-100 bg-white text-dark py-2 rounded-3 border-light-gray d-flex justify-content-center align-items-center gap-2">
-                    <i className="fab fa-facebook text-primary fs-5"></i>
+                    <FaFacebookF className="text-primary fs-5" />
                     <span className="small fw-semibold">Facebook</span>
                   </button>
                 </div>
               </div>
-
               <div className="text-center mt-2">
-                <p className="text-muted small mb-0">Don't have an account? <Link to="/register" className="text-green text-decoration-none fw-bold">Sign up</Link></p>
+                <p className="text-muted small mb-0">Don't have an account? <Link to={PathConstants.REGISTER} className="text-green text-decoration-none fw-bold">Sign up</Link></p>
               </div>
             </form>
           </div>
         </div>
-        <Link to="/" className="text-white text-decoration-underline small opacity-75 hover-opacity-100 transition">Back to Home</Link>
+        <Link to={PathConstants.HOME} className="text-white text-decoration-underline small opacity-75 hover-opacity-100 transition">Back to Home</Link>
       </main>
     </AppTemplate>
   );

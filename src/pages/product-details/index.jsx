@@ -17,11 +17,9 @@ import "swiper/css/pagination";
 import AppTemplate from '../../components/app-template';
 import PathConstants from '../../routes/pathConstants';
 import { useCart } from '../../contexts/cartContext';
-
-const getBgColor = (category) => {
-  const colors = { Software: '#1e3a8a', Robotics: '#14532d', AI: '#1e40af', Hardware: '#451a03', Security: '#0f172a' };
-  return colors[category] || '#1e3a8a';
-};
+import { getBgColor } from '../../helpers/productHelpers';
+import StarRating from '../../components/common/StarRating';
+import { FiChevronLeft, FiBox, FiCheckCircle, FiShoppingCart } from 'react-icons/fi';
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -61,13 +59,13 @@ const ProductDetails = () => {
             Home / Products / <span>{product.name}</span>
           </Breadcrumb>
 
-          <BackLink to="/products">
-            <i className="fas fa-chevron-left"></i> Back to Products
+          <BackLink to={PathConstants.PRODUCTS}>
+            <FiChevronLeft size={16} /> Back to Products
           </BackLink>
 
           <ProductSection>
-            <ProductImageArea bgColor={getBgColor(product.category)}>
-              <i className="fas fa-cube"></i>
+            <ProductImageArea $bgColor={getBgColor(product.category)}>
+              <FiBox opacity={0.8} size={80} />
               {product.badge && (
                 <span style={{ 
                   backgroundColor: '#22c55e', color: 'white', padding: '4px 12px', 
@@ -81,23 +79,19 @@ const ProductDetails = () => {
             <ProductInfoArea>
               <CategoryTag>{product.category}</CategoryTag>
               <ProductTitle>{product.name}</ProductTitle>
-
+              
               <RatingBox>
-                <div className="stars">
-                  <i className="fas fa-star"></i><i className="fas fa-star"></i>
-                  <i className="fas fa-star"></i><i className="fas fa-star"></i>
-                  <i className="fas fa-star"></i>
-                </div>
+                <StarRating rating={product.rating} />
                 <span>{product.rating} ({product.reviewsCount} reviews)</span>
               </RatingBox>
 
               <Description>{product.description}</Description>
 
               <FeaturesList>
-                <li><i className="far fa-check-circle"></i> High-quality performance</li>
-                <li><i className="far fa-check-circle"></i> 24/7 technical support</li>
-                <li><i className="far fa-check-circle"></i> Secure payment integration</li>
-                <li><i className="far fa-check-circle"></i> Fast delivery and setup</li>
+                <li><FiCheckCircle color="var(--color-primary)" size={16} /> High-quality performance</li>
+                <li><FiCheckCircle color="var(--color-primary)" size={16} /> 24/7 technical support</li>
+                <li><FiCheckCircle color="var(--color-primary)" size={16} /> Secure payment integration</li>
+                <li><FiCheckCircle color="var(--color-primary)" size={16} /> Fast delivery and setup</li>
               </FeaturesList>
 
               <Price>${product.price} <span>/mo</span></Price>
@@ -112,7 +106,7 @@ const ProductDetails = () => {
               </QuantityControl>
 
               <ActionButtons>
-                <CustomButton title={<><i className="fas fa-shopping-cart"></i> Add to Cart</>} onClickFunction={handleAddToCart} bgColor="#00a651" />
+                <CustomButton title={<><FiShoppingCart /> Add to Cart</>} onClickFunction={handleAddToCart} bgColor="#00a651" />
                 <CustomButton title="Buy Now" onClickFunction={handleBuyNow} />
               </ActionButtons>
             </ProductInfoArea>

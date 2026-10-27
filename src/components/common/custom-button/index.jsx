@@ -23,9 +23,9 @@ const StyledButton = styled.button`
   }
 `;
 
-const CustomButton = ({ title, onClickFunction, bgColor, color }) => {
+const CustomButton = ({ title, onClickFunction, bgColor, color, type = "button" }) => {
   return (
-    <StyledButton type="button" onClick={onClickFunction} bgColor={bgColor} color={color}>
+    <StyledButton type={type} onClick={onClickFunction} bgColor={bgColor} color={color}>
       {title}
     </StyledButton>
   );

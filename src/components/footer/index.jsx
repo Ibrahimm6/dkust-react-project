@@ -1,4 +1,5 @@
 import React from 'react';
+import PathConstants from '../../routes/pathConstants';
 import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram, FaRegPaperPlane } from 'react-icons/fa';
 import {
   FooterWrapper,
@@ -38,11 +39,11 @@ const Footer = () => {
           <FooterCol>
             <ColumnTitle>QUICK LINKS</ColumnTitle>
             <FooterList>
-              <FooterListItem><StyledFooterLink to="/about">About Us</StyledFooterLink></FooterListItem>
-              <FooterListItem><StyledFooterLink to="/services">Services</StyledFooterLink></FooterListItem>
-              <FooterListItem><StyledFooterLink to="/portfolio">Portfolio</StyledFooterLink></FooterListItem>
-              <FooterListItem><StyledFooterLink to="/blog">Blog</StyledFooterLink></FooterListItem>
-              <FooterListItem><StyledFooterLink to="/contact">Contact Us</StyledFooterLink></FooterListItem>
+              <FooterListItem><StyledFooterLink to={PathConstants.ABOUT}>About Us</StyledFooterLink></FooterListItem>
+              <FooterListItem><StyledFooterLink to={PathConstants.SERVICES}>Services</StyledFooterLink></FooterListItem>
+              <FooterListItem><StyledFooterLink to={PathConstants.PORTFOLIO}>Portfolio</StyledFooterLink></FooterListItem>
+              <FooterListItem><StyledFooterLink to={PathConstants.BLOG}>Blog</StyledFooterLink></FooterListItem>
+              <FooterListItem><StyledFooterLink to={PathConstants.CONTACT}>Contact Us</StyledFooterLink></FooterListItem>
             </FooterList>
           </FooterCol>
           

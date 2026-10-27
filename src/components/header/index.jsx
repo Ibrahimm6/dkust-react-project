@@ -85,7 +85,7 @@ const Header = () => {
 
       </HeaderContainer>
 
-      <MobileMenu isOpen={isMenuOpen}>
+      <MobileMenu $isOpen={isMenuOpen}>
         <MobileNavItem to={PathConstants.HOME} onClick={closeMenu}>Home</MobileNavItem>
         <MobileNavItem to={PathConstants.PRODUCTS} onClick={closeMenu}>Products</MobileNavItem>
         <MobileNavItem to={PathConstants.SERVICES} onClick={closeMenu}>Services</MobileNavItem>
@@ -93,9 +93,9 @@ const Header = () => {
         <MobileNavItem to={PathConstants.QUIZ} onClick={closeMenu}>Quiz</MobileNavItem>
         <MobileNavItem to={PathConstants.ABOUT} onClick={closeMenu}>About</MobileNavItem>
         <MobileNavItem to={PathConstants.CONTACT} onClick={closeMenu}>Contact</MobileNavItem>
-        <MobileNavItem to="/wishlist" onClick={closeMenu}>Favorites</MobileNavItem>
-        <MobileNavItem to="/cart" onClick={closeMenu}>Cart</MobileNavItem>
-        <MobileNavItem to="/profile" onClick={closeMenu}>Profile</MobileNavItem>
+        <MobileNavItem to={PathConstants.WISHLIST} onClick={closeMenu}>Favorites</MobileNavItem>
+        <MobileNavItem to={PathConstants.CART} onClick={closeMenu}>Cart</MobileNavItem>
+        <MobileNavItem to={PathConstants.PROFILE} onClick={closeMenu}>Profile</MobileNavItem>
         <MobileNavItem to={PathConstants.LOGIN} onClick={closeMenu}>Login</MobileNavItem>
         <MobileNavItem to={PathConstants.REGISTER} onClick={closeMenu}>Register</MobileNavItem>
       </MobileMenu>

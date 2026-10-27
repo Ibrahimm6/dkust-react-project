@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 import styled from 'styled-components';
 
 const InputWrapper = styled.div`
@@ -24,7 +25,7 @@ const StyledInput = styled.input`
   padding: 10px 12px; 
   padding-right: ${(props) => (props.type === 'password' ? '40px' : '12px')};
   border-radius: 6px;
-  border: 1px solid ${(props) => (props.hasError ? '#ef4444' : '#d1d5db')}; 
+  border: 1px solid ${(props) => (props.$hasError ? '#ef4444' : '#d1d5db')}; 
   box-sizing: border-box;
   font-size: 15px;
   color: #111827;
@@ -36,7 +37,7 @@ const StyledInput = styled.input`
   }
 
   &:focus {
-    border-color: ${(props) => (props.hasError ? '#ef4444' : '#00a651')};
+    border-color: ${(props) => (props.$hasError ? '#ef4444' : '#00a651')};
   }
 `;
 
@@ -71,11 +72,11 @@ const InputComponent = ({ fieldLabel, name, value, onChange, onBlur, placeholder
           onChange={onChange}
           onBlur={onBlur}
           placeholder={placeholder}
-          hasError={touched && error}
+          $hasError={touched && error}
         />
         {type === 'password' && (
           <IconWrapper onClick={() => setShowPassword(!showPassword)}>
-            <i className={`far ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+           {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
           </IconWrapper>
         )}
       </InputFieldContainer>
