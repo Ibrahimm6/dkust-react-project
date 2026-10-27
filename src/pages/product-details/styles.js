@@ -42,7 +42,7 @@ export const ProductSection = styled.div`
 
 export const ProductImageArea = styled.div`
   width: 50%;
-  background-color: ${(props) => props.bgColor || '#1a3a6e'};
+  background-color: ${(props) => props.$bgColor || '#1a3a6e'};
   display: flex;
   flex-direction: column;
   align-items: center;

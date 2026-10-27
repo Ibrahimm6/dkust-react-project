@@ -171,7 +171,7 @@ export const MobileMenu = styled.div`
   display: none;
   
   @media (max-width: 992px) {
-    display: ${(props) => (props.isOpen ? 'flex' : 'none')};
+    display: ${(props) => (props.$isOpen ? 'flex' : 'none')};
     flex-direction: column;
     position: absolute;
     top: var(--header-height);

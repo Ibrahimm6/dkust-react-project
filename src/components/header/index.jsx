@@ -58,12 +58,12 @@ const Header = () => {
           <IconGroup>
             <IconButton to={PathConstants.WISHLIST} aria-label="Wishlist">
              <FiHeart />
-             {wishlist.length > 0 && <IconBadge>{wishlist.length}</IconBadge>}
+             {wishlist.length > 0 && <IconBadge>{wishlist.length > 9 ? '9+' : wishlist.length}</IconBadge>}
             </IconButton>
 
             <IconButton to={PathConstants.CART} aria-label="Cart">
               <FiShoppingCart />
-             {cartCount > 0 && <IconBadge>{cartCount}</IconBadge>}
+             {cartCount > 0 && <IconBadge>{cartCount > 9 ? '9+' : cartCount}</IconBadge>}
             </IconButton>
 
             <IconButton to={PathConstants.PROFILE} aria-label="User Profile">

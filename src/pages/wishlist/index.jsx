@@ -6,6 +6,7 @@ import { useWishlist } from '../../contexts/wishlistContext';
 import ProductCardGrid from '../../components/products/ProductCardGrid';
 import { FiHeart } from 'react-icons/fi';
 import CustomButton from '../../components/common/custom-button';
+import { useCart } from '../../contexts/cartContext';
 
 import {
   PageWrapper, HeroSection, HeroTitle, HeroSubtitle,
@@ -16,10 +17,12 @@ import {
 const WishlistPage = () => {
   const navigate = useNavigate();
   const { wishlist } = useWishlist();
+  const { addToCart } = useCart();
 
   const handleAddToCart = (product) => {
-    console.log("Added to cart from wishlist", product);
+    addToCart(product, 1);
   };
+
 
   return (
     <AppTemplate pageTitle="My Favorites" path={PathConstants.WISHLIST}>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { FiBox, FiTrash2 } from 'react-icons/fi';
 import { useCart } from '../../../contexts/cartContext';
+import { getBgColor } from '../../../helpers/productHelpers';
 import {
   ItemCard,
   IconBox,
@@ -16,17 +17,6 @@ import {
   QtyValue,
   ItemPrice,
 } from './styles';
-
-const getBgColor = (category) => {
-  const colors = {
-    Software: '#1e3a8a',
-    Robotics: '#14532d',
-    AI: '#1e40af',
-    Hardware: '#451a03',
-    Security: '#0f172a',
-  };
-  return colors[category] || '#1e3a8a';
-};
 
 const CartItem = ({ item }) => {
   const { updateQuantity, removeFromCart } = useCart();
@@ -60,7 +50,7 @@ const CartItem = ({ item }) => {
               onClick={() => updateQuantity(item.id, item.quantity - 1)}
               disabled={item.quantity <= 1}
             >
-              −
+              -
             </QtyBtn>
             <QtyValue>{item.quantity}</QtyValue>
             <QtyBtn

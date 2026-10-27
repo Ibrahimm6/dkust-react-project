@@ -38,7 +38,7 @@ const OrderSummary = () => {
         {cart.map((item) => (
           <SummaryRow key={item.id}>
             <ItemNameText>
-              {truncateName(item.name)} ×{item.quantity}
+              {truncateName(item.name)} x {item.quantity}
             </ItemNameText>
             <ItemPriceText>
               ${(item.price * item.quantity).toLocaleString()}
