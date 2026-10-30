@@ -29,18 +29,18 @@ export const ContentWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 40px;
-  max-width: var(--container-max-width);
+  /* max-width: var(--container-max-width);
   margin: 0 auto;
   padding: var(--container-padding);
 
   @media (max-width: 992px) {
     flex-direction: column;
-  }
+  } */
 `;
 
 export const TextContent = styled.div`
   flex: 1;
-  max-width: 520px;
+  /* max-width: 520px; */
 `;
 
 export const Badge = styled.div`
@@ -135,7 +135,7 @@ export const StatsGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px;
-  max-width: 500px;
+  /* max-width: 500px; */
 
   @media (max-width: 576px) {
     grid-template-columns: 1fr;
