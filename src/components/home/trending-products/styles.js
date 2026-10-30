@@ -10,10 +10,10 @@ export const SectionHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  max-width: var(--container-max-width);
+  /* max-width: var(--container-max-width); */
   margin: 0 auto 30px auto;
-  padding: var(--container-padding);
-  width: 100%;
+  /* padding: var(--container-padding); */
+  /* width: 100%; */
 
   @media (max-width: 768px) {
     flex-direction: column;

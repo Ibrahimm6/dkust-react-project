@@ -1,16 +1,16 @@
 :root {
   --font-primary: "Inter", sans-serif;
   --font-base: 16px;
-  --color-navy: #0b1f3a;          
-  --color-primary: #00a651;      
+  --color-navy: #0b1f3a;
+  --color-primary: #00a651;
   --color-primary-hover: #00c951;
-  --color-accent: #05df72;       
+  --color-accent: #05df72;
   --color-bg-white: #ffffff;
   --color-bg-gray: #f8fafc;
   --color-text-white: #ffffff;
-  --color-text-muted: #d1d5dc;    
-  --color-text-dark: #111827;    
-  --color-text-gray: #6b7280;    
+  --color-text-muted: #d1d5dc;
+  --color-text-dark: #111827;
+  --color-text-gray: #6b7280;
   --container-max-width: 1200px;
   --container-padding: 0 33px;
   --header-height: 65px;
@@ -38,45 +38,47 @@ ul {
   padding-left: 0;
 }
 
-img, svg {
+img,
+svg {
   max-width: 100%;
   height: auto;
 }
 
 .container {
+  width: 100%;
   max-width: 1200px !important;
-  padding-left: 20px !important;
-  padding-right: 20px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
   margin: 0 auto;
 }
 
 /* Login Page Utilities */
-.custom-page-bg { 
-  background-color: var(--color-page-bg) !important; 
+.custom-page-bg {
+  background-color: var(--color-page-bg) !important;
 }
 
-.login-card { 
-  border-top: 6px solid #00a63e !important; 
+.login-card {
+  border-top: 6px solid #00a63e !important;
 }
 
-.login-card-wrapper { 
-  width: 100%; 
-  max-width: 480px; 
+.login-card-wrapper {
+  width: 100%;
+  max-width: 480px;
 }
 
-.text-green { 
-  color: var(--color-primary) !important; 
+.text-green {
+  color: var(--color-primary) !important;
 }
 
-.border-light-gray { 
-  border-color: #e5e7eb !important; 
+.border-light-gray {
+  border-color: #e5e7eb !important;
 }
 
-.custom-checkbox:checked { 
-  background-color: var(--color-primary); 
-  border-color: var(--color-primary); 
+.custom-checkbox:checked {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
 }
 
-.text-micro { 
-  font-size: 0.8rem; 
+.text-micro {
+  font-size: 0.8rem;
 }

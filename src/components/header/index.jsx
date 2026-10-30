@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import PathConstants from '../../routes/pathConstants';
-import { FiHeart, FiShoppingCart, FiUser, FiMenu, FiX } from 'react-icons/fi';
+import React, { useState } from "react";
+import PathConstants from "../../routes/pathConstants";
+import { FiHeart, FiShoppingCart, FiUser, FiMenu, FiX } from "react-icons/fi";
 import {
   HeaderWrapper,
   HeaderContainer,
@@ -18,10 +18,10 @@ import {
   RegisterButton,
   MenuButton,
   MobileMenu,
-  MobileNavItem
-} from './styles';
-import { useWishlist } from '../../contexts/wishlistContext';
-import { useCart } from '../../contexts/cartContext';
+  MobileNavItem,
+} from "./styles";
+import { useWishlist } from "../../contexts/wishlistContext";
+import { useCart } from "../../contexts/cartContext";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -38,10 +38,11 @@ const Header = () => {
   const { cartCount } = useCart();
   return (
     <HeaderWrapper>
-      <HeaderContainer>
-        
+      <HeaderContainer className="container">
         <LogoSection>
-          <Logo to={PathConstants.HOME} onClick={closeMenu}>DKUST</Logo>
+          <Logo to={PathConstants.HOME} onClick={closeMenu}>
+            DKUST
+          </Logo>
         </LogoSection>
 
         <NavSection>
@@ -57,17 +58,17 @@ const Header = () => {
         <RightSection>
           <IconGroup>
             <IconButton to={PathConstants.WISHLIST} aria-label="Wishlist">
-             <FiHeart />
-             {wishlist.length > 0 && <IconBadge>{wishlist.length}</IconBadge>}
+              <FiHeart />
+              {wishlist.length > 0 && <IconBadge>{wishlist.length}</IconBadge>}
             </IconButton>
 
             <IconButton to={PathConstants.CART} aria-label="Cart">
               <FiShoppingCart />
-             {cartCount > 0 && <IconBadge>{cartCount}</IconBadge>}
+              {cartCount > 0 && <IconBadge>{cartCount}</IconBadge>}
             </IconButton>
 
             <IconButton to={PathConstants.PROFILE} aria-label="User Profile">
-             <FiUser />
+              <FiUser />
             </IconButton>
           </IconGroup>
 
@@ -75,29 +76,54 @@ const Header = () => {
 
           <AuthGroup>
             <LoginLink to={PathConstants.LOGIN}>Login</LoginLink>
-            <RegisterButton to={PathConstants.REGISTER}>Register</RegisterButton>
+            <RegisterButton to={PathConstants.REGISTER}>
+              Register
+            </RegisterButton>
           </AuthGroup>
 
           <MenuButton onClick={toggleMenu} aria-label="Toggle Menu">
             {isMenuOpen ? <FiX /> : <FiMenu />}
           </MenuButton>
         </RightSection>
-
       </HeaderContainer>
 
       <MobileMenu isOpen={isMenuOpen}>
-        <MobileNavItem to={PathConstants.HOME} onClick={closeMenu}>Home</MobileNavItem>
-        <MobileNavItem to={PathConstants.PRODUCTS} onClick={closeMenu}>Products</MobileNavItem>
-        <MobileNavItem to={PathConstants.SERVICES} onClick={closeMenu}>Services</MobileNavItem>
-        <MobileNavItem to={PathConstants.BLOG} onClick={closeMenu}>Blog</MobileNavItem>
-        <MobileNavItem to={PathConstants.QUIZ} onClick={closeMenu}>Quiz</MobileNavItem>
-        <MobileNavItem to={PathConstants.ABOUT} onClick={closeMenu}>About</MobileNavItem>
-        <MobileNavItem to={PathConstants.CONTACT} onClick={closeMenu}>Contact</MobileNavItem>
-        <MobileNavItem to="/wishlist" onClick={closeMenu}>Favorites</MobileNavItem>
-        <MobileNavItem to="/cart" onClick={closeMenu}>Cart</MobileNavItem>
-        <MobileNavItem to="/profile" onClick={closeMenu}>Profile</MobileNavItem>
-        <MobileNavItem to={PathConstants.LOGIN} onClick={closeMenu}>Login</MobileNavItem>
-        <MobileNavItem to={PathConstants.REGISTER} onClick={closeMenu}>Register</MobileNavItem>
+        <MobileNavItem to={PathConstants.HOME} onClick={closeMenu}>
+          Home
+        </MobileNavItem>
+        <MobileNavItem to={PathConstants.PRODUCTS} onClick={closeMenu}>
+          Products
+        </MobileNavItem>
+        <MobileNavItem to={PathConstants.SERVICES} onClick={closeMenu}>
+          Services
+        </MobileNavItem>
+        <MobileNavItem to={PathConstants.BLOG} onClick={closeMenu}>
+          Blog
+        </MobileNavItem>
+        <MobileNavItem to={PathConstants.QUIZ} onClick={closeMenu}>
+          Quiz
+        </MobileNavItem>
+        <MobileNavItem to={PathConstants.ABOUT} onClick={closeMenu}>
+          About
+        </MobileNavItem>
+        <MobileNavItem to={PathConstants.CONTACT} onClick={closeMenu}>
+          Contact
+        </MobileNavItem>
+        <MobileNavItem to="/wishlist" onClick={closeMenu}>
+          Favorites
+        </MobileNavItem>
+        <MobileNavItem to="/cart" onClick={closeMenu}>
+          Cart
+        </MobileNavItem>
+        <MobileNavItem to="/profile" onClick={closeMenu}>
+          Profile
+        </MobileNavItem>
+        <MobileNavItem to={PathConstants.LOGIN} onClick={closeMenu}>
+          Login
+        </MobileNavItem>
+        <MobileNavItem to={PathConstants.REGISTER} onClick={closeMenu}>
+          Register
+        </MobileNavItem>
       </MobileMenu>
     </HeaderWrapper>
   );

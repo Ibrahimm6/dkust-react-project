@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { NavLink, Link } from 'react-router-dom';
+import styled from "styled-components";
+import { NavLink, Link } from "react-router-dom";
 
 export const HeaderWrapper = styled.header`
   background-color: var(--color-navy);
@@ -13,10 +13,10 @@ export const HeaderWrapper = styled.header`
 `;
 
 export const HeaderContainer = styled.div`
-  max-width: var(--container-max-width);
-  margin: 0 auto;
-  padding: var(--container-padding);
-  width: 100%;
+  /* max-width: var(--container-max-width); */
+  /* margin: 0 auto; */
+  /* padding: var(--container-padding); */
+  /* width: 100%; */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -54,7 +54,8 @@ export const NavItem = styled(NavLink)`
   text-transform: uppercase;
   transition: color 0.3s ease;
 
-  &.active, &:hover {
+  &.active,
+  &:hover {
     color: var(--color-accent);
   }
 `;
@@ -88,9 +89,9 @@ export const IconButton = styled(Link)`
 
 export const IconBadge = styled.span`
   position: absolute;
-  top: -8px; 
-  right: -10px; 
-  background-color: var(--color-primary-hover); 
+  top: -8px;
+  right: -10px;
+  background-color: var(--color-primary-hover);
   color: var(--color-text-white);
   font-size: 10px;
   font-weight: 700;
@@ -100,7 +101,7 @@ export const IconBadge = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid var(--color-navy); 
+  border: 2px solid var(--color-navy);
 `;
 
 export const Divider = styled.div`
@@ -169,9 +170,9 @@ export const MenuButton = styled.button`
 
 export const MobileMenu = styled.div`
   display: none;
-  
+
   @media (max-width: 992px) {
-    display: ${(props) => (props.isOpen ? 'flex' : 'none')};
+    display: ${(props) => (props.isOpen ? "flex" : "none")};
     flex-direction: column;
     position: absolute;
     top: var(--header-height);
@@ -193,11 +194,12 @@ export const MobileNavItem = styled(NavLink)`
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   transition: color 0.3s ease;
 
-  &.active, &:hover {
+  &.active,
+  &:hover {
     color: var(--color-primary);
   }
-  
+
   &:last-child {
-      border-bottom: none;
+    border-bottom: none;
   }
 `;

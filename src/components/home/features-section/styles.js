@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const FeaturesContainer = styled.section`
   padding: 60px 0;
@@ -9,10 +9,10 @@ export const FeaturesGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
-  max-width: var(--container-max-width);
-  margin: 0 auto;
-  padding: var(--container-padding);
-  width: 100%;
+  /* max-width: var(--container-max-width); */
+  /* margin: 0 auto; */
+  /* padding: var(--container-padding); */
+  /* width: 100%; */
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
