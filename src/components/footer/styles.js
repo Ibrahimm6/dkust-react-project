@@ -1,16 +1,9 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const FooterWrapper = styled.footer`
   background-color: var(--color-bg-white);
   padding: 48px 0 16px;
-`;
-
-export const FooterContainer = styled.div`
-  max-width: var(--container-max-width);
-  margin: 0 auto;
-  padding: var(--container-padding);
-  width: 100%;
 `;
 
 export const FooterTop = styled.div`

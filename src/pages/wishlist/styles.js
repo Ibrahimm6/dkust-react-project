@@ -1,15 +1,20 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  background-color: var(--color-bg-gray); 
+  background-color: var(--color-bg-gray);
 `;
 
 export const HeroSection = styled.div`
-  background: linear-gradient(135deg, rgb(13, 27, 62) 0%, rgb(26, 58, 110) 50%, rgb(13, 27, 62) 100%);
-  padding: 63px 33px; 
+  background: linear-gradient(
+    135deg,
+    rgb(13, 27, 62) 0%,
+    rgb(26, 58, 110) 50%,
+    rgb(13, 27, 62) 100%
+  );
+  padding: 63px 33px;
   text-align: center;
   color: var(--color-text-white);
 `;
@@ -17,22 +22,22 @@ export const HeroSection = styled.div`
 export const HeroTitle = styled.h1`
   font-size: 36px;
   font-weight: 700;
-  margin-bottom: 8px; 
+  margin-bottom: 8px;
 `;
 
 export const HeroSubtitle = styled.p`
   color: var(--color-text-muted);
-  font-size: 15px; 
+  font-size: 15px;
   max-width: 512px;
   margin: 0 auto;
   line-height: 1.6;
 `;
 
 export const ContentContainer = styled.div`
-  max-width: var(--container-max-width);
-  margin: 0 auto;
-  padding: 50px 33px; 
-  width: 100%;
+  /* max-width: var(--container-max-width); */
+  /* margin: 0 auto; */
+  padding-block: 50px;
+  /* width: 100%; */
   flex-grow: 1;
 `;
 
@@ -66,7 +71,7 @@ export const EmptyStateWrapper = styled.div`
 `;
 
 export const EmptyIcon = styled.div`
-  color: #d1d5dc; 
+  color: #d1d5dc;
   margin-bottom: 16px;
   margin-inline: auto;
   display: flex;
@@ -82,5 +87,5 @@ export const EmptyIcon = styled.div`
 export const EmptyText = styled.p`
   color: #9ca3af;
   font-size: 16px;
-  margin-bottom: 30px; 
+  margin-bottom: 30px;
 `;

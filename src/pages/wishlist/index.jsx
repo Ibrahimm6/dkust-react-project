@@ -1,17 +1,23 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import AppTemplate from '../../components/app-template';
-import PathConstants from '../../routes/pathConstants';
-import { useWishlist } from '../../contexts/wishlistContext';
-import ProductCardGrid from '../../components/products/ProductCardGrid';
-import { FiHeart } from 'react-icons/fi';
-import CustomButton from '../../components/common/custom-button';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import AppTemplate from "../../components/app-template";
+import PathConstants from "../../routes/pathConstants";
+import { useWishlist } from "../../contexts/wishlistContext";
+import ProductCardGrid from "../../components/products/ProductCardGrid";
+import { FiHeart } from "react-icons/fi";
+import CustomButton from "../../components/common/custom-button";
 
 import {
-  PageWrapper, HeroSection, HeroTitle, HeroSubtitle,
-  ContentContainer, EmptyStateWrapper, EmptyIcon, EmptyText,
+  PageWrapper,
+  HeroSection,
+  HeroTitle,
+  HeroSubtitle,
+  ContentContainer,
+  EmptyStateWrapper,
+  EmptyIcon,
+  EmptyText,
   ProductsGrid, //ResultsText
-} from './styles';
+} from "./styles";
 
 const WishlistPage = () => {
   const navigate = useNavigate();
@@ -27,20 +33,22 @@ const WishlistPage = () => {
         <HeroSection>
           <HeroTitle>My Favorites</HeroTitle>
           <HeroSubtitle>
-            {wishlist.length === 1 ? '1 saved item' : `${wishlist.length} saved items`}
+            {wishlist.length === 1
+              ? "1 saved item"
+              : `${wishlist.length} saved items`}
           </HeroSubtitle>
         </HeroSection>
 
-        <ContentContainer>
+        <ContentContainer className="container">
           {wishlist.length > 0 ? (
             <>
               {/* <ResultsText>{wishlist.length} products saved</ResultsText> */}
               <ProductsGrid>
                 {wishlist.map((product) => (
-                  <ProductCardGrid 
-                    key={product.id} 
-                    product={product} 
-                    onAddToCart={handleAddToCart} 
+                  <ProductCardGrid
+                    key={product.id}
+                    product={product}
+                    onAddToCart={handleAddToCart}
                   />
                 ))}
               </ProductsGrid>
@@ -51,11 +59,11 @@ const WishlistPage = () => {
                 <FiHeart />
               </EmptyIcon>
               <EmptyText>You haven't saved any products yet</EmptyText>
-              <div style={{ width: '200px' }}>
-                <CustomButton 
-                  title="Explore Products" 
-                  onClickFunction={() => navigate(PathConstants.PRODUCTS)} 
-                  bgColor="var(--color-primary)" 
+              <div style={{ width: "200px" }}>
+                <CustomButton
+                  title="Explore Products"
+                  onClickFunction={() => navigate(PathConstants.PRODUCTS)}
+                  bgColor="var(--color-primary)"
                 />
               </div>
             </EmptyStateWrapper>
