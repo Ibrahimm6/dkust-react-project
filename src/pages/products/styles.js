@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const PageWrapper = styled.div`
   display: flex;
@@ -8,7 +8,12 @@ export const PageWrapper = styled.div`
 `;
 
 export const HeroSection = styled.div`
-  background: linear-gradient(135deg, rgb(13, 27, 62) 0%, rgb(26, 58, 110) 50%, rgb(13, 27, 62) 100%);
+  background: linear-gradient(
+    135deg,
+    rgb(13, 27, 62) 0%,
+    rgb(26, 58, 110) 50%,
+    rgb(13, 27, 62) 100%
+  );
   padding: 55px 33px;
   text-align: center;
   color: var(--color-text-white);
@@ -29,28 +34,28 @@ export const HeroSubtitle = styled.p`
 `;
 
 export const ContentContainer = styled.div`
-  max-width: var(--container-max-width);
-  margin: 0 auto;
-  padding: 40px 33px;
-  width: 100%;
+  /* max-width: var(--container-max-width); */
+  /* margin: 0 auto; */
+  padding-block: 40px;
+  /* width: 100%; */
 `;
 
 export const FilterSection = styled.section`
   position: sticky;
   top: var(--header-height);
-  z-index: 1040; 
+  z-index: 1040;
   background-color: var(--color-bg-gray);
   border-bottom: 1px solid #ebe6e7;
   width: 100%;
 `;
 
 export const FilterContainer = styled.div`
-  max-width: var(--container-max-width);
-  margin: 0 auto;
-  padding: var(--container-padding);
+  /* max-width: var(--container-max-width); */
+  /* margin: 0 auto; */
+  /* padding: var(--container-padding); */
   padding-top: 15px;
   padding-bottom: 15px;
-  width: 100%;
+  /* width: 100%; */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -67,16 +72,20 @@ export const CategoriesWrapper = styled.div`
 export const CategoryButton = styled.button`
   padding: 6px 16px;
   border-radius: var(--border-radius-btn);
-  border: 1px solid ${(props) => (props.isActive ? 'var(--color-primary)' : '#d1d5db')};
-  background-color: ${(props) => (props.isActive ? 'var(--color-primary)' : 'var(--color-bg-white)')};
-  color: ${(props) => (props.isActive ? 'var(--color-text-white)' : 'var(--color-text-gray)')};
+  border: 1px solid
+    ${(props) => (props.isActive ? "var(--color-primary)" : "#d1d5db")};
+  background-color: ${(props) =>
+    props.isActive ? "var(--color-primary)" : "var(--color-bg-white)"};
+  color: ${(props) =>
+    props.isActive ? "var(--color-text-white)" : "var(--color-text-gray)"};
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
 
   &:hover {
-    background-color: ${(props) => (props.isActive ? 'var(--color-primary-hover)' : '#f3f4f6')};
+    background-color: ${(props) =>
+      props.isActive ? "var(--color-primary-hover)" : "#f3f4f6"};
   }
 `;
 
@@ -113,8 +122,10 @@ export const ViewToggle = styled.div`
 
 export const IconButton = styled.button`
   border: none;
-  background-color: ${(props) => (props.isActive ? 'var(--color-primary)' : 'transparent')};
-  color: ${(props) => (props.isActive ? 'var(--color-text-white)' : 'var(--color-text-gray)')};
+  background-color: ${(props) =>
+    props.isActive ? "var(--color-primary)" : "transparent"};
+  color: ${(props) =>
+    props.isActive ? "var(--color-text-white)" : "var(--color-text-gray)"};
   width: 32px;
   height: 30px;
   display: flex;
@@ -127,9 +138,10 @@ export const IconButton = styled.button`
   /* &:first-child {
     border-right: 1px solid #d1d5db;
   } */
-  
+
   &:hover {
-    color: ${(props) => (props.isActive ? 'var(--color-text-white)' : 'var(--color-primary)')};
+    color: ${(props) =>
+      props.isActive ? "var(--color-text-white)" : "var(--color-primary)"};
   }
 `;
 
