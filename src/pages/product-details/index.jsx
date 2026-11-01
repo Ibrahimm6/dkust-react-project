@@ -19,7 +19,8 @@ import {
   RelatedSectionTitle,
 } from "./styles";
 import CustomButton from "../../components/common/custom-button";
-import ProductCardGrid from "../../components/products/ProductCardGrid";
+import RelatedProductCard from "../../components/products/RelatedProductCard";
+import { SwiperWrapper } from "../../components/home/trending-products/styles.js";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
@@ -175,30 +176,28 @@ const ProductDetails = () => {
 
           <section className="container">
             <RelatedSectionTitle>Related Products</RelatedSectionTitle>
-            <div style={{ paddingBottom: "40px" }}>
-              <Swiper
-                modules={[Navigation, Pagination]}
-                spaceBetween={25}
-                slidesPerView={1}
-                navigation
-                pagination={{ clickable: true }}
-                breakpoints={{
+          <SwiperWrapper style={{ padding: 0, maxWidth: "100%" }}>
+                <Swiper
+                  className="related-swiper"
+                  modules={[Navigation, Pagination]}
+                  spaceBetween={25}
+                  slidesPerView={1}
+                  navigation
+                  pagination={{ clickable: true }}
+                  breakpoints={{
                   768: { slidesPerView: 2 },
                   1024: { slidesPerView: 3 },
-                }}
-              >
-                {relatedProducts.map((relatedProd) => (
-                  <SwiperSlide key={relatedProd.id}>
-                    <div style={{ height: "100%", paddingBottom: "10px" }}>
-                      <ProductCardGrid
-                        product={relatedProd}
-                        onAddToCart={() => addToCart(relatedProd, 1)}
-                      />
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </div>
+            }}
+           >
+    {relatedProducts.map((relatedProd) => (
+      <SwiperSlide key={relatedProd.id}>
+        <div style={{ height: "100%", paddingBottom: "10px" }}>
+          <RelatedProductCard product={relatedProd} />
+        </div>
+      </SwiperSlide>
+    ))}
+  </Swiper>
+</SwiperWrapper>
           </section>
         </PageWrapper>
       </div>

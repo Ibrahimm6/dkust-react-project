@@ -52,7 +52,7 @@ export const ProductImageArea = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 60px 20px;
+  padding: 30px 20px;
   color: white;
   i {
     font-size: 80px;
@@ -75,7 +75,7 @@ export const ProductImageArea = styled.div`
 
 export const ProductInfoArea = styled.div`
   width: 50%;
-  padding: 40px;
+  padding: 30px 35px;
   display: flex;
   flex-direction: column;
   @media (max-width: 992px) {
@@ -94,14 +94,14 @@ export const CategoryTag = styled.span`
 export const ProductTitle = styled.h1`
   font-size: 28px;
   color: #111827;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 `;
 
 export const RatingBox = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
   font-size: 14px;
   color: #6b7280;
   .stars {
@@ -112,18 +112,18 @@ export const RatingBox = styled.div`
 export const Description = styled.p`
   color: #4b5563;
   line-height: 1.6;
-  margin-bottom: 25px;
+  margin-bottom: 18px;
 `;
 
 export const FeaturesList = styled.ul`
   list-style: none;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   li {
     display: flex;
     align-items: center;
     gap: 10px;
     color: #4b5563;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     font-size: 15px;
   }
   li i {
@@ -135,7 +135,7 @@ export const Price = styled.div`
   font-size: 32px;
   font-weight: bold;
   color: #00a651;
-  margin-bottom: 25px;
+  margin-bottom: 14px;
   span {
     font-size: 14px;
     color: #6b7280;
@@ -147,7 +147,7 @@ export const QuantityControl = styled.div`
   display: flex;
   align-items: center;
   gap: 15px;
-  margin-bottom: 30px;
+  margin-bottom: 18px;
   span {
     font-weight: 500;
     color: #374151;
