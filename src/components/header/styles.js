@@ -1,22 +1,8 @@
 import styled from "styled-components";
 import { NavLink, Link } from "react-router-dom";
-
-export const HeaderWrapper = styled.header`
-  background-color: var(--color-navy);
-  position: sticky;
-  top: 0;
-  z-index: 1050;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  height: var(--header-height);
-  display: flex;
-  align-items: center;
-`;
+import { devicesBreakpoints } from "../../constants/Breakpoints";
 
 export const HeaderContainer = styled.div`
-  /* max-width: var(--container-max-width); */
-  /* margin: 0 auto; */
-  /* padding: var(--container-padding); */
-  /* width: 100%; */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -40,10 +26,6 @@ export const NavSection = styled.nav`
   justify-content: center;
   align-items: center;
   gap: 20px;
-
-  @media (max-width: 992px) {
-    display: none;
-  }
 `;
 
 export const NavItem = styled(NavLink)`
@@ -108,20 +90,12 @@ export const Divider = styled.div`
   width: 1px;
   height: 24px;
   background-color: rgba(255, 255, 255, 0.2);
-
-  @media (max-width: 992px) {
-    display: none;
-  }
 `;
 
 export const AuthGroup = styled.div`
   display: flex;
   align-items: center;
   gap: 15px;
-
-  @media (max-width: 992px) {
-    display: none;
-  }
 `;
 
 export const LoginLink = styled(Link)`
@@ -162,27 +136,19 @@ export const MenuButton = styled.button`
   justify-content: center;
   cursor: pointer;
   padding: 0;
-
-  @media (max-width: 992px) {
-    display: flex;
-  }
 `;
 
 export const MobileMenu = styled.div`
   display: none;
-
-  @media (max-width: 992px) {
-    display: ${(props) => (props.isOpen ? "flex" : "none")};
-    flex-direction: column;
-    position: absolute;
-    top: var(--header-height);
-    left: 0;
-    width: 100%;
-    background-color: var(--color-navy);
-    padding: 10px 20px 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  }
+  flex-direction: column;
+  position: absolute;
+  top: var(--header-height);
+  left: 0;
+  width: 100%;
+  background-color: var(--color-navy);
+  padding: 10px 20px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 `;
 
 export const MobileNavItem = styled(NavLink)`
@@ -201,5 +167,43 @@ export const MobileNavItem = styled(NavLink)`
 
   &:last-child {
     border-bottom: none;
+  }
+`;
+
+//   Root Wrapper & Responsive Media Queries
+export const HeaderWrapper = styled.header`
+  background-color: var(--color-navy);
+  position: sticky;
+  top: 0;
+  z-index: 1050;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+
+  @media ${devicesBreakpoints.portable} {
+    ${NavSection},
+    ${Divider},
+    ${AuthGroup} {
+      display: none;
+    }
+
+    ${MenuButton} {
+      display: flex;
+    }
+
+    ${MobileMenu} {
+      display: ${({ $isOpen }) => ($isOpen ? "flex" : "none")};
+    }
+  }
+
+  @media ${devicesBreakpoints.thumb} {
+    ${RightSection} {
+      gap: 14px;
+    }
+
+    ${IconGroup} {
+      gap: 16px;
+    }
   }
 `;

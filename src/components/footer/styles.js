@@ -1,24 +1,12 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-
-export const FooterWrapper = styled.footer`
-  background-color: var(--color-bg-white);
-  padding: 48px 0 16px;
-`;
+import { devicesBreakpoints } from "../../constants/Breakpoints";
 
 export const FooterTop = styled.div`
   display: grid;
   grid-template-columns: 1.2fr 1fr 1fr 1.2fr;
   gap: 24px;
   margin-bottom: 24px;
-
-  @media (max-width: 992px) {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  @media (max-width: 576px) {
-    grid-template-columns: 1fr;
-  }
 `;
 
 export const FooterCol = styled.div``;
@@ -119,11 +107,6 @@ export const FooterBottom = styled.div`
   align-items: center;
   padding-top: 10px;
   margin-top: 8px;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    gap: 16px;
-  }
 `;
 
 export const CopyrightText = styled.p`
@@ -154,5 +137,39 @@ export const SocialIconLink = styled.a`
   &:hover {
     background-color: var(--color-primary-hover);
     color: var(--color-text-white);
+  }
+`;
+
+//Root Wrapper & Responsive Media Queries
+
+export const FooterWrapper = styled.footer`
+  background-color: var(--color-bg-white);
+  padding: 48px 0 16px;
+
+  @media ${devicesBreakpoints.portable} {
+    ${FooterTop} {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media ${devicesBreakpoints.pocket} {
+    ${FooterBottom} {
+      flex-direction: column;
+      gap: 16px;
+      text-align: center;
+    }
+  }
+
+  @media ${devicesBreakpoints.thumb} {
+    padding: 36px 0 16px;
+
+    ${FooterTop} {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    ${NewsletterForm} {
+      max-width: 100%;
+    }
   }
 `;
