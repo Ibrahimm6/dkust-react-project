@@ -8,18 +8,20 @@ import {
   WishlistButton 
 } from './styles';
 
-import CustomButton from '../common/custom-button';
+import CustomButton from '../../../custom-button';
 import { FiShoppingCart, FiHeart } from 'react-icons/fi';
 import { FaHeart } from 'react-icons/fa';
-import { useWishlist } from '../../contexts/wishlistContext';
+import { useWishlist } from '../../../../../contexts/wishlistContext';
+import { useCart } from '../../../../../contexts/cartContext';
 
 const getBgColor = (category) => {
   const colors = { Software: '#1e3a8a', Robotics: '#14532d', AI: '#1e40af', Hardware: '#451a03', Security: '#0f172a' };
   return colors[category] || '#1e3a8a';
 };
 
-const ProductCardList = ({ product, onAddToCart }) => {
+const ProductCardList = ({ product }) => {
   const navigate = useNavigate();
+  const { addToCart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
   
   const isFavorite = isInWishlist(product.id);
@@ -72,7 +74,7 @@ const ProductCardList = ({ product, onAddToCart }) => {
             />
             <CustomButton 
               title={<><FiShoppingCart /> Add to Cart</>} 
-              onClickFunction={() => onAddToCart(product)} 
+              onClickFunction={() => addToCart(product)} 
             />
           </ActionButtons>
         </ListBottomRow>

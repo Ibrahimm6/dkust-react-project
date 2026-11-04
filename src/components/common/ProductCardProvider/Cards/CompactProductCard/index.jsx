@@ -21,7 +21,9 @@ const Card = styled(Link)`
   border-radius: 16px;
   overflow: hidden;
   text-decoration: none;
-  transition: box-shadow 0.2s, transform 0.2s;
+  transition:
+    box-shadow 0.2s,
+    transform 0.2s;
 
   &:hover {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
@@ -71,7 +73,7 @@ const Price = styled.div`
   }
 `;
 
-const RelatedProductCard = ({ product }) => (
+const CompactProductCard = ({ product }) => (
   <Card to={`/products/${product.id}`}>
     <ImageArea $bgColor={getBgColor(product.category)}>
       <i className="fas fa-cube"></i>
@@ -86,4 +88,4 @@ const RelatedProductCard = ({ product }) => (
   </Card>
 );
 
-export default RelatedProductCard;
+export default CompactProductCard;

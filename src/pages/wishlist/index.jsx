@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import AppTemplate from "../../components/app-template";
 import PathConstants from "../../routes/pathConstants";
 import { useWishlist } from "../../contexts/wishlistContext";
-import ProductCardGrid from "../../components/products/ProductCardGrid";
+import ProductCardGrid from "../../components/common/ProductCardProvider/Cards/ProductCardGrid";
 import { FiHeart } from "react-icons/fi";
 import CustomButton from "../../components/common/custom-button";
 
@@ -18,14 +18,11 @@ import {
   EmptyText,
   ProductsGrid, //ResultsText
 } from "./styles";
+import ProductCardProvider from "../../components/common/ProductCardProvider";
 
 const WishlistPage = () => {
   const navigate = useNavigate();
   const { wishlist } = useWishlist();
-
-  const handleAddToCart = (product) => {
-    console.log("Added to cart from wishlist", product);
-  };
 
   return (
     <AppTemplate pageTitle="My Favorites" path={PathConstants.WISHLIST}>
@@ -45,10 +42,10 @@ const WishlistPage = () => {
               {/* <ResultsText>{wishlist.length} products saved</ResultsText> */}
               <ProductsGrid>
                 {wishlist.map((product) => (
-                  <ProductCardGrid
+                  <ProductCardProvider
+                    $variant="normal-grid"
                     key={product.id}
                     product={product}
-                    onAddToCart={handleAddToCart}
                   />
                 ))}
               </ProductsGrid>
