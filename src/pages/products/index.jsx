@@ -17,12 +17,13 @@ import {
   ProductsGrid,
   ProductsList,
 } from "./styles";
-import ProductCardGrid from "../../components/products/ProductCardGrid";
-import ProductCardList from "../../components/products/ProductCardList";
+import ProductCardGrid from "../../components/common/ProductCardProvider/Cards/ProductCardGrid";
+import ProductCardList from "../../components/common/ProductCardProvider/Cards/ProductCardList";
 import { productsArray } from "../../data";
 import AppTemplate from "../../components/app-template";
 import PathConstants from "../../routes/pathConstants";
 import { useCart } from "../../contexts/cartContext";
+import ProductCardProvider from "../../components/common/ProductCardProvider";
 
 const categories = [
   "All",
@@ -119,20 +120,20 @@ const ProductsPage = () => {
           ) : viewMode === "grid" ? (
             <ProductsGrid>
               {filteredProducts.map((product) => (
-                <ProductCardGrid
+                <ProductCardProvider
                   key={product.id}
+                  $variant="normal-grid"
                   product={product}
-                  onAddToCart={addToCart}
                 />
               ))}
             </ProductsGrid>
           ) : (
             <ProductsList>
               {filteredProducts.map((product) => (
-                <ProductCardList
+                <ProductCardProvider
                   key={product.id}
+                  $variant="normal-list"
                   product={product}
-                  onAddToCart={addToCart}
                 />
               ))}
             </ProductsList>

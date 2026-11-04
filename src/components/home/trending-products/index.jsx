@@ -1,6 +1,6 @@
 import React from "react";
 import PathConstants from "../../../routes/pathConstants";
-import ProductCardGrid from "../../products/ProductCardGrid";
+import ProductCardGrid from "../../common/ProductCardProvider/Cards/ProductCardGrid";
 import { productsArray } from "../../../data";
 import { useCart } from "../../../contexts/cartContext";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -18,6 +18,7 @@ import {
   ViewAllButton,
   SwiperWrapper,
 } from "./styles";
+import ProductCardProvider from "../../common/ProductCardProvider";
 
 const TrendingProducts = () => {
   const { addToCart } = useCart();
@@ -59,10 +60,7 @@ const TrendingProducts = () => {
           {productsArray.map((product) => (
             <SwiperSlide key={product.id}>
               <div style={{ height: "100%", paddingBottom: "15px" }}>
-                <ProductCardGrid
-                  product={product}
-                  onAddToCart={handleAddToCart}
-                />
+                <ProductCardProvider $variant="normal-grid" product={product} />
               </div>
             </SwiperSlide>
           ))}

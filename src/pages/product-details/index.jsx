@@ -1,25 +1,11 @@
-import React, { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { productsArray } from "../../data";
 import {
   PageWrapper,
   Breadcrumb,
   BackLink,
-  ProductSection,
-  ProductImageArea,
-  ProductInfoArea,
-  CategoryTag,
-  ProductTitle,
-  RatingBox,
-  Description,
-  FeaturesList,
-  Price,
-  QuantityControl,
-  ActionButtons,
   RelatedSectionTitle,
 } from "./styles";
-import CustomButton from "../../components/common/custom-button";
-import RelatedProductCard from "../../components/products/RelatedProductCard";
 import { SwiperWrapper } from "../../components/home/trending-products/styles.js";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
@@ -28,38 +14,12 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import AppTemplate from "../../components/app-template";
 import PathConstants from "../../routes/pathConstants";
-import { useCart } from "../../contexts/cartContext";
-
-const getBgColor = (category) => {
-  const colors = {
-    Software: "#1e3a8a",
-    Robotics: "#14532d",
-    AI: "#1e40af",
-    Hardware: "#451a03",
-    Security: "#0f172a",
-  };
-  return colors[category] || "#1e3a8a";
-};
+import ProductCardProvider from "../../components/common/ProductCardProvider/index.jsx";
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const { addToCart } = useCart();
-  const [quantity, setQuantity] = useState(1);
 
   const product = productsArray.find((p) => p.id === parseInt(id));
-
-  const handleIncrease = () => setQuantity((prev) => prev + 1);
-  const handleDecrease = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
-
-  const handleAddToCart = () => {
-    addToCart(product, quantity);
-  };
-
-  const handleBuyNow = () => {
-    addToCart(product, quantity);
-    navigate(PathConstants.CART);
-  };
 
   if (!product) {
     return (
@@ -87,117 +47,35 @@ const ProductDetails = () => {
             </BackLink>
           </div>
 
-          <ProductSection className="container">
-            <ProductImageArea bgColor={getBgColor(product.category)}>
-              <i className="fas fa-cube"></i>
-              {product.badge && (
-                <span
-                  style={{
-                    backgroundColor: "#22c55e",
-                    color: "white",
-                    padding: "4px 12px",
-                    borderRadius: "20px",
-                    fontSize: "12px",
-                    fontWeight: "bold",
-                    marginTop: "20px",
-                  }}
-                >
-                  {product.badge}
-                </span>
-              )}
-            </ProductImageArea>
-
-            <ProductInfoArea>
-              <CategoryTag>{product.category}</CategoryTag>
-              <ProductTitle>{product.name}</ProductTitle>
-
-              <RatingBox>
-                <div className="stars">
-                  <i className="fas fa-star"></i>
-                  <i className="fas fa-star"></i>
-                  <i className="fas fa-star"></i>
-                  <i className="fas fa-star"></i>
-                  <i className="fas fa-star"></i>
-                </div>
-                <span>
-                  {product.rating} ({product.reviewsCount} reviews)
-                </span>
-              </RatingBox>
-
-              <Description>{product.description}</Description>
-
-              <FeaturesList>
-                <li>
-                  <i className="far fa-check-circle"></i> High-quality
-                  performance
-                </li>
-                <li>
-                  <i className="far fa-check-circle"></i> 24/7 technical support
-                </li>
-                <li>
-                  <i className="far fa-check-circle"></i> Secure payment
-                  integration
-                </li>
-                <li>
-                  <i className="far fa-check-circle"></i> Fast delivery and
-                  setup
-                </li>
-              </FeaturesList>
-
-              <Price>
-                ${product.price} <span>/mo</span>
-              </Price>
-
-              <QuantityControl>
-                <span>Qty</span>
-                <div className="controls">
-                  <button onClick={handleDecrease} disabled={quantity === 1}>
-                    -
-                  </button>
-                  <div className="qty-value">{quantity}</div>
-                  <button onClick={handleIncrease}>+</button>
-                </div>
-              </QuantityControl>
-
-              <ActionButtons>
-                <CustomButton
-                  title={
-                    <>
-                      <i className="fas fa-shopping-cart"></i> Add to Cart
-                    </>
-                  }
-                  onClickFunction={handleAddToCart}
-                  bgColor="#00a651"
-                />
-                <CustomButton title="Buy Now" onClickFunction={handleBuyNow} />
-              </ActionButtons>
-            </ProductInfoArea>
-          </ProductSection>
+          <ProductCardProvider $variant="detailed" product={product} />
 
           <section className="container">
             <RelatedSectionTitle>Related Products</RelatedSectionTitle>
-          <SwiperWrapper style={{ padding: 0, maxWidth: "100%" }}>
-                <Swiper
-                  className="related-swiper"
-                  modules={[Navigation, Pagination]}
-                  spaceBetween={25}
-                  slidesPerView={1}
-                  navigation
-                  pagination={{ clickable: true }}
-                  breakpoints={{
+            <SwiperWrapper style={{ padding: 0, maxWidth: "100%" }}>
+              <Swiper
+                className="related-swiper"
+                modules={[Navigation, Pagination]}
+                spaceBetween={25}
+                slidesPerView={1}
+                navigation
+                pagination={{ clickable: true }}
+                breakpoints={{
                   768: { slidesPerView: 2 },
                   1024: { slidesPerView: 3 },
-            }}
-           >
-    {relatedProducts.map((relatedProd) => (
-      <SwiperSlide key={relatedProd.id}>
-        <div style={{ height: "100%", paddingBottom: "10px" }}>
-          <RelatedProductCard product={relatedProd} />
-        </div>
-      </SwiperSlide>
-    ))}
-  </Swiper>
-</SwiperWrapper>
+                }}
+              >
+                {relatedProducts.map((relatedProd) => (
+                  <SwiperSlide key={relatedProd.id}>
+                    <div style={{ height: "100%", paddingBottom: "10px" }}>
+                      <ProductCardProvider
+                        $variant="compact"
+                        product={relatedProd}
+                      />
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </SwiperWrapper>
           </section>
         </PageWrapper>
       </div>
