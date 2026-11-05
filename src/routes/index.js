@@ -10,9 +10,10 @@ const QuizPage = React.lazy(() => import("../pages/quiz"));
 const WishlistPage = React.lazy(() => import("../pages/wishlist"));
 const ProfilePage = React.lazy(() => import("../pages/profile"));
 const CartPage = React.lazy(() => import("../pages/cart"));
+const BlogPage = React.lazy(() => import("../pages/blog"));
 
 const routes = [
-  { path: PathConstants.HOME, element: <HomePage /> }, 
+  { path: PathConstants.HOME, element: <HomePage /> },
   { path: PathConstants.LOGIN, element: <LoginPage /> },
   { path: PathConstants.REGISTER, element: <RegisterPage /> },
   { path: PathConstants.PRODUCTS, element: <ProductsPage /> },
@@ -21,6 +22,7 @@ const routes = [
   { path: PathConstants.WISHLIST, element: <WishlistPage /> },
   { path: PathConstants.PROFILE, element: <ProfilePage /> },
   { path: PathConstants.CART, element: <CartPage /> },
+  { path: PathConstants.BLOG, element: <BlogPage /> },
 ];
 
 export default routes;
