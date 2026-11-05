@@ -1,25 +1,12 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-
-export const TrendingContainer = styled.section`
-  padding: 60px 0;
-  background-color: var(--color-bg-gray);
-`;
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { devicesBreakpoints } from "../../../constants/Breakpoints";
 
 export const SectionHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  /* max-width: var(--container-max-width); */
   margin: 0 auto 30px auto;
-  /* padding: var(--container-padding); */
-  /* width: 100%; */
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
-  }
 `;
 
 export const HeaderContent = styled.div``;
@@ -60,7 +47,7 @@ export const ViewAllButton = styled(Link)`
   text-decoration: none;
   transition: all 0.2s ease;
   background-color: var(--color-bg-white);
-  margin-right: 10px;
+  flex-shrink: 0;
 
   &:hover {
     background-color: #f0fdf4;
@@ -70,10 +57,6 @@ export const ViewAllButton = styled(Link)`
 
 export const SwiperWrapper = styled.div`
   position: relative;
-  max-width: var(--container-max-width);
-  margin: 0 auto;
-  padding: var(--container-padding);
-  width: 100%;
 
   .swiper {
     padding-bottom: 20px !important;
@@ -113,13 +96,10 @@ export const SwiperWrapper = styled.div`
   }
 
   .swiper-button-next::after,
-  .swiper-button-prev::after {
-    content: '' !important;
-    display: none !important;
-  }
-
+  .swiper-button-prev::after,
   .swiper-button-next svg,
   .swiper-button-prev svg {
+    content: "" !important;
     display: none !important;
   }
 
@@ -128,6 +108,7 @@ export const SwiperWrapper = styled.div`
     background-repeat: no-repeat !important;
     background-position: center !important;
     background-size: 16px !important;
+    right: 0px !important;
   }
 
   .swiper-button-prev {
@@ -135,6 +116,7 @@ export const SwiperWrapper = styled.div`
     background-repeat: no-repeat !important;
     background-position: center !important;
     background-size: 16px !important;
+    left: 0px !important;
   }
 
   .swiper-button-next:hover:not(.swiper-button-disabled),
@@ -142,7 +124,7 @@ export const SwiperWrapper = styled.div`
     border-color: var(--color-primary) !important;
     background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300a651' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'/%3E%3C/svg%3E") !important;
   }
-  
+
   .swiper-button-prev:hover:not(.swiper-button-disabled) {
     background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300a651' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='15 18 9 12 15 6'/%3E%3C/svg%3E") !important;
   }
@@ -154,7 +136,38 @@ export const SwiperWrapper = styled.div`
     border: 1px solid #e5e7eb !important;
     pointer-events: auto !important;
   }
+`;
 
-  .swiper-button-prev { left: 0px !important; }
-  .swiper-button-next { right: 0px !important; }
+ //Root Wrapper & Responsive Media Queries
+export const TrendingContainer = styled.section`
+  padding: 60px 0;
+  background-color: var(--color-bg-gray);
+
+  @media ${devicesBreakpoints.pocket} {
+    padding: 45px 0;
+
+    ${SectionHeader} {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+    }
+
+    ${SectionTitle} {
+      font-size: 1.5rem;
+    }
+  }
+
+  @media ${devicesBreakpoints.thumb} {
+    ${SwiperWrapper} {
+      .swiper {
+        padding-left: 4px !important;
+        padding-right: 4px !important;
+      }
+
+      .swiper-button-next,
+      .swiper-button-prev {
+        display: none !important;
+      }
+    }
+  }
 `;

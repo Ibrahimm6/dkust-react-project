@@ -1,26 +1,6 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-
-export const HeroContainer = styled.section`
-  position: relative;
-  background: linear-gradient(135deg, rgb(13, 27, 62) 0%, rgb(26, 58, 110) 50%, rgb(13, 27, 62) 100%);
-  color: var(--color-text-white);
-  padding: 100px 0 150px;
-  overflow: hidden;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-    background-size: 50px 50px;
-    z-index: 1;
-  }
-`;
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { devicesBreakpoints } from "../../../constants/Breakpoints";
 
 export const ContentWrapper = styled.div`
   position: relative;
@@ -29,18 +9,11 @@ export const ContentWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 40px;
-  /* max-width: var(--container-max-width);
-  margin: 0 auto;
-  padding: var(--container-padding);
-
-  @media (max-width: 992px) {
-    flex-direction: column;
-  } */
 `;
 
 export const TextContent = styled.div`
   flex: 1;
-  /* max-width: 520px; */
+  max-width: 520px;
 `;
 
 export const Badge = styled.div`
@@ -65,10 +38,6 @@ export const Title = styled.h1`
   span {
     color: var(--color-primary);
   }
-
-  @media (max-width: 768px) {
-    font-size: 2rem;
-  }
 `;
 
 export const Description = styled.p`
@@ -81,10 +50,6 @@ export const Description = styled.p`
 export const ButtonsGroup = styled.div`
   display: flex;
   gap: 12px;
-
-  @media (max-width: 576px) {
-    flex-direction: column;
-  }
 `;
 
 export const PrimaryButton = styled(Link)`
@@ -135,12 +100,8 @@ export const StatsGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px;
-  /* max-width: 500px; */
-
-  @media (max-width: 576px) {
-    grid-template-columns: 1fr;
-    width: 100%;
-  }
+  max-width: 500px;
+  width: 100%;
 `;
 
 export const StatCard = styled.div`
@@ -181,5 +142,84 @@ export const WaveBottom = styled.div`
 
   .shape-fill {
     fill: var(--color-bg-gray);
+  }
+`;
+
+//Root Wrapper & Responsive Media Queries
+
+export const HeroContainer = styled.section`
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    rgb(13, 27, 62) 0%,
+    rgb(26, 58, 110) 50%,
+    rgb(13, 27, 62) 100%
+  );
+  color: var(--color-text-white);
+  padding: 100px 0 150px;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(
+        rgba(255, 255, 255, 0.05) 1px,
+        transparent 1px
+      ),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: 1;
+  }
+
+  @media ${devicesBreakpoints.portable} {
+    padding: 80px 0 130px;
+
+    ${ContentWrapper} {
+      flex-direction: column;
+      text-align: center;
+      gap: 35px;
+    }
+
+    ${TextContent} {
+      max-width: 600px;
+    }
+
+    ${ButtonsGroup} {
+      justify-content: center;
+    }
+
+    ${StatsGrid} {
+      max-width: 550px;
+    }
+  }
+
+  @media ${devicesBreakpoints.pocket} {
+    padding: 65px 0 110px;
+
+    ${Title} {
+      font-size: 2rem;
+    }
+
+    ${StatNumber} {
+      font-size: 24px;
+    }
+
+    ${WaveBottom} svg {
+      height: 40px;
+    }
+  }
+
+  @media ${devicesBreakpoints.thumb} {${ButtonsGroup} {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    ${StatsGrid} {
+      grid-template-columns: 1fr;
+    }
   }
 `;

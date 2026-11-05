@@ -1,23 +1,10 @@
 import styled from "styled-components";
-
-export const FeaturesContainer = styled.section`
-  padding: 60px 0;
-  background-color: var(--color-bg-white);
-`;
+import { devicesBreakpoints } from "../../../constants/Breakpoints";
 
 export const FeaturesGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
-  /* max-width: var(--container-max-width); */
-  /* margin: 0 auto; */
-  /* padding: var(--container-padding); */
-  /* width: 100%; */
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: 25px;
-  }
 `;
 
 export const FeatureCard = styled.div`
@@ -52,4 +39,27 @@ export const FeatureDescription = styled.p`
   color: var(--color-text-gray);
   line-height: 1.6;
   max-width: 320px;
+  margin: 0;
+`;
+
+//Root Wrapper & Responsive Media Queries
+
+export const FeaturesContainer = styled.section`
+  padding: 60px 0;
+  background-color: var(--color-bg-white);
+
+  @media ${devicesBreakpoints.portable} {
+    ${FeaturesGrid} {
+      gap: 20px;
+    }
+  }
+
+  @media ${devicesBreakpoints.pocket} {
+    padding: 45px 0;
+
+    ${FeaturesGrid} {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+  }
 `;

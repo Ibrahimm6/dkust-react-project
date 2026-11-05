@@ -1,19 +1,6 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-
-export const CtaContainer = styled.section`
-  background-color: var(--color-navy);
-  padding: 60px 0;
-  text-align: center;
-  color: var(--color-text-white);
-
-  .container {
-    max-width: var(--container-max-width);
-    margin: 0 auto;
-    padding: var(--container-padding);
-    width: 100%;
-  }
-`;
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { devicesBreakpoints } from "../../../constants/Breakpoints";
 
 export const Title = styled.h2`
   font-size: 1.8rem;
@@ -35,12 +22,6 @@ export const ButtonsGroup = styled.div`
   display: flex;
   justify-content: center;
   gap: 12px;
-
-  @media (max-width: 576px) {
-    flex-direction: column;
-    max-width: 300px;
-    margin: 0 auto;
-  }
 `;
 
 export const PrimaryButton = styled(Link)`
@@ -82,5 +63,29 @@ export const SecondaryButton = styled(Link)`
     border-color: var(--color-text-white);
     color: var(--color-text-white) !important;
     text-decoration: none !important;
+  }
+`;
+
+//Root Wrapper & Responsive Media Queries
+export const CtaContainer = styled.section`
+  background-color: var(--color-navy);
+  padding: 60px 0;
+  text-align: center;
+  color: var(--color-text-white);
+
+  @media ${devicesBreakpoints.pocket} {
+    padding: 45px 0;
+
+    ${Title} {
+      font-size: 1.5rem;
+    }
+  }
+
+  @media ${devicesBreakpoints.thumb} {
+    ${ButtonsGroup} {
+      flex-direction: column;
+      max-width: 300px;
+      margin: 0 auto;
+    }
   }
 `;

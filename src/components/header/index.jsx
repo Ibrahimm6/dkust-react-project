@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import PathConstants from "../../routes/pathConstants";
 import { FiHeart, FiShoppingCart, FiUser, FiMenu, FiX } from "react-icons/fi";
 import {
@@ -23,36 +24,39 @@ import {
 import { useWishlist } from "../../contexts/wishlistContext";
 import { useCart } from "../../contexts/cartContext";
 
+const NAV_LINKS = [
+  { label: "Home", path: PathConstants.HOME },
+  { label: "Products", path: PathConstants.PRODUCTS },
+  { label: "Services", path: PathConstants.SERVICES },
+  { label: "Blog", path: PathConstants.BLOG },
+  { label: "Quiz", path: PathConstants.QUIZ },
+  { label: "About", path: PathConstants.ABOUT },
+  { label: "Contact", path: PathConstants.CONTACT },
+];
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  };
-
+  const { pathname } = useLocation();
   const { wishlist } = useWishlist();
   const { cartCount } = useCart();
+
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [pathname]);
+
   return (
-    <HeaderWrapper>
+    <HeaderWrapper $isOpen={isMenuOpen}>
       <HeaderContainer className="container">
         <LogoSection>
-          <Logo to={PathConstants.HOME} onClick={closeMenu}>
-            DKUST
-          </Logo>
+          <Logo to={PathConstants.HOME}>DKUST</Logo>
         </LogoSection>
 
         <NavSection>
-          <NavItem to={PathConstants.HOME}>HOME</NavItem>
-          <NavItem to={PathConstants.PRODUCTS}>PRODUCTS</NavItem>
-          <NavItem to={PathConstants.SERVICES}>SERVICES</NavItem>
-          <NavItem to={PathConstants.BLOG}>BLOG</NavItem>
-          <NavItem to={PathConstants.QUIZ}>QUIZ</NavItem>
-          <NavItem to={PathConstants.ABOUT}>ABOUT</NavItem>
-          <NavItem to={PathConstants.CONTACT}>CONTACT</NavItem>
+          {NAV_LINKS.map((link) => (
+            <NavItem key={link.path} to={link.path}>
+              {link.label}
+            </NavItem>
+          ))}
         </NavSection>
 
         <RightSection>
@@ -61,12 +65,10 @@ const Header = () => {
               <FiHeart />
               {wishlist.length > 0 && <IconBadge>{wishlist.length}</IconBadge>}
             </IconButton>
-
             <IconButton to={PathConstants.CART} aria-label="Cart">
               <FiShoppingCart />
               {cartCount > 0 && <IconBadge>{cartCount}</IconBadge>}
             </IconButton>
-
             <IconButton to={PathConstants.PROFILE} aria-label="User Profile">
               <FiUser />
             </IconButton>
@@ -76,54 +78,30 @@ const Header = () => {
 
           <AuthGroup>
             <LoginLink to={PathConstants.LOGIN}>Login</LoginLink>
-            <RegisterButton to={PathConstants.REGISTER}>
-              Register
-            </RegisterButton>
+            <RegisterButton to={PathConstants.REGISTER}>Register</RegisterButton>
           </AuthGroup>
 
-          <MenuButton onClick={toggleMenu} aria-label="Toggle Menu">
+          <MenuButton
+            type="button"
+            onClick={() => setIsMenuOpen((prev) => !prev)}
+            aria-label="Toggle Menu"
+          >
             {isMenuOpen ? <FiX /> : <FiMenu />}
           </MenuButton>
         </RightSection>
       </HeaderContainer>
 
-      <MobileMenu isOpen={isMenuOpen}>
-        <MobileNavItem to={PathConstants.HOME} onClick={closeMenu}>
-          Home
-        </MobileNavItem>
-        <MobileNavItem to={PathConstants.PRODUCTS} onClick={closeMenu}>
-          Products
-        </MobileNavItem>
-        <MobileNavItem to={PathConstants.SERVICES} onClick={closeMenu}>
-          Services
-        </MobileNavItem>
-        <MobileNavItem to={PathConstants.BLOG} onClick={closeMenu}>
-          Blog
-        </MobileNavItem>
-        <MobileNavItem to={PathConstants.QUIZ} onClick={closeMenu}>
-          Quiz
-        </MobileNavItem>
-        <MobileNavItem to={PathConstants.ABOUT} onClick={closeMenu}>
-          About
-        </MobileNavItem>
-        <MobileNavItem to={PathConstants.CONTACT} onClick={closeMenu}>
-          Contact
-        </MobileNavItem>
-        <MobileNavItem to="/wishlist" onClick={closeMenu}>
-          Favorites
-        </MobileNavItem>
-        <MobileNavItem to="/cart" onClick={closeMenu}>
-          Cart
-        </MobileNavItem>
-        <MobileNavItem to="/profile" onClick={closeMenu}>
-          Profile
-        </MobileNavItem>
-        <MobileNavItem to={PathConstants.LOGIN} onClick={closeMenu}>
-          Login
-        </MobileNavItem>
-        <MobileNavItem to={PathConstants.REGISTER} onClick={closeMenu}>
-          Register
-        </MobileNavItem>
+      <MobileMenu>
+        {NAV_LINKS.map((link) => (
+          <MobileNavItem key={link.path} to={link.path}>
+            {link.label}
+          </MobileNavItem>
+        ))}
+        <MobileNavItem to={PathConstants.WISHLIST}>Favorites</MobileNavItem>
+        <MobileNavItem to={PathConstants.CART}>Cart</MobileNavItem>
+        <MobileNavItem to={PathConstants.PROFILE}>Profile</MobileNavItem>
+        <MobileNavItem to={PathConstants.LOGIN}>Login</MobileNavItem>
+        <MobileNavItem to={PathConstants.REGISTER}>Register</MobileNavItem>
       </MobileMenu>
     </HeaderWrapper>
   );

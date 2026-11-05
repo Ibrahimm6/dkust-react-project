@@ -45,7 +45,7 @@ svg {
 }
 
 .container {
-  width: 100%;
+  width: min(1200px, calc(100% - 40px)) !important;  
   max-width: 1200px !important;
   padding-left: 0px !important;
   padding-right: 0px !important;

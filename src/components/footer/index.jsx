@@ -1,4 +1,5 @@
 import React from "react";
+import PathConstants from "../../routes/pathConstants";
 import {
   FaFacebookF,
   FaTwitter,
@@ -47,19 +48,19 @@ const Footer = () => {
             <ColumnTitle>QUICK LINKS</ColumnTitle>
             <FooterList>
               <FooterListItem>
-                <StyledFooterLink to="/about">About Us</StyledFooterLink>
+                <StyledFooterLink to={PathConstants.ABOUT}>About Us</StyledFooterLink>
               </FooterListItem>
               <FooterListItem>
-                <StyledFooterLink to="/services">Services</StyledFooterLink>
+                <StyledFooterLink to={PathConstants.SERVICES}>Services</StyledFooterLink>
               </FooterListItem>
               <FooterListItem>
-                <StyledFooterLink to="/portfolio">Portfolio</StyledFooterLink>
+                <StyledFooterLink to={PathConstants.PORTFOLIO}>Portfolio</StyledFooterLink>
               </FooterListItem>
               <FooterListItem>
-                <StyledFooterLink to="/blog">Blog</StyledFooterLink>
+                <StyledFooterLink to={PathConstants.BLOG}>Blog</StyledFooterLink>
               </FooterListItem>
               <FooterListItem>
-                <StyledFooterLink to="/contact">Contact Us</StyledFooterLink>
+                <StyledFooterLink to={PathConstants.CONTACT}>Contact Us</StyledFooterLink>
               </FooterListItem>
             </FooterList>
           </FooterCol>
@@ -68,29 +69,19 @@ const Footer = () => {
             <ColumnTitle>OUR SERVICES</ColumnTitle>
             <FooterList>
               <FooterListItem>
-                <StyledFooterLink to="/services/web">
-                  Web Development
-                </StyledFooterLink>
+                <StyledFooterLink to="/services/web">Web Development</StyledFooterLink>
               </FooterListItem>
               <FooterListItem>
-                <StyledFooterLink to="/services/ml">
-                  Machine Learning
-                </StyledFooterLink>
+                <StyledFooterLink to="/services/ml">Machine Learning</StyledFooterLink>
               </FooterListItem>
               <FooterListItem>
-                <StyledFooterLink to="/services/robotics">
-                  Robotics
-                </StyledFooterLink>
+                <StyledFooterLink to="/services/robotics">Robotics</StyledFooterLink>
               </FooterListItem>
               <FooterListItem>
-                <StyledFooterLink to="/services/consulting">
-                  Industrial Consulting
-                </StyledFooterLink>
+                <StyledFooterLink to="/services/consulting">Industrial Consulting</StyledFooterLink>
               </FooterListItem>
               <FooterListItem>
-                <StyledFooterLink to="/services/analytics">
-                  Data Analytics
-                </StyledFooterLink>
+                <StyledFooterLink to="/services/analytics">Data Analytics</StyledFooterLink>
               </FooterListItem>
             </FooterList>
           </FooterCol>
@@ -106,18 +97,13 @@ const Footer = () => {
             </NewsletterForm>
           </FooterCol>
         </FooterTop>
-      </div>
 
-      <div className="container">
         <Divider />
-      </div>
 
-      <div className="container">
         <FooterBottom>
           <CopyrightText>
             Copyright &copy; DKUST | All Rights Reserved
           </CopyrightText>
-
           <SocialIcons>
             <SocialIconLink href="#fb" aria-label="Facebook">
               <FaFacebookF />
