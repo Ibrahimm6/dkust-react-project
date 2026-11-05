@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const InfoCardStyles = styled.div`
   border: 1px solid var(--border-subtle);
