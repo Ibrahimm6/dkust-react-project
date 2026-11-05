@@ -1,11 +1,5 @@
 import styled from "styled-components";
-
-export const PageWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  background-color: var(--color-bg-gray);
-`;
+import { devicesBreakpoints } from "../../constants/Breakpoints";
 
 export const HeroSection = styled.div`
   background: linear-gradient(
@@ -34,10 +28,7 @@ export const HeroSubtitle = styled.p`
 `;
 
 export const ContentContainer = styled.div`
-  /* max-width: var(--container-max-width); */
-  /* margin: 0 auto; */
   padding-block: 40px;
-  /* width: 100%; */
 `;
 
 export const FilterSection = styled.section`
@@ -50,49 +41,49 @@ export const FilterSection = styled.section`
 `;
 
 export const FilterContainer = styled.div`
-  /* max-width: var(--container-max-width); */
-  /* margin: 0 auto; */
-  /* padding: var(--container-padding); */
   padding-top: 15px;
   padding-bottom: 15px;
-  /* width: 100%; */
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 16px;
+  min-width: 0;
 `;
 
 export const CategoriesWrapper = styled.div`
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  min-width: 0;
 `;
 
 export const CategoryButton = styled.button`
   padding: 6px 16px;
   border-radius: var(--border-radius-btn);
   border: 1px solid
-    ${(props) => (props.isActive ? "var(--color-primary)" : "#d1d5db")};
+    ${(props) => (props.$isActive ? "var(--color-primary)" : "#d1d5db")};
   background-color: ${(props) =>
-    props.isActive ? "var(--color-primary)" : "var(--color-bg-white)"};
+    props.$isActive ? "var(--color-primary)" : "var(--color-bg-white)"};
   color: ${(props) =>
-    props.isActive ? "var(--color-text-white)" : "var(--color-text-gray)"};
+    props.$isActive ? "var(--color-text-white)" : "var(--color-text-gray)"};
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
+  white-space: nowrap;
 
   &:hover {
     background-color: ${(props) =>
-      props.isActive ? "var(--color-primary-hover)" : "#f3f4f6"};
+      props.$isActive ? "var(--color-primary-hover)" : "#f3f4f6"};
   }
 `;
 
 export const ControlsWrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 12px;
+  min-width: 0;
 `;
 
 export const SortSelect = styled.select`
@@ -102,9 +93,9 @@ export const SortSelect = styled.select`
   background-color: var(--color-bg-white);
   color: var(--color-text-gray);
   font-size: 12px;
-  /* font-weight: 500; */
   outline: none;
   cursor: pointer;
+  min-width: 0;
 
   &:focus {
     border-color: var(--color-primary);
@@ -114,18 +105,18 @@ export const SortSelect = styled.select`
 export const ViewToggle = styled.div`
   display: flex;
   background-color: var(--color-bg-white);
-  /* border: 1px solid #d1d5db; */
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 0 0 1px #d1d5db;
+  flex-shrink: 0;
 `;
 
 export const IconButton = styled.button`
   border: none;
   background-color: ${(props) =>
-    props.isActive ? "var(--color-primary)" : "transparent"};
+    props.$isActive ? "var(--color-primary)" : "transparent"};
   color: ${(props) =>
-    props.isActive ? "var(--color-text-white)" : "var(--color-text-gray)"};
+    props.$isActive ? "var(--color-text-white)" : "var(--color-text-gray)"};
   width: 32px;
   height: 30px;
   display: flex;
@@ -135,13 +126,9 @@ export const IconButton = styled.button`
   font-size: 14px;
   transition: all 0.2s ease;
 
-  /* &:first-child {
-    border-right: 1px solid #d1d5db;
-  } */
-
   &:hover {
     color: ${(props) =>
-      props.isActive ? "var(--color-text-white)" : "var(--color-primary)"};
+      props.$isActive ? "var(--color-text-white)" : "var(--color-primary)"};
   }
 `;
 
@@ -155,18 +142,71 @@ export const ProductsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 25px;
-
-  @media (max-width: 992px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
 `;
 
 export const ProductsList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+`;
+
+// Root Wrapper & Responsive Media Queries
+export const PageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  background-color: var(--color-bg-gray);
+  overflow-x: clip;
+
+  @media ${devicesBreakpoints.portable} {
+    ${ProductsGrid} {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+  }
+
+  @media ${devicesBreakpoints.pocket} {
+    ${HeroSection} {
+      padding: 40px 20px;
+    }
+
+    ${HeroTitle} {
+      font-size: 28px;
+    }
+
+    ${FilterContainer} {
+      flex-direction: column;
+      align-items: stretch;
+      padding-block: 12px;
+      gap: 10px;
+    }
+
+    ${CategoriesWrapper} {
+      width: 100%;
+      gap: 6px;
+    }
+
+    ${CategoryButton} {
+      padding: 5px 12px;
+      font-size: 11px;
+    }
+
+    ${ControlsWrapper} {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    ${SortSelect} {
+      flex: 1;
+      width: 100%;
+    }
+
+    ${ContentContainer} {
+      padding-block: 30px;
+    }
+
+    ${ProductsGrid} {
+      grid-template-columns: 1fr;
+    }
+  }
 `;

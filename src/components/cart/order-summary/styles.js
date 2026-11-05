@@ -1,16 +1,5 @@
-import styled from 'styled-components';
-
-export const SummaryCard = styled.div`
-  background-color: var(--color-bg-white);
-  border: 1px solid #ebe6e7;
-  border-radius: 14px;
-  padding: 24px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
-  display: flex;
-  flex-direction: column;
-  position: sticky;
-  top: calc(var(--header-height) + 24px);
-`;
+import styled from "styled-components";
+import { devicesBreakpoints } from "../../../constants/Breakpoints";
 
 export const SummaryTitle = styled.h3`
   font-size: 16px;
@@ -110,4 +99,25 @@ export const SecureNote = styled.div`
   margin-top: 12px;
   font-size: 12px;
   color: #9ca3af;
+`;
+
+// Root Wrapper & Responsive Media Queries
+export const SummaryCard = styled.div`
+  background-color: var(--color-bg-white);
+  border: 1px solid #ebe6e7;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: calc(var(--header-height) + 24px);
+
+  @media ${devicesBreakpoints.portable} {
+    position: static;
+  }
+
+  @media ${devicesBreakpoints.thumb} {
+    padding: 18px;
+  }
 `;

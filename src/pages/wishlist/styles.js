@@ -1,11 +1,5 @@
 import styled from "styled-components";
-
-export const PageWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  background-color: var(--color-bg-gray);
-`;
+import { devicesBreakpoints } from "../../constants/Breakpoints";
 
 export const HeroSection = styled.div`
   background: linear-gradient(
@@ -34,31 +28,14 @@ export const HeroSubtitle = styled.p`
 `;
 
 export const ContentContainer = styled.div`
-  /* max-width: var(--container-max-width); */
-  /* margin: 0 auto; */
   padding-block: 50px;
-  /* width: 100%; */
   flex-grow: 1;
 `;
-
-// export const ResultsText = styled.p`
-//   color: #99a1af;
-//   font-size: 12px;
-//   margin-bottom: 20px;
-// `;
 
 export const ProductsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 25px;
-
-  @media (max-width: 992px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
 `;
 
 export const EmptyStateWrapper = styled.div`
@@ -88,4 +65,37 @@ export const EmptyText = styled.p`
   color: #9ca3af;
   font-size: 16px;
   margin-bottom: 30px;
+`;
+
+// Root Wrapper & Responsive Media Queries
+export const PageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  background-color: var(--color-bg-gray);
+
+  @media ${devicesBreakpoints.portable} {
+    ${ProductsGrid} {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+  }
+
+  @media ${devicesBreakpoints.pocket} {
+    ${HeroSection} {
+      padding: 45px 20px;
+    }
+
+    ${HeroTitle} {
+      font-size: 28px;
+    }
+
+    ${ContentContainer} {
+      padding-block: 35px;
+    }
+
+    ${ProductsGrid} {
+      grid-template-columns: 1fr;
+    }
+  }
 `;

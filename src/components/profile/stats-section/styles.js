@@ -1,18 +1,5 @@
 import styled from "styled-components";
-
-export const StatsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-
-  @media (max-width: 992px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: 576px) {
-    grid-template-columns: 1fr;
-  }
-`;
+import { devicesBreakpoints } from "../../../constants/Breakpoints";
 
 export const StatCard = styled.div`
   background-color: var(--color-bg-white);
@@ -22,7 +9,6 @@ export const StatCard = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
-  /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02); */
 `;
 
 export const StatIconWrapper = styled.div`
@@ -53,4 +39,19 @@ export const StatLabel = styled.span`
   font-size: 12px;
   color: #9ca3af;
   margin-top: 2px;
+`;
+
+// Root Wrapper & Responsive Media Queries
+export const StatsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+
+  @media ${devicesBreakpoints.portable} {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media ${devicesBreakpoints.thumb} {
+    grid-template-columns: 1fr;
+  }
 `;

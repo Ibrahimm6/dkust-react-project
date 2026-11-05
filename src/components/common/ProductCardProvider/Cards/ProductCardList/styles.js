@@ -1,4 +1,5 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
+import { devicesBreakpoints } from "../../../../../constants/Breakpoints";
 
 const handleBadgeColor = (text) => {
   switch (text?.toLowerCase()) {
@@ -18,24 +19,6 @@ const handleBadgeColor = (text) => {
 };
 
 export const ProductCardListStyles = styled.div``;
-
-export const ListCard = styled.div`
-  background-color: var(--color-bg-white);
-  border: 1px solid #ebe6e7;
-  border-radius: 14px;
-  padding: 20px;
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
-  transition: box-shadow 0.3s ease;
-  position: relative;
-
-  &:hover {
-    box-shadow:
-      0 4px 6px -1px rgba(0, 0, 0, 0.1),
-      0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  }
-`;
 
 export const ListImageArea = styled.div`
   width: 100px;
@@ -61,6 +44,7 @@ export const ListImageArea = styled.div`
 export const ListContentArea = styled.div`
   flex: 1;
   min-width: 0;
+  width: 100%;
 `;
 
 export const ListTopRow = styled.div`
@@ -122,6 +106,71 @@ export const ListDesc = styled.p`
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+`;
+
+export const RatingBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  .stars {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    color: #facc15;
+    font-size: 12px;
+  }
+
+  .reviews {
+    font-size: 11px;
+    color: var(--color-text-gray);
+  }
+`;
+
+export const ActionButtons = styled.div`
+  display: flex;
+  gap: 8px;
+
+  > div {
+    margin-bottom: 0;
+  }
+
+  & > button:first-child,
+  & > div:first-child button {
+    border: 1px solid #d1d5dc !important;
+    padding: 6px 12px !important;
+    font-size: 12px !important;
+    border-radius: 10px !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease;
+  }
+
+  & > button:first-child:hover,
+  & > div:first-child button:hover {
+    border-color: var(--color-primary) !important;
+    color: var(--color-primary) !important;
+  }
+
+  & > button:last-child,
+  & > div:last-child button {
+    background-color: var(--color-primary) !important;
+    border: 1px solid var(--color-primary) !important;
+    color: var(--color-text-white) !important;
+    padding: 6px 12px !important;
+    font-size: 11px !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+  }
+
+  & > button:last-child:hover,
+  & > div:last-child button:hover {
+    background-color: var(--color-primary-hover) !important;
+    border-color: var(--color-primary-hover) !important;
+  }
 `;
 
 export const ListBottomRow = styled.div`
@@ -197,72 +246,6 @@ export const ListWishlistButton = styled.button`
   }
 `;
 
-export const RatingBox = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 6px;
-
-  .stars {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    color: #facc15;
-    font-size: 12px;
-  }
-
-  .reviews {
-    font-size: 11px;
-    color: var(--color-text-gray);
-  }
-`;
-
-export const ActionButtons = styled.div`
-  display: flex;
-  gap: 8px;
-
-  > div {
-    margin-bottom: 0;
-  }
-
-  & > button:first-child,
-  & > div:first-child button {
-    border: 1px solid #d1d5dc !important;
-    padding: 6px 12px !important;
-    font-size: 12px !important;
-    border-radius: 10px !important;
-    font-weight: 500 !important;
-    transition: all 0.2s ease;
-  }
-
-  & > button:first-child:hover,
-  & > div:first-child button:hover {
-    /* background-color: var(--color-primary) !important; */
-    border-color: var(--color-primary) !important;
-    color: var(--color-primary) !important;
-  }
-
-  & > button:last-child,
-  & > div:last-child button {
-    background-color: var(--color-primary) !important;
-    border: 1px solid var(--color-primary) !important;
-    color: var(--color-text-white) !important;
-    padding: 6px 12px !important;
-    font-size: 11px !important;
-    border-radius: 8px !important;
-    font-weight: 500 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 4px !important;
-  }
-
-  & > button:last-child:hover,
-  & > div:last-child button:hover {
-    background-color: var(--color-primary-hover) !important;
-    border-color: var(--color-primary-hover) !important;
-  }
-`;
-
 export const WishlistButton = styled.button`
   position: absolute;
   top: 10px;
@@ -285,5 +268,60 @@ export const WishlistButton = styled.button`
 
   &.active {
     color: #ef4444;
+  }
+`;
+
+// Root Wrapper & Responsive Media Queries
+export const ListCard = styled.div`
+  background-color: var(--color-bg-white);
+  border: 1px solid #ebe6e7;
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  transition: box-shadow 0.3s ease;
+  position: relative;
+
+  &:hover {
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
+  @media ${devicesBreakpoints.pocket} {
+    flex-direction: column;
+    padding: 16px;
+    gap: 14px;
+
+    ${ListImageArea} {
+      width: 100%;
+      height: 140px;
+
+      & > button {
+        top: 10px !important;
+        right: 10px !important;
+        width: 32px !important;
+        height: 32px !important;
+      }
+    }
+  }
+
+  @media ${devicesBreakpoints.thumb} {
+    ${ListBottomRow} {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+
+      & > div:last-child {
+        width: 100%;
+      }
+
+      & > div:last-child > button:first-child,
+      & > div:last-child > button:last-child {
+        flex: 1;
+        width: 100% !important;
+      }
+    }
   }
 `;

@@ -1,15 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-
-export const SectionCard = styled.div`
-  background-color: var(--color-bg-white);
-  border: 1px solid #ebe6e7;
-  border-radius: 14px;
-  padding: 24px;
-  /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02); */
-  display: flex;
-  flex-direction: column;
-`;
+import { devicesBreakpoints } from "../../../constants/Breakpoints";
 
 export const CardHeader = styled.div`
   display: flex;
@@ -39,12 +30,14 @@ export const OrderCard = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
 `;
 
 export const OrderLeft = styled.div`
   display: flex;
   align-items: center;
   gap: 14px;
+  min-width: 0;
 `;
 
 export const OrderLogoBox = styled.div`
@@ -63,6 +56,7 @@ export const OrderDetails = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3px;
+  min-width: 0;
 `;
 
 export const OrderTitle = styled.span`
@@ -84,6 +78,7 @@ export const OrderRight = styled.div`
   flex-direction: column;
   align-items: flex-end;
   gap: 4px;
+  flex-shrink: 0;
 `;
 
 export const OrderPrice = styled.span`
@@ -118,5 +113,27 @@ export const BrowseMoreButton = styled(Link)`
   &:hover {
     background-color: #00a63e;
     color: #fff;
+  }
+`;
+
+// Root Wrapper & Responsive Media Queries
+export const SectionCard = styled.div`
+  background-color: var(--color-bg-white);
+  border: 1px solid #ebe6e7;
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+
+  @media ${devicesBreakpoints.thumb} {
+    padding: 18px;
+
+    ${OrderCard} {
+      padding: 12px;
+    }
+
+    ${OrderLeft} {
+      gap: 10px;
+    }
   }
 `;
