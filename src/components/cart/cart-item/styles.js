@@ -1,22 +1,12 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-
-export const ItemCard = styled.div`
-  background-color: var(--color-bg-white);
-  border: 1px solid #ebe6e7;
-  border-radius: 14px;
-  padding: 20px;
-  display: flex;
-  gap: 18px;
-  align-items: flex-start;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
-`;
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { devicesBreakpoints } from "../../../constants/Breakpoints";
 
 export const IconBox = styled.div`
   width: 60px;
   height: 60px;
   border-radius: 12px;
-  background-color: ${(props) => props.$bgColor || 'var(--color-navy)'};
+  background-color: ${(props) => props.$bgColor || "var(--color-navy)"};
   color: rgba(255, 255, 255, 0.9);
   display: flex;
   align-items: center;
@@ -82,6 +72,8 @@ export const BottomRow = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
 `;
 
 export const QuantityControl = styled.div`
@@ -138,5 +130,27 @@ export const ItemPrice = styled.div`
     font-size: 12px;
     font-weight: 400;
     color: #9ca3af;
+  }
+`;
+
+// Root Wrapper & Responsive Media Queries
+export const ItemCard = styled.div`
+  background-color: var(--color-bg-white);
+  border: 1px solid #ebe6e7;
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+
+  @media ${devicesBreakpoints.thumb} {
+    padding: 14px;
+    gap: 12px;
+
+    ${IconBox} {
+      width: 48px;
+      height: 48px;
+    }
   }
 `;

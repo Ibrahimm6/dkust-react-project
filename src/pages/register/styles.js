@@ -1,37 +1,28 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-
-export const PageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 55px 20px;
-  flex-grow: 1;
-  background-color: var(--color-page-bg);
-`;
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { devicesBreakpoints } from "../../constants/Breakpoints";
 
 export const RegisterCard = styled.div`
   background-color: #ffffff;
   padding: 40px;
-  border-radius: 10px; 
+  border-radius: 10px;
   width: 100%;
   max-width: 500px;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); 
-  border-top: 6px solid #00a63e; 
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  border-top: 6px solid #00a63e;
 `;
 
 export const Title = styled.h2`
   text-align: center;
   margin-bottom: 5px;
-  color: #1a1a2e; 
-  font-weight: 700; 
-  font-size: 1.75rem; 
+  color: #1a1a2e;
+  font-weight: 700;
+  font-size: 1.75rem;
 `;
 
 export const Subtitle = styled.p`
   text-align: center;
-  color: #6b7280; 
+  color: #6b7280;
   font-size: 0.875rem;
   margin-bottom: 30px;
 `;
@@ -40,24 +31,31 @@ export const Row = styled.div`
   display: flex;
   gap: 15px;
   width: 100%;
-  
-  @media (max-width: 500px) {
-    flex-direction: column;
-    gap: 0;
-  }
 `;
 
 export const CheckboxContainer = styled.div`
+  position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-top: 4px;
+  margin-bottom: 26px;
   font-size: 14px;
   color: #555;
 
   input {
     cursor: pointer;
+    margin-top: 4px;
   }
+`;
+
+export const TermsError = styled.div`
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 0;
+  color: #ef4444;
+  font-size: 11px;
+  line-height: 1.2;
 `;
 
 export const DividerText = styled.div`
@@ -97,7 +95,7 @@ export const GreenText = styled.span`
 export const PasswordStrengthBar = styled.div`
   display: flex;
   gap: 5px;
-  margin-top: 8px;
+  margin-top: 4px;
   margin-bottom: 4px;
 `;
 
@@ -105,7 +103,7 @@ export const StrengthSegment = styled.div`
   height: 4px;
   flex: 1;
   border-radius: 2px;
-  background-color: ${(props) => props.color || '#e5e7eb'};
+  background-color: ${(props) => props.color || "#e5e7eb"};
 `;
 
 export const StrengthLabel = styled.div`
@@ -130,7 +128,7 @@ export const SuccessMessage = styled.div`
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
-    
+
     i {
       color: #16a34a;
       font-size: 24px;
@@ -147,5 +145,49 @@ export const SuccessMessage = styled.div`
     color: #6b7280;
     margin-bottom: 30px;
     font-size: 15px;
+  }
+`;
+
+// Root Wrapper & Responsive Media Queries
+export const PageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 55px 20px;
+  flex-grow: 1;
+  background-color: var(--color-page-bg);
+
+  @media ${devicesBreakpoints.pocket} {
+    padding: 40px 16px;
+
+    ${RegisterCard} {
+      padding: 32px 24px;
+    }
+
+    ${Title} {
+      font-size: 1.5rem;
+    }
+
+    ${Subtitle} {
+      margin-bottom: 24px;
+    }
+  }
+
+  @media ${devicesBreakpoints.thumb} {
+    padding: 30px 14px;
+
+    ${RegisterCard} {
+      padding: 24px 16px;
+    }
+
+    ${Row} {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    ${CheckboxContainer} {
+      font-size: 13px;
+    }
   }
 `;

@@ -1,12 +1,5 @@
 import styled from "styled-components";
-
-export const PageWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  background-color: var(--color-bg-gray);
-  padding-bottom: 60px;
-`;
+import { devicesBreakpoints } from "../../constants/Breakpoints";
 
 export const ContentContainer = styled.div`
   max-width: 1020px;
@@ -22,8 +15,28 @@ export const TwoColumnGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
+`;
 
-  @media (max-width: 860px) {
-    grid-template-columns: 1fr;
+// Root Wrapper & Responsive Media Queries
+export const PageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  background-color: var(--color-bg-gray);
+  padding-bottom: 60px;
+
+  @media ${devicesBreakpoints.portable} {
+    ${TwoColumnGrid} {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media ${devicesBreakpoints.pocket} {
+    padding-bottom: 40px;
+
+    ${ContentContainer} {
+      padding: 28px 20px;
+      gap: 20px;
+    }
   }
 `;

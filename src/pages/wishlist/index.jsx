@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import AppTemplate from "../../components/app-template";
 import PathConstants from "../../routes/pathConstants";
 import { useWishlist } from "../../contexts/wishlistContext";
-import ProductCardGrid from "../../components/common/ProductCardProvider/Cards/ProductCardGrid";
 import { FiHeart } from "react-icons/fi";
 import CustomButton from "../../components/common/custom-button";
 

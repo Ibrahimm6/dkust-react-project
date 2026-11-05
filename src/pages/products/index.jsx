@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   PageWrapper,
   HeroSection,
@@ -17,12 +17,9 @@ import {
   ProductsGrid,
   ProductsList,
 } from "./styles";
-import ProductCardGrid from "../../components/common/ProductCardProvider/Cards/ProductCardGrid";
-import ProductCardList from "../../components/common/ProductCardProvider/Cards/ProductCardList";
 import { productsArray } from "../../data";
 import AppTemplate from "../../components/app-template";
 import PathConstants from "../../routes/pathConstants";
-import { useCart } from "../../contexts/cartContext";
 import ProductCardProvider from "../../components/common/ProductCardProvider";
 
 const categories = [
@@ -39,20 +36,22 @@ const ProductsPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortOption, setSortOption] = useState("default");
 
-  const { addToCart } = useCart();
+  const filteredProducts = useMemo(() => {
+    const filtered = productsArray.filter(
+      (product) =>
+        selectedCategory === "All" || product.category === selectedCategory
+    );
 
-  let filteredProducts = productsArray.filter(
-    (product) =>
-      selectedCategory === "All" || product.category === selectedCategory,
-  );
+    if (sortOption === "price-asc") {
+      return [...filtered].sort((a, b) => a.price - b.price);
+    } else if (sortOption === "price-desc") {
+      return [...filtered].sort((a, b) => b.price - a.price);
+    } else if (sortOption === "rating") {
+      return [...filtered].sort((a, b) => b.rating - a.rating);
+    }
 
-  if (sortOption === "price-asc") {
-    filteredProducts.sort((a, b) => a.price - b.price);
-  } else if (sortOption === "price-desc") {
-    filteredProducts.sort((a, b) => b.price - a.price);
-  } else if (sortOption === "rating") {
-    filteredProducts.sort((a, b) => b.rating - a.rating);
-  }
+    return filtered;
+  }, [selectedCategory, sortOption]);
 
   return (
     <AppTemplate pageTitle="Products" path={PathConstants.PRODUCTS}>
@@ -71,7 +70,7 @@ const ProductsPage = () => {
               {categories.map((category) => (
                 <CategoryButton
                   key={category}
-                  isActive={selectedCategory === category}
+                  $isActive={selectedCategory === category}
                   onClick={() => setSelectedCategory(category)}
                 >
                   {category}
@@ -92,13 +91,13 @@ const ProductsPage = () => {
 
               <ViewToggle>
                 <IconButton
-                  isActive={viewMode === "grid"}
+                  $isActive={viewMode === "grid"}
                   onClick={() => setViewMode("grid")}
                 >
                   <i className="fas fa-th-large"></i>
                 </IconButton>
                 <IconButton
-                  isActive={viewMode === "list"}
+                  $isActive={viewMode === "list"}
                   onClick={() => setViewMode("list")}
                 >
                   <i className="fas fa-list-ul"></i>

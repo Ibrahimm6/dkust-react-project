@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const InputWrapper = styled.div`
-  margin-bottom: 15px;
+  position: relative;
+  margin-bottom: 22px;
   width: 100%;
 `;
 
 const StyledLabel = styled.label`
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   font-size: 14px;
   font-weight: bold;
   color: #333;
@@ -21,10 +22,10 @@ const InputFieldContainer = styled.div`
 
 const StyledInput = styled.input`
   width: 100%;
-  padding: 10px 12px; 
+  padding: 10px 12px;
   padding-right: ${(props) => (props.type === 'password' ? '40px' : '12px')};
   border-radius: 6px;
-  border: 1px solid ${(props) => (props.hasError ? '#ef4444' : '#d1d5db')}; 
+  border: 1px solid ${(props) => (props.$hasError ? '#ef4444' : '#d1d5db')};
   box-sizing: border-box;
   font-size: 15px;
   color: #111827;
@@ -32,11 +33,11 @@ const StyledInput = styled.input`
   transition: border-color 0.2s;
 
   &::placeholder {
-    color: #9ca3af; 
+    color: #9ca3af;
   }
 
   &:focus {
-    border-color: ${(props) => (props.hasError ? '#ef4444' : '#00a651')};
+    border-color: ${(props) => (props.$hasError ? '#ef4444' : '#00a651')};
   }
 `;
 
@@ -51,9 +52,12 @@ const IconWrapper = styled.span`
 `;
 
 const ErrorText = styled.div`
+  position: absolute;
+  top: calc(100% + 3px);
+  left: 0;
   color: #ef4444;
-  font-size: 12px;
-  margin-top: 5px;
+  font-size: 11px;
+  line-height: 1.2;
 `;
 
 const InputComponent = ({ fieldLabel, name, value, onChange, onBlur, placeholder, type, error, touched }) => {
@@ -71,7 +75,7 @@ const InputComponent = ({ fieldLabel, name, value, onChange, onBlur, placeholder
           onChange={onChange}
           onBlur={onBlur}
           placeholder={placeholder}
-          hasError={touched && error}
+          $hasError={touched && Boolean(error)}
         />
         {type === 'password' && (
           <IconWrapper onClick={() => setShowPassword(!showPassword)}>

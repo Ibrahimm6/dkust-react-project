@@ -1,12 +1,6 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-
-export const PageWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  background-color: var(--color-bg-gray);
-`;
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { devicesBreakpoints } from "../../constants/Breakpoints";
 
 export const HeroSection = styled.div`
   background: linear-gradient(
@@ -47,10 +41,6 @@ export const CartGrid = styled.div`
   grid-template-columns: 1.65fr 1fr;
   gap: 28px;
   align-items: start;
-
-  @media (max-width: 860px) {
-    grid-template-columns: 1fr;
-  }
 `;
 
 export const ItemsColumn = styled.div`
@@ -80,5 +70,34 @@ export const ContinueShoppingLink = styled(Link)`
   &:hover {
     opacity: 0.8;
     color: var(--color-primary);
+  }
+`;
+
+// Root Wrapper & Responsive Media Queries
+export const PageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  background-color: var(--color-bg-gray);
+
+  @media ${devicesBreakpoints.portable} {
+    ${CartGrid} {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+
+  @media ${devicesBreakpoints.pocket} {
+    ${HeroSection} {
+      padding: 40px 20px;
+    }
+
+    ${HeroTitle} {
+      font-size: 26px;
+    }
+
+    ${ContentContainer} {
+      padding: 30px 20px;
+    }
   }
 `;

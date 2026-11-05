@@ -1,15 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-
-export const SectionCard = styled.div`
-  background-color: var(--color-bg-white);
-  border: 1px solid #ebe6e7;
-  border-radius: 14px;
-  padding: 24px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
-  display: flex;
-  flex-direction: column;
-`;
+import { devicesBreakpoints } from "../../../constants/Breakpoints";
 
 export const CardHeader = styled.div`
   display: flex;
@@ -29,14 +20,6 @@ export const QuickActionsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
-
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: 480px) {
-    grid-template-columns: 1fr;
-  }
 `;
 
 export const QuickActionButton = styled(Link)`
@@ -66,6 +49,31 @@ export const QuickActionButton = styled(Link)`
 
     svg {
       color: var(--color-primary);
+    }
+  }
+`;
+
+// Root Wrapper & Responsive Media Queries
+export const SectionCard = styled.div`
+  background-color: var(--color-bg-white);
+  border: 1px solid #ebe6e7;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+
+  @media ${devicesBreakpoints.pocket} {
+    ${QuickActionsGrid} {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media ${devicesBreakpoints.thumb} {
+    padding: 18px;
+
+    ${QuickActionsGrid} {
+      grid-template-columns: 1fr;
     }
   }
 `;

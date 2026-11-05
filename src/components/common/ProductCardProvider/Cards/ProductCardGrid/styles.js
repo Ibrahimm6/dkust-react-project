@@ -1,4 +1,5 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
+import { devicesBreakpoints } from "../../../../../constants/Breakpoints";
 
 const handleBadgeColor = (text) => {
   switch (text?.toLowerCase()) {
@@ -19,28 +20,9 @@ const handleBadgeColor = (text) => {
 
 export const ProductCardGridStyles = styled.div``;
 
-export const GridCard = styled.div`
-  overflow: hidden;
-  min-height: 240px;
-  /* height: max-content; */
-  background-color: var(--color-bg-white);
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  /* display: flex; */
-  /* flex-direction: column; */
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  transition: all 0.3s ease;
-
-  &:hover {
-    /* transform: translateY(-5px); */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  }
-`;
-
 export const GridImageArea = styled.div`
   height: 100%;
-  /* flex: 0 0 50%; */
+  min-height: 140px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -79,31 +61,6 @@ export const GridCategory = styled.p`
   display: flex;
   align-items: center;
   gap: 4px;
-`;
-
-export const GridFooter = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: auto;
-
-  & > div:last-child {
-    gap: 8px !important;
-  }
-
-  & > div:last-child > button:first-child {
-    width: fit-content !important;
-    padding: 6px 12px !important;
-    border-radius: 10px !important;
-    font-size: 12px !important;
-  }
-
-  & > div:last-child > button:last-child {
-    width: fit-content !important;
-    padding: 6px 12px !important;
-    border-radius: 10px !important;
-    font-size: 12px !important;
-  }
 `;
 
 export const ListTitle = styled.h3`
@@ -178,7 +135,6 @@ export const ActionButtons = styled.div`
 
   & > button:first-child:hover,
   & > div:first-child button:hover {
-    /* background-color: var(--color-primary) !important; */
     border-color: var(--color-primary) !important;
     color: var(--color-primary) !important;
   }
@@ -205,6 +161,33 @@ export const ActionButtons = styled.div`
   }
 `;
 
+export const GridFooter = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 12px;
+  gap: 8px;
+
+  & > div:last-child {
+    gap: 8px !important;
+  }
+
+  & > div:last-child > button:first-child {
+    width: fit-content !important;
+    padding: 6px 12px !important;
+    border-radius: 10px !important;
+    font-size: 12px !important;
+  }
+
+  & > div:last-child > button:last-child {
+    width: fit-content !important;
+    padding: 6px 12px !important;
+    border-radius: 10px !important;
+    font-size: 12px !important;
+  }
+`;
+
 export const WishlistButton = styled.button`
   position: absolute;
   top: 10px;
@@ -227,5 +210,38 @@ export const WishlistButton = styled.button`
 
   &.active {
     color: #ef4444;
+  }
+`;
+
+// Root Wrapper & Responsive Media Queries
+export const GridCard = styled.div`
+  overflow: hidden;
+  min-height: 240px;
+  background-color: var(--color-bg-white);
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  @media ${devicesBreakpoints.xSmall} {
+    ${GridFooter} {
+      flex-direction: column;
+      align-items: flex-start;
+
+      & > div:last-child {
+        width: 100%;
+      }
+
+      & > div:last-child > button:first-child,
+      & > div:last-child > button:last-child {
+        flex: 1;
+        width: 100% !important;
+      }
+    }
   }
 `;
