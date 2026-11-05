@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { 
-  PageContainer, RegisterCard, Title, Subtitle, Row, CheckboxContainer, 
-  DividerText, FooterText, StyledLink, 
-  BackLinkContainer, BackLink, GreenText,
+  PageContainer, RegisterCard, Title, Subtitle, Row, CheckboxContainer, TermsError,
+  DividerText, FooterText, StyledLink, BackLinkContainer, BackLink, GreenText,
   PasswordStrengthBar, StrengthSegment, StrengthLabel, SuccessMessage
 } from './styles';
 import InputComponent from '../../components/common/input-component';
@@ -32,7 +32,7 @@ const calculateStrength = (password) => {
   if (/[A-Z]/.test(password) || /[a-z]/.test(password)) score += 1;
   if (/[0-9]/.test(password)) score += 1;
   if (/[\W_]/.test(password)) score += 1;
-  
+
   if (score <= 1) return { score: 1, label: 'Weak', color: '#ef4444' };
   if (score === 2) return { score: 2, label: 'Fair', color: '#f97316' };
   if (score === 3) return { score: 3, label: 'Good', color: '#eab308' };
@@ -40,6 +40,7 @@ const calculateStrength = (password) => {
 };
 
 const Register = () => {
+  const navigate = useNavigate();
   const [isSuccess, setIsSuccess] = useState(false);
 
   const formik = useFormik({
@@ -66,7 +67,7 @@ const Register = () => {
               </div>
               <h2>Account Created!</h2>
               <p>Welcome, {formik.values.firstName}! Your account has been created successfully.</p>
-              <CustomButton title="Go to Login" onClickFunction={() => window.location.href = '/login'} bgColor="#00a651" />
+              <CustomButton title="Go to Login" onClickFunction={() => navigate(PathConstants.LOGIN)} bgColor="#00a651" />
             </SuccessMessage>
           ) : (
             <>
@@ -99,22 +100,22 @@ const Register = () => {
                 <CheckboxContainer>
                   <input type="checkbox" id="agreeTerms" name="agreeTerms" checked={formik.values.agreeTerms} onChange={formik.handleChange} onBlur={formik.handleBlur} />
                   <label htmlFor="agreeTerms">I agree to the <GreenText>Terms of Service</GreenText> and <GreenText>Privacy Policy</GreenText></label>
+                  {formik.touched.agreeTerms && formik.errors.agreeTerms && (
+                    <TermsError>{formik.errors.agreeTerms}</TermsError>
+                  )}
                 </CheckboxContainer>
-                {formik.touched.agreeTerms && formik.errors.agreeTerms && (
-                  <div style={{ color: '#ef4444', fontSize: '12px', marginBottom: '15px' }}>{formik.errors.agreeTerms}</div>
-                )}
                 
                 <CustomButton title="CREATE ACCOUNT" onClickFunction={formik.handleSubmit} bgColor="#00a651" />
                 
                 <DividerText>or continue with</DividerText>
-                <div className="row gx-3 mb-4">
-                  <div className="col-6">
+                <div className="row g-2 mb-4">
+                  <div className="col-12 col-sm-6">
                     <button type="button" className="btn btn-outline-secondary w-100 bg-white text-dark py-2 rounded-3 border-light-gray d-flex justify-content-center align-items-center gap-2">
                       <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google" width="18" />
                       <span className="small fw-semibold">Google</span>
                     </button>
                   </div>
-                  <div className="col-6">
+                  <div className="col-12 col-sm-6">
                     <button type="button" className="btn btn-outline-secondary w-100 bg-white text-dark py-2 rounded-3 border-light-gray d-flex justify-content-center align-items-center gap-2">
                       <i className="fab fa-facebook text-primary fs-5"></i>
                       <span className="small fw-semibold">Facebook</span>
@@ -122,14 +123,14 @@ const Register = () => {
                   </div>
                 </div>
                 
-                <FooterText>Already have an account? <StyledLink to="/login">Sign In</StyledLink></FooterText>
+                <FooterText>Already have an account? <StyledLink to={PathConstants.LOGIN}>Sign In</StyledLink></FooterText>
               </form>
             </>
           )}
         </RegisterCard>
         
         <BackLinkContainer>
-          <BackLink to="/">Back to Home</BackLink>
+          <BackLink to={PathConstants.HOME}>Back to Home</BackLink>
         </BackLinkContainer>
       </PageContainer>
     </AppTemplate>

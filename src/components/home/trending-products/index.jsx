@@ -1,8 +1,6 @@
 import React from "react";
 import PathConstants from "../../../routes/pathConstants";
-import ProductCardGrid from "../../common/ProductCardProvider/Cards/ProductCardGrid";
 import { productsArray } from "../../../data";
-import { useCart } from "../../../contexts/cartContext";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
@@ -21,11 +19,6 @@ import {
 import ProductCardProvider from "../../common/ProductCardProvider";
 
 const TrendingProducts = () => {
-  const { addToCart } = useCart();
-
-  const handleAddToCart = (product) => {
-    addToCart(product, 1);
-  };
 
   return (
     <TrendingContainer>

@@ -1,11 +1,5 @@
-import styled from 'styled-components';
-
-export const PageWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  background-color: var(--color-bg-gray);
-`;
+import styled from "styled-components";
+import { devicesBreakpoints } from "../../constants/Breakpoints";
 
 export const HeroSection = styled.div`
   background: linear-gradient(
@@ -32,7 +26,7 @@ export const HeroSubtitle = styled.p`
 `;
 
 export const ScoreBadge = styled.div`
-  background-color: ${(props) => (props.$isPassed ? '#00a651' : '#ef4444')};
+  background-color: ${(props) => (props.$isPassed ? "#00a651" : "#ef4444")};
   color: #ffffff;
   padding: 6px 22px;
   border-radius: 9999px;
@@ -82,12 +76,12 @@ export const SubmitQuizButton = styled.button`
 `;
 
 export const ResultCard = styled.div`
-  background-color: ${(props) => (props.$isPassed ? '#f0fdf4' : '#fee2e2')};
+  background-color: ${(props) => (props.$isPassed ? "#f0fdf4" : "#fee2e2")};
   border-radius: 14px;
   padding: 35px 20px;
   text-align: center;
   margin-top: 30px;
-  border: 1px solid ${(props) => (props.$isPassed ? '#86efac' : '#fca5a5')};
+  border: 1px solid ${(props) => (props.$isPassed ? "#86efac" : "#fca5a5")};
 
   h2 {
     color: #1f2937;
@@ -136,5 +130,53 @@ export const ButtonsRow = styled.div`
 
   .btn-secondary:hover {
     background-color: #f3f4f6;
+  }
+`;
+
+// Root Wrapper & Responsive Media Queries
+export const PageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  background-color: var(--color-bg-gray);
+
+  @media ${devicesBreakpoints.pocket} {
+    ${HeroSection} {
+      padding: 40px 20px;
+    }
+
+    ${HeroTitle} {
+      font-size: 28px;
+    }
+
+    ${SectionTitle} {
+      font-size: 20px;
+      margin-top: 32px;
+      margin-bottom: 22px;
+    }
+
+    ${ContentContainer} {
+      margin-bottom: 40px;
+      padding: 0 16px;
+    }
+
+    ${ResultCard} {
+      padding: 25px 16px;
+    }
+  }
+
+  @media ${devicesBreakpoints.thumb} {
+    ${SubmitQuizButton} {
+      width: 100%;
+    }
+
+    ${ButtonsRow} {
+      flex-direction: column;
+      gap: 10px;
+
+      button {
+        width: 100%;
+      }
+    }
   }
 `;
