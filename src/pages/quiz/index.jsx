@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
+
 import {
   PageWrapper,
   HeroSection,
@@ -16,38 +18,48 @@ import {
 import QuestionCard from '../../components/question-card';
 import AppTemplate from '../../components/app-template';
 import PathConstants from '../../routes/pathConstants';
+import MainLoader from "../../components/main-loader";
 
-const questionsArray = [
-  {
-    id: 1,
-    question: 'What does HTML stand for?',
-    options: [
-      'HyperText Markup Language',
-      'HyperText Machine Language',
-      'HighText Markup Language',
-      'None of the above',
-    ],
-    answer: 'HyperText Markup Language',
-  },
-  {
-    id: 2,
-    question: 'Which CSS property changes the background color?',
-    options: ['color', 'bg-color', 'background-color', 'background'],
-    answer: 'background-color',
-  },
-  {
-    id: 3,
-    question: 'Which Bootstrap class makes a button green?',
-    options: ['btn-primary', 'btn-dark', 'btn-warning', 'btn-success'],
-    answer: 'btn-success',
-  },
-];
+import { getQuiz } from "../../services/quiz/quiz.service"; 
 
 const QuizPage = () => {
   const navigate = useNavigate();
+  const { i18n } = useTranslation();
+  const lang = i18n.language || "en";
+
+  const [questions, setQuestions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [score, setScore] = useState(0);
+
+  const getData = async () => {
+    setLoading(true);
+    const response = await getQuiz(lang);
+    
+    if (response.status === 200 && Array.isArray(response.data)) {
+      const mappedData = response.data.map((q) => ({
+        id: q.id,
+        question: q.question || "",
+        options: Array.isArray(q.options) ? q.options.map(opt => opt.label) : [],
+        
+        answer: (q.options && q.options.find(opt => opt.value === q.correct)?.label) || "",
+      }));
+      setQuestions(mappedData);
+    } else {
+      setQuestions([]);
+    }
+    
+    setSelectedAnswers({});
+    setIsSubmitted(false);
+    setScore(0);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getData();
+  }, [lang]);
 
   const handleOptionChange = (questionId, option) => {
     if (isSubmitted) return;
@@ -59,7 +71,7 @@ const QuizPage = () => {
 
   const handleSubmitQuiz = () => {
     let calculatedScore = 0;
-    questionsArray.forEach((q) => {
+    questions.forEach((q) => {
       if (selectedAnswers[q.id] === q.answer) {
         calculatedScore += 1;
       }
@@ -83,49 +95,57 @@ const QuizPage = () => {
           <HeroSubtitle>
             Answer the questions below and click Submit to check your score.
           </HeroSubtitle>
-          <ScoreBadge $isPassed={isSubmitted && score >= 2}>
-            Score: {score} / {questionsArray.length}
+          <ScoreBadge $isPassed={isSubmitted && score >= (questions.length / 2)}>
+            Score: {score} / {questions.length}
           </ScoreBadge>
         </HeroSection>
-
         <ContentContainer>
           <SectionTitle>Choose the Correct Answer</SectionTitle>
 
-          {questionsArray.map((question) => (
-            <QuestionCard
-              key={question.id}
-              questionData={question}
-              selectedOption={selectedAnswers[question.id] || ''}
-              onOptionChange={(val) => handleOptionChange(question.id, val)}
-              isSubmitted={isSubmitted}
-            />
-          ))}
-
-          {!isSubmitted ? (
-            <SubmitButtonWrapper>
-              <SubmitQuizButton type="button" onClick={handleSubmitQuiz}>
-                SUBMIT QUIZ
-              </SubmitQuizButton>
-            </SubmitButtonWrapper>
+          {loading ? (
+            <MainLoader />
+          ) : questions.length === 0 ? (
+             <div style={{ textAlign: "center", padding: "40px", color: "#888" }}>
+              No questions found.
+            </div>
           ) : (
-            <ResultCard $isPassed={score >= 2}>
-              <h2>{score >= 2 ? 'Great Job!' : 'Keep Practicing!'}</h2>
-              <p>
-                You answered {score} out of {questionsArray.length} questions
-                correctly.
-              </p>
-              <ButtonsRow>
-                <button className="btn-primary" onClick={handleRestart}>
-                  TRY AGAIN
-                </button>
-                <button
-                  className="btn-secondary"
-                  onClick={() => navigate(PathConstants.HOME)}
-                >
-                  Back to Home
-                </button>
-              </ButtonsRow>
-            </ResultCard>
+            <>
+              {questions.map((question) => (
+                <QuestionCard
+                  key={question.id}
+                  questionData={question}
+                  selectedOption={selectedAnswers[question.id] || ''}
+                  onOptionChange={(val) => handleOptionChange(question.id, val)}
+                  isSubmitted={isSubmitted}
+                />
+              ))}
+
+              {!isSubmitted ? (
+                <SubmitButtonWrapper>
+                  <SubmitQuizButton type="button" onClick={handleSubmitQuiz}>
+                    SUBMIT QUIZ
+                  </SubmitQuizButton>
+                </SubmitButtonWrapper>
+              ) : (
+                <ResultCard $isPassed={score >= (questions.length / 2)}>
+                  <h2>{score >= (questions.length / 2) ? 'Great Job!' : 'Keep Practicing!'}</h2>
+                  <p>
+                    You answered {score} out of {questions.length} questions correctly.
+                  </p>
+                  <ButtonsRow>
+                    <button className="btn-primary" onClick={handleRestart}>
+                      TRY AGAIN
+                    </button>
+                    <button
+                      className="btn-secondary"
+                      onClick={() => navigate(PathConstants.HOME)}
+                    >
+                      Back to Home
+                    </button>
+                  </ButtonsRow>
+                </ResultCard>
+              )}
+            </>
           )}
         </ContentContainer>
       </PageWrapper>
