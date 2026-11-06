@@ -1,4 +1,5 @@
 import AppTemplate from "../../components/app-template";
+import HeroSection from "../../components/common/HeroSection";
 import InfoCard from "../../components/common/InfoCard";
 import PathConstants from "../../routes/pathConstants";
 import { BlogStyles } from "./styles";
@@ -24,6 +25,10 @@ const blogData = [
 function Blog() {
   return (
     <AppTemplate pageTitle="Blog" path={PathConstants.BLOG}>
+      <HeroSection
+        title="DKUST Blog"
+        subtitle="Updates, product notes, and engineering stories from the team."
+      />
       <BlogStyles>
         <div className="container">
           {blogData.map((item, index) => (
