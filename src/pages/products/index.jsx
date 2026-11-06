@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
+import {useTranslation} from "react-i18next";
 import {
   PageWrapper,
   HeroSection,
@@ -17,10 +18,11 @@ import {
   ProductsGrid,
   ProductsList,
 } from "./styles";
-import { productsArray } from "../../data";
 import AppTemplate from "../../components/app-template";
 import PathConstants from "../../routes/pathConstants";
 import ProductCardProvider from "../../components/common/ProductCardProvider";
+import { getProducts } from "../../services/products/products.service";
+import MainLoader from "../../components/main-loader";
 
 const categories = [
   "All",
@@ -32,12 +34,49 @@ const categories = [
 ];
 
 const ProductsPage = () => {
+  const { i18n } = useTranslation();
+  const lang = i18n.language || "en";
+
   const [viewMode, setViewMode] = useState("grid");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortOption, setSortOption] = useState("default");
 
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const getData = async () => {
+    setLoading(true);
+    const response = await getProducts();
+    
+    if (response.status === 200 && Array.isArray(response.data)) {
+      const mappedData = response.data.map((p) => {
+        const badgeText = p.badge?.[lang] || "";
+        
+        return {
+          id: p.id,
+          name: p.name?.[lang] || "",
+          category: p.category?.[lang] || "",
+          description: p.description?.[lang] || "",
+          badge: badgeText.trim() === "" ? null : badgeText,
+          reviewsCount: p.reviews || 0,
+          price: p.price || 0,
+          rating: p.rating || 0,
+          color: p.color || "",
+        };
+      });
+      setData(mappedData);
+    } else {
+      setData([]);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getData();
+  }, [lang]);
+
   const filteredProducts = useMemo(() => {
-    const filtered = productsArray.filter(
+    const filtered = data.filter(
       (product) =>
         selectedCategory === "All" || product.category === selectedCategory
     );
@@ -51,7 +90,7 @@ const ProductsPage = () => {
     }
 
     return filtered;
-  }, [selectedCategory, sortOption]);
+  }, [selectedCategory, sortOption, data]);
 
   return (
     <AppTemplate pageTitle="Products" path={PathConstants.PRODUCTS}>
@@ -110,10 +149,10 @@ const ProductsPage = () => {
         <ContentContainer className="container">
           <ResultsText>{filteredProducts.length} products found</ResultsText>
 
-          {filteredProducts.length === 0 ? (
-            <div
-              style={{ textAlign: "center", padding: "40px", color: "#888" }}
-            >
+          {loading ? (
+            <MainLoader />
+          ) : filteredProducts.length === 0 ? (
+            <div style={{ textAlign: "center", padding: "40px", color: "#888" }}>
               No products found.
             </div>
           ) : viewMode === "grid" ? (

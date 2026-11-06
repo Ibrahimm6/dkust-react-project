@@ -2,7 +2,11 @@ import styled from "styled-components";
 import { devicesBreakpoints } from "../../../../../constants/Breakpoints";
 
 const handleBadgeColor = (text) => {
-  switch (text?.toLowerCase()) {
+  if (!text || typeof text !== "string") {
+    return { bg: "#f3f4f6", text: "#374151" };
+  }
+
+  switch (text.toLowerCase()) {
     case "best seller":
       return { bg: "#dcfce7", text: "#15803d" };
     case "new":
