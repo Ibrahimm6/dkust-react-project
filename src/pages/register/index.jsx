@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import { registerSchema } from '../../validations'; 
 import { 
   PageContainer, RegisterCard, Title, Subtitle, Row, CheckboxContainer, TermsError,
   DividerText, FooterText, StyledLink, BackLinkContainer, BackLink, GreenText,
@@ -11,19 +11,6 @@ import InputComponent from '../../components/common/input-component';
 import CustomButton from '../../components/common/custom-button';
 import AppTemplate from '../../components/app-template';
 import PathConstants from '../../routes/pathConstants';
-
-const registerSchema = Yup.object().shape({
-  firstName: Yup.string().required('First name is required'),
-  lastName: Yup.string().required('Last name is required'),
-  email: Yup.string().email('Invalid email address').required('Email is required'),
-  password: Yup.string()
-    .min(6, 'Password must be at least 6 characters')
-    .required('Password is required'),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password'), null], 'Passwords must match')
-    .required('Confirm password is required'),
-  agreeTerms: Yup.boolean().oneOf([true], 'You must accept the terms and conditions')
-});
 
 const calculateStrength = (password) => {
   let score = 0;
@@ -47,7 +34,7 @@ const Register = () => {
     initialValues: {
       firstName: '', lastName: '', email: '', password: '', confirmPassword: '', agreeTerms: false
     },
-    validationSchema: registerSchema,
+    validationSchema: registerSchema, 
     onSubmit: (values) => {
       console.log('Account Created:', values);
       setIsSuccess(true);

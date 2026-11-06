@@ -1,22 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import { loginSchema } from '../validations'; 
 import InputComponent from './common/input-component';
 import CustomButton from './common/custom-button';
 import AppTemplate from './app-template';
 import PathConstants from '../routes/pathConstants';
 
-const loginSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email address').required('Email is required'),
-  password: Yup.string().required('Password is required'),
-  rememberMe: Yup.boolean()
-});
-
 const LoginForm = () => {
   const formik = useFormik({
     initialValues: { email: '', password: '', rememberMe: false },
-    validationSchema: loginSchema,
+    validationSchema: loginSchema, 
     onSubmit: (values) => {
       console.log('Login Submitted:', values);
     }
