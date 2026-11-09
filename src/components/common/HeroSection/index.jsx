@@ -1,4 +1,3 @@
-import { Children } from "react";
 import { HeroSectionStyles } from "./styles";
 
 function HeroSection({ title, subtitle, Children }) {

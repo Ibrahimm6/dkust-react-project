@@ -2,6 +2,7 @@ const PathConstants = {
   HOME: "/",
   LOGIN: "/login",
   REGISTER: "/register",
+  VERIFY: "/verify-email",
   PRODUCTS: "/products",
   PRODUCT_DETAILS: "/products/:id",
   QUIZ: "/quiz",

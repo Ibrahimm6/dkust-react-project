@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import PathConstants from "../../routes/pathConstants";
 import { FiHeart, FiShoppingCart, FiUser, FiMenu, FiX } from "react-icons/fi";
 import {
@@ -17,12 +17,17 @@ import {
   AuthGroup,
   LoginLink,
   RegisterButton,
+  LogoutButton,
   MenuButton,
   MobileMenu,
   MobileNavItem,
+  MobileLogoutButton,
 } from "./styles";
 import { useWishlist } from "../../contexts/wishlistContext";
 import { useCart } from "../../contexts/cartContext";
+import { logoutUser } from "../../services/auth/auth.service";
+import { getCookie } from "../../helpers/cookies";
+import environment from "../../environment";
 
 const NAV_LINKS = [
   { label: "Home", path: PathConstants.HOME },
@@ -36,13 +41,27 @@ const NAV_LINKS = [
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const { wishlist } = useWishlist();
   const { cartCount } = useCart();
 
   useEffect(() => {
     setIsMenuOpen(false);
+    const token = getCookie(environment.TOKEN_KEY);
+    setIsLoggedIn(!!token);
   }, [pathname]);
+
+  const handleLogout = async () => {
+    setLoggingOut(true);
+    await logoutUser();
+    setIsLoggedIn(false); 
+    setLoggingOut(false);
+    navigate(PathConstants.LOGIN);
+  };
 
   return (
     <HeaderWrapper $isOpen={isMenuOpen}>
@@ -77,8 +96,31 @@ const Header = () => {
           <Divider />
 
           <AuthGroup>
-            <LoginLink to={PathConstants.LOGIN}>Login</LoginLink>
-            <RegisterButton to={PathConstants.REGISTER}>Register</RegisterButton>
+            {isLoggedIn ? (
+              <LogoutButton
+                type="button"
+                onClick={handleLogout}
+                disabled={loggingOut}
+              >
+                {loggingOut ? (
+                  <>
+                    <span
+                      className="spinner-border spinner-border-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
+                    <span>Logging out...</span>
+                  </>
+                ) : (
+                  "Logout"
+                )}
+              </LogoutButton>
+            ) : (
+              <>
+                <LoginLink to={PathConstants.LOGIN}>Login</LoginLink>
+                <RegisterButton to={PathConstants.REGISTER}>Register</RegisterButton>
+              </>
+            )}
           </AuthGroup>
 
           <MenuButton
@@ -100,8 +142,21 @@ const Header = () => {
         <MobileNavItem to={PathConstants.WISHLIST}>Favorites</MobileNavItem>
         <MobileNavItem to={PathConstants.CART}>Cart</MobileNavItem>
         <MobileNavItem to={PathConstants.PROFILE}>Profile</MobileNavItem>
-        <MobileNavItem to={PathConstants.LOGIN}>Login</MobileNavItem>
-        <MobileNavItem to={PathConstants.REGISTER}>Register</MobileNavItem>
+        
+        {isLoggedIn ? (
+          <MobileLogoutButton
+            type="button"
+            onClick={handleLogout}
+            disabled={loggingOut}
+          >
+            {loggingOut ? "Logging out..." : "Logout"}
+          </MobileLogoutButton>
+        ) : (
+          <>
+            <MobileNavItem to={PathConstants.LOGIN}>Login</MobileNavItem>
+            <MobileNavItem to={PathConstants.REGISTER}>Register</MobileNavItem>
+          </>
+        )}
       </MobileMenu>
     </HeaderWrapper>
   );

@@ -11,21 +11,33 @@ const StyledButton = styled.button`
   font-weight: 600;
   cursor: pointer;
   margin-bottom: 10px;
-  transition: all 0.2s ease-in-out; 
+  transition: all 0.2s ease-in-out;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
 
-  &:hover {
-    transform: translateY(-2px); 
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
     opacity: 0.9;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
   }
 `;
 
-const CustomButton = ({ title, onClickFunction, bgColor, color }) => {
+const CustomButton = ({ title, onClickFunction, bgColor, color, disabled = false, type = "button" }) => {
   return (
-    <StyledButton type="button" onClick={onClickFunction} bgColor={bgColor} color={color}>
+    <StyledButton
+      type={type}
+      onClick={onClickFunction}
+      bgColor={bgColor}
+      color={color}
+      disabled={disabled}
+    >
       {title}
     </StyledButton>
   );

@@ -3,6 +3,7 @@ const environment = {
   lang: "_lang",
   localLang: "lang",
   TOKEN_KEY: "token",
+  REFRESH_TOKEN_KEY: "refreshToken",
   USER_KEY: "dkust_user",
 
   // App Info
@@ -21,6 +22,12 @@ const environment = {
   orders: "orders",
   messages: "messages",
   subscribers: "subscribers",
+  register: "auth/register",
+  verifyEmail: "auth/verify-email",
+  resendVerification: "auth/resend-verification",
+  login: "auth/login",
+  logout: "auth/logout",
+  refresh: "auth/refresh",
 
   // Base API URL
   API_URL: "https://api-commerce.learnsou.com",
