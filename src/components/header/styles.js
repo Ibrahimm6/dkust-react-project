@@ -126,6 +126,32 @@ export const RegisterButton = styled(Link)`
   }
 `;
 
+export const LogoutButton = styled.button`
+  background-color: var(--color-primary);
+  color: var(--color-text-white);
+  border: none;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background-color 0.3s ease, opacity 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-primary-hover);
+    color: var(--color-text-white);
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+`;
+
 export const MenuButton = styled.button`
   background: none;
   border: none;
@@ -170,7 +196,27 @@ export const MobileNavItem = styled(NavLink)`
   }
 `;
 
-//   Root Wrapper & Responsive Media Queries
+export const MobileLogoutButton = styled.button`
+  background: none;
+  border: none;
+  color: var(--color-text-white);
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 15px 0;
+  cursor: pointer;
+  transition: color 0.3s ease;
+
+  &:hover:not(:disabled) {
+    color: var(--color-primary);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+`;
+
 export const HeaderWrapper = styled.header`
   background-color: var(--color-navy);
   position: sticky;
