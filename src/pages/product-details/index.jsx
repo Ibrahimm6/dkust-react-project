@@ -1,10 +1,13 @@
+import React, { useState, useEffect,useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { productsArray } from "../../data";
+import {useTranslation} from "react-i18next";
+import { getProducts, getProductById } from "../../services/products/products.service";
 import {
   PageWrapper,
   Breadcrumb,
   BackLink,
   RelatedSectionTitle,
+  RelatedSwiperArea,
 } from "./styles";
 import { SwiperWrapper } from "../../components/home/trending-products/styles.js";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -16,44 +19,84 @@ import AppTemplate from "../../components/app-template";
 import PathConstants from "../../routes/pathConstants";
 import ProductCardProvider from "../../components/common/ProductCardProvider/index.jsx";
 
-const ProductDetails = () => {
-  const { id } = useParams();
+const localize = (value, lang) => {
+  if (Array.isArray(value)) return value.map((v) => localize(v, lang));
+  if (value && typeof value === "object") {
+    if ("en" in value || "ar" in value) {
+      return value[lang] ?? value.en ?? value.ar;
+    }
+    return Object.fromEntries(
+      Object.entries(value).map(([k, v]) => [k, localize(v, lang)])
+    );
+  }
+  return value;
+};
+  const ProductDetails=()=>
+  {
+    const {id}=useParams();
+    const {t,i18n}=useTranslation();
+    const lang=i18n.language?.startsWith("ar")?"ar":"en";
+const [rawProduct, setRawProduct] = useState(null);
+const [rawRelated, setRawRelated] = useState([]);
+const [loading, setLoading] = useState(true);
 
-  const product = productsArray.find((p) => p.id === parseInt(id));
+    useEffect(()=>{
+        const fetchData=async()=>{
+        setLoading(true);
+        const currentRes=await getProductById(id);
+        const allRes=await getProducts();
+        const current = currentRes?.data;
+        const all=allRes?.data || [];
+        setRawProduct(current || null);
+        setRawRelated(all.filter((p) => p.id !== current?.id));
+        setLoading(false);
+      };
+      fetchData();
+      },[id]);
 
-  if (!product) {
+      const product = useMemo(() => localize(rawProduct, lang), [rawProduct, lang]);
+      const relatedProducts = useMemo(
+        () => localize(rawRelated, lang),
+        [rawRelated, lang]
+      );
+
+      if(loading) return null;
+      if(!product){
     return (
-      <AppTemplate pageTitle="Not Found" path={PathConstants.PRODUCT_DETAILS}>
+      <AppTemplate pageTitle={t("productDetails.notFoundTitle")}
+      path={PathConstants.PRODUCT_DETAILS}
+      >
         <PageWrapper>
-          <h2>Product not found!</h2>
+         {t("productDetails.notFoundTitle")}
         </PageWrapper>
       </AppTemplate>
     );
   }
-
-  const relatedProducts = productsArray.filter((p) => p.id !== product.id);
-
   return (
     <AppTemplate pageTitle={product.name} path={PathConstants.PRODUCT_DETAILS}>
       <div style={{ backgroundColor: "#f8fafc", width: "100%", flexGrow: 1 }}>
         <PageWrapper>
-          <Breadcrumb className="container">
-            Home / Products / <span>{product.name}</span>
-          </Breadcrumb>
+         <Breadcrumb className="container">
+        {t("productDetails.home", "Home")} /{" "}
+        {t("productDetails.products", "Products")} /{" "}
+          <span>{product.name}</span>
+        </Breadcrumb>
 
           <div className="container">
             <BackLink to="/products">
-              <i className="fas fa-chevron-left"></i> Back to Products
+              <i className="fas fa-chevron-left"></i>{" "}
+              {t("productDetails.backToProducts", "Back to Products")}
             </BackLink>
           </div>
 
           <ProductCardProvider $variant="detailed" product={product} />
 
           <section className="container">
-            <RelatedSectionTitle>Related Products</RelatedSectionTitle>
-            <SwiperWrapper style={{ padding: 0, maxWidth: "100%" }}>
+            <RelatedSectionTitle>
+            {t("productDetails.relatedProducts", "Related Products")}
+            </RelatedSectionTitle>
+            <RelatedSwiperArea>            <SwiperWrapper style={{ padding: 0, maxWidth: "100%" }}>
               <Swiper
-                className="related-swiper"
                 modules={[Navigation, Pagination]}
                 spaceBetween={25}
                 slidesPerView={1}
@@ -76,6 +119,7 @@ const ProductDetails = () => {
                 ))}
               </Swiper>
             </SwiperWrapper>
+            </RelatedSwiperArea>
           </section>
         </PageWrapper>
       </div>

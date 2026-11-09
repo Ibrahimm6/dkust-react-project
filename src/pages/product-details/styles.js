@@ -2,11 +2,11 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const PageWrapper = styled.div`
-  /* max-width: 1200px; */
-  /* margin: 0 auto; */
-  padding-block: 40px;
-  /* width: 100%; */
-  flex-grow: 1;
+padding-block:40px;
+flex-grow:1;
+@media (max-width: 768px) {
+  padding-block: 24px;
+}
 `;
 
 export const Breadcrumb = styled.div`
@@ -17,8 +17,11 @@ export const Breadcrumb = styled.div`
     color: #111827;
     font-weight: 600;
   }
+    @media (max-width: 576px) {
+    font-size: 12px;
+    margin-bottom: 14px;
+  } 
 `;
-
 export const BackLink = styled(Link)`
   display: inline-flex;
   align-items: center;
@@ -31,6 +34,10 @@ export const BackLink = styled(Link)`
   &:hover {
     color: #00a651;
   }
+    @media (max-width: 576px) {
+    font-size: 13px;
+    margin-bottom: 20px;
+    }
 `;
 
 export const RelatedSectionTitle = styled.h2`
@@ -38,4 +45,15 @@ export const RelatedSectionTitle = styled.h2`
   color: #111827;
   margin-bottom: 20px;
   font-weight: bold;
+  @media (max-width: 576px) {
+    font-size: 18px;
+    }
+`;
+export const RelatedSwiperArea=styled.div`
+@media (max-width: 576px) {
+.swiper-button-next,
+.swiper-button-prev {
+display: none !important; 
+  }
+}
 `;
