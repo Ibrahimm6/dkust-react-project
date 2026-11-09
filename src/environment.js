@@ -3,6 +3,7 @@ const environment = {
   lang: "_lang",
   localLang: "lang",
   TOKEN_KEY: "token",
+  REFRESH_TOKEN_KEY: "refreshToken",
   USER_KEY: "dkust_user",
 
   // App Info
