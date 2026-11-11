@@ -1,65 +1,63 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import PathConstants from "../../../routes/pathConstants";
-import { productsArray } from "../../../data";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import {
-  TrendingContainer,
-  SectionHeader,
-  HeaderContent,
-  HotBadge,
-  SectionTitle,
-  SectionSubtitle,
-  ViewAllButton,
-  SwiperWrapper,
-} from "./styles";
-import ProductCardProvider from "../../common/ProductCardProvider";
+import ProductsSwiper from "../../common/ProductsSwiper";
+import MainLoader from "../../main-loader";
+import { getProducts } from "../../../services/products/products.service";
+import { mapProductData } from "../../../helpers/product.helpers";
+import { TrendingWrapper } from "./styles";
 
 const TrendingProducts = () => {
+  const { i18n } = useTranslation();
+  const lang = i18n.language || "en";
+
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTrending = async () => {
+      setLoading(true);
+      const response = await getProducts();
+      if (response.status === 200 && Array.isArray(response.data)) {
+        setProducts(response.data.map((p) => mapProductData(p, lang)));
+      } else {
+        setProducts([]);
+      }
+      setLoading(false);
+    };
+
+    fetchTrending();
+  }, [lang]);
 
   return (
-    <TrendingContainer>
-      <SectionHeader className="container">
-        <HeaderContent>
-          <HotBadge>HOT RIGHT NOW</HotBadge>
-          <SectionTitle>Trending Products</SectionTitle>
-          <SectionSubtitle>
+    <TrendingWrapper>
+      <div className="container section-header">
+        <div>
+          <span className="hot-badge">HOT RIGHT NOW</span>
+          <h2 className="section-title">Trending Products</h2>
+          <p className="section-subtitle">
             Our most popular tools and solutions, loved by teams around the
             world.
-          </SectionSubtitle>
-        </HeaderContent>
+          </p>
+        </div>
+        <Link to={PathConstants.PRODUCTS} className="view-all-btn">
+          View All <i className="fas fa-chevron-right"></i>
+        </Link>
+      </div>
 
-        <ViewAllButton to={PathConstants.PRODUCTS}>
-          View All{" "}
-          <i className="fas fa-chevron-right" style={{ fontSize: "12px" }}></i>
-        </ViewAllButton>
-      </SectionHeader>
-
-      <SwiperWrapper className="container">
-        <Swiper
-          modules={[Navigation, Pagination]}
-          spaceBetween={30}
-          slidesPerView={1}
-          navigation
-          pagination={{ clickable: true }}
-          breakpoints={{
-            768: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
-          }}
-        >
-          {productsArray.map((product) => (
-            <SwiperSlide key={product.id}>
-              <div style={{ height: "100%", paddingBottom: "15px" }}>
-                <ProductCardProvider $variant="normal-grid" product={product} />
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </SwiperWrapper>
-    </TrendingContainer>
+      <div className="container">
+        {loading ? (
+          <MainLoader />
+        ) : (
+          <ProductsSwiper
+            products={products}
+            cardVariant="normal-grid"
+            spaceBetween={30}
+          />
+        )}
+      </div>
+    </TrendingWrapper>
   );
 };
 

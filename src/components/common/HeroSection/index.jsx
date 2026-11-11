@@ -1,12 +1,12 @@
 import { HeroSectionStyles } from "./styles";
 
-function HeroSection({ title, subtitle, Children }) {
+function HeroSection({ title, subtitle, children }) {
   return (
     <HeroSectionStyles>
       <div className="container">
         <h2>{title}</h2>
         <p>{subtitle}</p>
-        <div>{Children}</div>
+        {children && <div>{children}</div>}
       </div>
     </HeroSectionStyles>
   );

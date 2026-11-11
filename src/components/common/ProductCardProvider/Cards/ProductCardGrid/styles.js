@@ -1,26 +1,6 @@
 import styled from "styled-components";
 import { devicesBreakpoints } from "../../../../../constants/Breakpoints";
-
-const handleBadgeColor = (text) => {
-  if (!text || typeof text !== "string") {
-    return { bg: "#f3f4f6", text: "#374151" };
-  }
-
-  switch (text.toLowerCase()) {
-    case "best seller":
-      return { bg: "#dcfce7", text: "#15803d" };
-    case "new":
-      return { bg: "#dbeafe", text: "#1d4ed8" };
-    case "popular":
-      return { bg: "#f3e8ff", text: "#7e22ce" };
-    case "sale":
-      return { bg: "#fee2e2", text: "#b91c1c" };
-    case "top rated":
-      return { bg: "#fef9c3", text: "#b45309" };
-    default:
-      return { bg: "#f3f4f6", text: "#374151" };
-  }
-};
+import { getBadgeColors } from "../../../../../helpers/product.helpers";
 
 export const ProductCardGridStyles = styled.div``;
 
@@ -30,7 +10,7 @@ export const GridImageArea = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) => props.bgColor || "var(--color-navy)"};
+  background-color: ${(props) => props.$bgColor || "var(--color-navy)"};
   color: rgba(255, 255, 255, 0.8);
   font-size: 40px;
   position: relative;
@@ -40,8 +20,8 @@ export const GridBadge = styled.span`
   position: absolute;
   top: 10px;
   left: 10px;
-  background-color: ${(props) => handleBadgeColor(props.text).bg};
-  color: ${(props) => handleBadgeColor(props.text).text};
+  background-color: ${(props) => getBadgeColors(props.$text).bg};
+  color: ${(props) => getBadgeColors(props.$text).text};
   font-size: 10px;
   font-weight: 700;
   padding: 3px 8px;
