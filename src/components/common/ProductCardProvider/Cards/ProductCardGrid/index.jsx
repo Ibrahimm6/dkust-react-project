@@ -15,22 +15,11 @@ import {
   WishlistButton,
 } from "./styles";
 import CustomButton from "../../../../common/custom-button";
-import { FiShoppingCart } from "react-icons/fi";
-import { FiHeart } from "react-icons/fi";
-import { useWishlist } from "../../../../../contexts/wishlistContext";
+import { FiShoppingCart, FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
+import { useWishlist } from "../../../../../contexts/wishlistContext";
 import { useCart } from "../../../../../contexts/cartContext";
-
-const getBgColor = (category) => {
-  const colors = {
-    Software: "#1e3a8a",
-    Robotics: "#14532d",
-    AI: "#1e40af",
-    Hardware: "#451a03",
-    Security: "#0f172a",
-  };
-  return colors[category] || "#1e3a8a";
-};
+import { getProductBgColor } from "../../../../../helpers/product.helpers";
 
 const ProductCardGrid = ({ product, compact }) => {
   const navigate = useNavigate();
@@ -38,15 +27,11 @@ const ProductCardGrid = ({ product, compact }) => {
   const { toggleWishlist, isInWishlist } = useWishlist();
   const isFavorite = isInWishlist(product.id);
 
-  const handleAddToCart = () => {
-    addToCart(product);
-  };
-
   return (
     <GridCard>
-      <GridImageArea bgColor={getBgColor(product.category)}>
+      <GridImageArea $bgColor={getProductBgColor(product.category, product.color)}>
         {product.badge && !compact && (
-          <GridBadge text={product.badge}>{product.badge}</GridBadge>
+          <GridBadge $text={product.badge}>{product.badge}</GridBadge>
         )}
         <i className="fas fa-cube"></i>
         {!compact && (
@@ -58,15 +43,12 @@ const ProductCardGrid = ({ product, compact }) => {
           </WishlistButton>
         )}
       </GridImageArea>
-
       <GridContent>
         <GridCategory>
           <i className="fas fa-tag"></i> {product.category}
         </GridCategory>
-
         <ListTitle>{product.name}</ListTitle>
         {!compact && <ListDesc>{product.description}</ListDesc>}
-
         {!compact && (
           <RatingBox style={{ marginTop: "12px" }}>
             <div className="stars">
@@ -79,7 +61,6 @@ const ProductCardGrid = ({ product, compact }) => {
             <span className="reviews">({product.reviewsCount})</span>
           </RatingBox>
         )}
-
         <GridFooter>
           <ListPrice>
             ${product.price}
@@ -99,7 +80,7 @@ const ProductCardGrid = ({ product, compact }) => {
                     <FiShoppingCart /> Add
                   </>
                 }
-                onClickFunction={() => handleAddToCart(product)}
+                onClickFunction={() => addToCart(product)}
               />
             </ActionButtons>
           )}

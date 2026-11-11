@@ -16,24 +16,14 @@ import {
   QtyValue,
   ItemPrice,
 } from './styles';
-
-const getBgColor = (category) => {
-  const colors = {
-    Software: '#1e3a8a',
-    Robotics: '#14532d',
-    AI: '#1e40af',
-    Hardware: '#451a03',
-    Security: '#0f172a',
-  };
-  return colors[category] || '#1e3a8a';
-};
+import { getProductBgColor } from "../../../helpers/product.helpers";
 
 const CartItem = ({ item }) => {
   const { updateQuantity, removeFromCart } = useCart();
 
   return (
     <ItemCard>
-      <IconBox $bgColor={getBgColor(item.category)}>
+      <IconBox $bgColor={getProductBgColor(item.category, item.color)}>
         <FiBox size={28} />
       </IconBox>
 
