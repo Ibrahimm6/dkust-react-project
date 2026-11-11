@@ -1,23 +1,12 @@
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../../../custom-button";
-import {
-  ActionButtons,
-  CategoryTag,
-  Description,
-  FeaturesList,
-  Price,
-  ProductImageArea,
-  ProductInfoArea,
-  ProductSection,
-  ProductTitle,
-  QuantityControl,
-  RatingBox,
-} from "./styles";
+import { DetailedCardWrapper } from "./styles";
 import { useCart } from "../../../../../contexts/cartContext";
-import { useState } from "react";
 import PathConstants from "../../../../../routes/pathConstants";
 
-const getBgColor = (category) => {
+const getBgColor = (category, customColor) => {
+  if (customColor) return customColor;
   const colors = {
     Software: "#1e3a8a",
     Robotics: "#14532d",
@@ -28,10 +17,21 @@ const getBgColor = (category) => {
   return colors[category] || "#1e3a8a";
 };
 
+const defaultFeatures = [
+  "High-quality performance",
+  "24/7 technical support",
+  "Secure payment integration",
+  "Fast delivery and setup",
+];
+
 function DetailedProductCard({ product }) {
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    setQuantity(1);
+  }, [product?.id]);
 
   const handleIncrease = () => setQuantity((prev) => prev + 1);
   const handleDecrease = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
@@ -45,32 +45,26 @@ function DetailedProductCard({ product }) {
     navigate(PathConstants.CART);
   };
 
+  const featuresToRender =
+    Array.isArray(product.features) && product.features.length > 0
+      ? product.features
+      : defaultFeatures;
+
   return (
-    <ProductSection className="container">
-      <ProductImageArea bgColor={getBgColor(product.category)}>
-        <i className="fas fa-cube"></i>
-        {product.badge && (
-          <span
-            style={{
-              backgroundColor: "#22c55e",
-              color: "white",
-              padding: "4px 12px",
-              borderRadius: "20px",
-              fontSize: "12px",
-              fontWeight: "bold",
-              marginTop: "20px",
-            }}
-          >
-            {product.badge}
-          </span>
-        )}
-      </ProductImageArea>
+    <DetailedCardWrapper
+      className="container"
+      $bgColor={getBgColor(product.category, product.color)}
+    >
+      <div className="image-area">
+        <i className="fas fa-cube product-icon"></i>
+        {product.badge && <span className="badge-pill">{product.badge}</span>}
+      </div>
 
-      <ProductInfoArea>
-        <CategoryTag>{product.category}</CategoryTag>
-        <ProductTitle>{product.name}</ProductTitle>
+      <div className="info-area">
+        <span className="category-tag">{product.category}</span>
+        <h1 className="product-title">{product.name}</h1>
 
-        <RatingBox>
+        <div className="rating-box">
           <div className="stars">
             <i className="fas fa-star"></i>
             <i className="fas fa-star"></i>
@@ -81,41 +75,41 @@ function DetailedProductCard({ product }) {
           <span>
             {product.rating} ({product.reviewsCount} reviews)
           </span>
-        </RatingBox>
+        </div>
 
-        <Description>{product.description}</Description>
+        <p className="description">{product.description}</p>
 
-        <FeaturesList>
-          <li>
-            <i className="far fa-check-circle"></i> High-quality performance
-          </li>
-          <li>
-            <i className="far fa-check-circle"></i> 24/7 technical support
-          </li>
-          <li>
-            <i className="far fa-check-circle"></i> Secure payment integration
-          </li>
-          <li>
-            <i className="far fa-check-circle"></i> Fast delivery and setup
-          </li>
-        </FeaturesList>
+        <ul className="features-list">
+          {featuresToRender.map((feature, idx) => (
+            <li key={idx}>
+              <i className="far fa-check-circle"></i>
+              <span>{feature}</span>
+            </li>
+          ))}
+        </ul>
 
-        <Price>
+        <div className="price-box">
           ${product.price} <span>/mo</span>
-        </Price>
+        </div>
 
-        <QuantityControl>
-          <span>Qty</span>
+        <div className="quantity-control">
+          <span className="qty-label">Qty</span>
           <div className="controls">
-            <button onClick={handleDecrease} disabled={quantity === 1}>
+            <button
+              type="button"
+              onClick={handleDecrease}
+              disabled={quantity === 1}
+            >
               -
             </button>
             <div className="qty-value">{quantity}</div>
-            <button onClick={handleIncrease}>+</button>
+            <button type="button" onClick={handleIncrease}>
+              +
+            </button>
           </div>
-        </QuantityControl>
+        </div>
 
-        <ActionButtons>
+        <div className="action-buttons">
           <CustomButton
             title={
               <>
@@ -126,9 +120,9 @@ function DetailedProductCard({ product }) {
             bgColor="#00a651"
           />
           <CustomButton title="Buy Now" onClickFunction={handleBuyNow} />
-        </ActionButtons>
-      </ProductInfoArea>
-    </ProductSection>
+        </div>
+      </div>
+    </DetailedCardWrapper>
   );
 }
 

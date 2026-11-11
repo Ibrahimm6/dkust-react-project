@@ -1,182 +1,241 @@
 import styled from "styled-components";
+import { devicesBreakpoints } from "../../../../../constants/Breakpoints";
 
-export const DetailedProductCardStyles = styled.div``;
-
-export const ProductSection = styled.div`
+export const DetailedCardWrapper = styled.div`
   display: flex;
-  background: #fff;
-  border-radius: 12px;
+  background-color: var(--color-bg-white);
+  border: 1px solid #ebe6e7;
+  border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   margin-bottom: 50px;
-  @media (max-width: 992px) {
+
+  .image-area {
+    width: 45%;
+    min-height: 360px;
+    background-color: ${({ $bgColor }) => $bgColor || "#1a3a6e"};
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    color: #ffffff;
+    position: relative;
+
+    i.product-icon {
+      font-size: 84px;
+      opacity: 0.85;
+    }
+
+    .badge-pill {
+      background-color: #22c55e;
+      color: #ffffff;
+      padding: 5px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 20px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  .info-area {
+    width: 55%;
+    padding: 32px 36px;
+    display: flex;
     flex-direction: column;
   }
-`;
 
-export const ProductImageArea = styled.div`
-  width: 50%;
-  background-color: ${(props) => props.bgColor || "#1a3a6e"};
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 30px 20px;
-  color: white;
-  i {
-    font-size: 80px;
-    opacity: 0.8;
-  }
-  .badge {
-    background-color: #22c55e;
-    color: white;
-    padding: 4px 12px;
-    border-radius: 20px;
+  .category-tag {
+    color: var(--color-text-gray);
     font-size: 12px;
-    font-weight: bold;
-    margin-top: 20px;
-  }
-  @media (max-width: 992px) {
-    width: 100%;
-    padding: 40px 20px;
-  }
-`;
-
-export const ProductInfoArea = styled.div`
-  width: 50%;
-  padding: 30px 35px;
-  display: flex;
-  flex-direction: column;
-  @media (max-width: 992px) {
-    width: 100%;
-    padding: 25px;
-  }
-`;
-
-export const CategoryTag = styled.span`
-  color: #6b7280;
-  font-size: 13px;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-`;
-
-export const ProductTitle = styled.h1`
-  font-size: 28px;
-  color: #111827;
-  margin-bottom: 10px;
-`;
-
-export const RatingBox = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 14px;
-  font-size: 14px;
-  color: #6b7280;
-  .stars {
-    color: #facc15;
-  }
-`;
-
-export const Description = styled.p`
-  color: #4b5563;
-  line-height: 1.6;
-  margin-bottom: 18px;
-`;
-
-export const FeaturesList = styled.ul`
-  list-style: none;
-  margin-bottom: 20px;
-  li {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: #4b5563;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     margin-bottom: 8px;
-    font-size: 15px;
   }
-  li i {
-    color: #00a651;
-  }
-`;
 
-export const Price = styled.div`
-  font-size: 32px;
-  font-weight: bold;
-  color: #00a651;
-  margin-bottom: 14px;
-  span {
-    font-size: 14px;
-    color: #6b7280;
-    font-weight: normal;
+  .product-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-text-dark);
+    margin-bottom: 10px;
   }
-`;
 
-export const QuantityControl = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 18px;
-  span {
-    font-weight: 500;
-    color: #374151;
-  }
-  .controls {
+  .rating-box {
     display: flex;
     align-items: center;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    overflow: hidden;
-    button {
-      background: #f3f4f6;
-      border: none;
-      padding: 8px 15px;
-      font-size: 16px;
-      cursor: pointer;
+    gap: 8px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    color: var(--color-text-gray);
+
+    .stars {
+      color: #facc15;
+      display: flex;
+      gap: 3px;
+    }
+  }
+
+  .description {
+    color: #4b5563;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 22px 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px 16px;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #374151;
+      font-size: 14px;
+
+      i {
+        color: var(--color-primary);
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  .price-box {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 18px;
+
+    span {
+      font-size: 14px;
+      color: var(--color-text-gray);
+      font-weight: 400;
+    }
+  }
+
+  .quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+
+    .qty-label {
+      font-weight: 600;
+      font-size: 14px;
       color: #374151;
     }
-    button:hover:not(:disabled) {
-      background: #e5e7eb;
+
+    .controls {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      overflow: hidden;
+
+      button {
+        background: #f3f4f6;
+        border: none;
+        padding: 8px 16px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        color: #374151;
+        transition: background-color 0.2s ease;
+
+        &:hover:not(:disabled) {
+          background: #e5e7eb;
+        }
+
+        &:disabled {
+          opacity: 0.45;
+          cursor: not-allowed;
+        }
+      }
+
+      .qty-value {
+        padding: 8px 20px;
+        font-weight: 700;
+        font-size: 14px;
+        border-left: 1px solid #d1d5db;
+        border-right: 1px solid #d1d5db;
+      }
     }
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 14px;
+    margin-top: auto;
+
+    & > button {
+      margin-bottom: 0;
     }
-    .qty-value {
-      padding: 8px 20px;
-      font-weight: bold;
-      border-left: 1px solid #d1d5db;
-      border-right: 1px solid #d1d5db;
+
+    & > button:first-child {
+      flex: 2;
+    }
+
+    & > button:last-child {
+      flex: 1;
+      background-color: transparent !important;
+      border: 2px solid var(--color-primary) !important;
+      color: var(--color-primary) !important;
+
+      &:hover {
+        background-color: #f0fdf4 !important;
+      }
     }
   }
-`;
 
-export const ActionButtons = styled.div`
-  display: flex;
-  gap: 15px;
-
-  & > button:first-child {
-    flex: 2;
-  }
-
-  & > button:last-child {
-    flex: 1;
-    background-color: transparent !important;
-    border: 2px solid #00a651 !important;
-    color: #00a651 !important;
-  }
-
-  & > button:last-child:hover {
-    background-color: #f0fdf4 !important;
-  }
-
-  @media (max-width: 375px) {
+  @media ${devicesBreakpoints.portable} {
     flex-direction: column;
 
-    & > button:first-child,
-    & > button:last-child {
-      flex: none;
+    .image-area {
       width: 100%;
+      min-height: 240px;
+    }
+
+    .info-area {
+      width: 100%;
+      padding: 28px 24px;
+    }
+  }
+
+  @media ${devicesBreakpoints.pocket} {
+    margin-bottom: 36px;
+
+    .product-title {
+      font-size: 24px;
+    }
+
+    .features-list {
+      grid-template-columns: 1fr;
+    }
+
+    .price-box {
+      font-size: 26px;
+    }
+  }
+
+  @media ${devicesBreakpoints.thumb} {
+    .info-area {
+      padding: 20px 16px;
+    }
+
+    .action-buttons {
+      flex-direction: column;
+
+      & > button:first-child,
+      & > button:last-child {
+        flex: none;
+        width: 100%;
+      }
     }
   }
 `;
