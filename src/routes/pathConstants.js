@@ -15,6 +15,8 @@ const PathConstants = {
   WISHLIST: "/wishlist",
   PROFILE: "/profile",
   CART: "/cart",
+  FORGOT_PASSWORD: "/forgot-password",
+  RESET_PASSWORD: "/reset-password",
 };
 
 export default PathConstants;

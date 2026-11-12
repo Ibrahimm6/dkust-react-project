@@ -57,3 +57,12 @@ export const logoutUser = async () => {
   clearAuthSession();
   return response;
 };
+
+
+export const forgotPassword = async (payload) => {
+  return await POST(environment.forgotPassword, payload);
+}
+
+export const resetPassword = async (payload) => {
+  return await POST(environment.resetPassword, payload);
+}
