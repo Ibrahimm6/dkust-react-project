@@ -31,10 +31,14 @@ const LoginPage = () => {
       if (response.status === 200 || response.status === 201) {
         navigate(PathConstants.HOME);
       } else {
-        setApiError(
-          response.data?.message ||
-            "Invalid email or password. Please try again."
-        );
+        if (response?.data?.requiresEmailVerification) {
+          navigate(PathConstants.VERIFY, { state: { email: values.email } });
+        } else {
+          setApiError(
+            response.data?.message ||
+              "Invalid email or password. Please try again.",
+          );
+        }
       }
     },
   });
@@ -47,7 +51,10 @@ const LoginPage = () => {
           <p className="subtitle">Sign in to your DKUST account</p>
 
           {apiError && (
-            <div className="alert alert-danger py-2 small text-center" role="alert">
+            <div
+              className="alert alert-danger py-2 small text-center"
+              role="alert"
+            >
               {apiError}
             </div>
           )}
@@ -66,7 +73,7 @@ const LoginPage = () => {
             />
 
             <div className="forgot-row">
-              <a href="#forgot">Forgot password?</a>
+              <a href={PathConstants.FORGOT_PASSWORD}>Forgot password?</a>
             </div>
 
             <InputComponent

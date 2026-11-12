@@ -22,12 +22,15 @@ const environment = {
   orders: "orders",
   messages: "messages",
   subscribers: "subscribers",
+
+  // auth
   register: "auth/register",
   verifyEmail: "auth/verify-email",
   resendVerification: "auth/resend-verification",
   login: "auth/login",
   logout: "auth/logout",
   refresh: "auth/refresh",
+  forgotPassword: "auth/forgot-password",
 
   // Base API URL
   API_URL: "https://api-commerce.learnsou.com",

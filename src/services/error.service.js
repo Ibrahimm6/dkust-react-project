@@ -9,19 +9,19 @@ const ERRORS_OBJECT = {
 };
 
 export const handleError = (error) => {
-  const message =
-    error?.data?.Message ||
-    error?.data?.message ||
-    ERRORS_OBJECT[error?.status] ||
-    ERRORS_OBJECT[500];
+  // const message =
+  //   error?.data?.Message ||
+  //   error?.data?.message ||
+  //   ERRORS_OBJECT[error?.status] ||
+  //   ERRORS_OBJECT[500];
 
-  console.error("API Error:", message);
+  // console.error("API Error:", message);
 
-  if (error && error?.status === 401) {
-    window.location.replace(PathConstants.LOGIN);
-    return;
-  }
-  if (error && error?.status === 403) {
-    window.location.replace(PathConstants.HOME);
-  }
+  // if (error && error?.status === 401) {
+  //   window.location.replace(PathConstants.LOGIN);
+  //   return;
+  // }
+  // if (error && error?.status === 403) {
+  //   window.location.replace(PathConstants.HOME);
+  // }
 };

@@ -3,7 +3,10 @@ import { useLocation, useNavigate, Link } from "react-router-dom";
 import AppTemplate from "../../components/app-template";
 import CustomButton from "../../components/common/custom-button";
 import PathConstants from "../../routes/pathConstants";
-import { verifyEmailCode, resendVerificationCode } from "../../services/auth/auth.service";
+import {
+  verifyEmailCode,
+  resendVerificationCode,
+} from "../../services/auth/auth.service";
 import { VerificationWrapper } from "./styles";
 
 const VerificationPage = () => {
@@ -17,6 +20,8 @@ const VerificationPage = () => {
   const [timer, setTimer] = useState(60);
   const [statusMsg, setStatusMsg] = useState({ type: "", text: "" });
   const [isVerified, setIsVerified] = useState(false);
+
+  const fromFlow = location.state?.fromFlow || "register";
 
   const inputRefs = useRef([]);
 
@@ -48,7 +53,10 @@ const VerificationPage = () => {
 
   const handlePaste = (e) => {
     e.preventDefault();
-    const pastedData = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6);
+    const pastedData = e.clipboardData
+      .getData("text")
+      .replace(/\D/g, "")
+      .slice(0, 6);
     if (!pastedData) return;
 
     const updatedOtp = [...otp];
@@ -66,11 +74,17 @@ const VerificationPage = () => {
     const code = otp.join("");
 
     if (!email) {
-      setStatusMsg({ type: "danger", text: "Please enter your email address." });
+      setStatusMsg({
+        type: "danger",
+        text: "Please enter your email address.",
+      });
       return;
     }
     if (code.length < 6) {
-      setStatusMsg({ type: "danger", text: "Please enter the complete 6-digit code." });
+      setStatusMsg({
+        type: "danger",
+        text: "Please enter the complete 6-digit code.",
+      });
       return;
     }
 
@@ -78,18 +92,36 @@ const VerificationPage = () => {
     setStatusMsg({ type: "", text: "" });
 
     const response = await verifyEmailCode({ email, code });
+    // fake response for testing
+    // const response = {
+    //   status: 200,
+    //   data: { message: "Email verified successfully." },
+    // };
+
     setLoading(false);
 
     if (response.status === 200 || response.status === 201) {
-      setIsVerified(true);
+      if (fromFlow === "reset-password") {
+        navigate(PathConstants.RESET_PASSWORD, {
+          state: { email: email, code: code },
+        });
+      } else {
+        setIsVerified(true);
+      }
     } else {
-      setStatusMsg({ type: "danger", text: "Invalid or expired verification code." });
+      setStatusMsg({
+        type: "danger",
+        text: "Invalid or expired verification code.",
+      });
     }
   };
 
   const handleResend = async () => {
     if (!email) {
-      setStatusMsg({ type: "danger", text: "Please enter your email address first." });
+      setStatusMsg({
+        type: "danger",
+        text: "Please enter your email address first.",
+      });
       return;
     }
 
@@ -103,9 +135,15 @@ const VerificationPage = () => {
       setTimer(60);
       setOtp(["", "", "", "", "", ""]);
       inputRefs.current[0]?.focus();
-      setStatusMsg({ type: "success", text: "A new verification code has been sent to your email." });
+      setStatusMsg({
+        type: "success",
+        text: "A new verification code has been sent to your email.",
+      });
     } else {
-      setStatusMsg({ type: "danger", text: "Failed to resend code. Please try again." });
+      setStatusMsg({
+        type: "danger",
+        text: "Failed to resend code. Please try again.",
+      });
     }
   };
 
@@ -120,7 +158,8 @@ const VerificationPage = () => {
               </div>
               <h2>Email Verified!</h2>
               <p className="subtitle">
-                Your account has been verified successfully. You can now sign in to your account.
+                Your account has been verified successfully. You can now sign in
+                to your account.
               </p>
               <CustomButton
                 title="Go to Login"
@@ -136,11 +175,16 @@ const VerificationPage = () => {
               <h2>Verify Your Email</h2>
               <p className="subtitle">
                 We've sent a 6-digit verification code to
-                {location.state?.email && <strong>{location.state.email}</strong>}
+                {location.state?.email && (
+                  <strong>{location.state.email}</strong>
+                )}
               </p>
 
               {statusMsg.text && (
-                <div className={`alert alert-${statusMsg.type} py-2 small`} role="alert">
+                <div
+                  className={`alert alert-${statusMsg.type} py-2 small`}
+                  role="alert"
+                >
                   {statusMsg.text}
                 </div>
               )}
@@ -183,7 +227,11 @@ const VerificationPage = () => {
                   title={
                     loading ? (
                       <>
-                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span
+                          className="spinner-border spinner-border-sm"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
                         <span>Verifying...</span>
                       </>
                     ) : (
@@ -203,8 +251,8 @@ const VerificationPage = () => {
                   {resendLoading
                     ? "Sending..."
                     : timer > 0
-                    ? `Resend in ${timer}s`
-                    : "Resend Code"}
+                      ? `Resend in ${timer}s`
+                      : "Resend Code"}
                 </button>
               </div>
             </>
