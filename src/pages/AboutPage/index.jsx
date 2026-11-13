@@ -14,14 +14,14 @@ function AboutPage() {
 
   const fetchData = async () => {
     setLoading(true);
-    const response = await getAboutData();
-    console.log(response);
-    if (response.status === 200) {
-      console.log("About data fetched successfully");
-      setAboutData(response.data);
-    } else {
-      console.error("Failed to fetch about data");
-    }
+    // const response = await getAboutData();
+    // console.log(response);
+    // if (response.status === 200) {
+    //   console.log("About data fetched successfully");
+    //   setAboutData(response.data);
+    // } else {
+    //   console.error("Failed to fetch about data");
+    // }
     setLoading(false);
   };
 
