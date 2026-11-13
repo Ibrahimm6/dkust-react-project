@@ -31,6 +31,7 @@ const environment = {
   logout: "auth/logout",
   refresh: "auth/refresh",
   forgotPassword: "auth/forgot-password",
+  resetPassword: "auth/reset-password",
 
   // this endpoint does not exist in the backend, but it is here in case we need to use it in the future
   about: "about",
