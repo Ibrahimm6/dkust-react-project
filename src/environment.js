@@ -10,7 +10,7 @@ const environment = {
   appName: "DKUST",
   siteUrl: process.env.REACT_APP_SITE_URL || "http://localhost:3000",
 
-  // API ENDPOINTS 
+  // API ENDPOINTS
   faqs: "faqs",
   products: "products",
   services: "services",
@@ -31,6 +31,9 @@ const environment = {
   logout: "auth/logout",
   refresh: "auth/refresh",
   forgotPassword: "auth/forgot-password",
+
+  // this endpoint does not exist in the backend, but it is here in case we need to use it in the future
+  about: "about",
 
   // Base API URL
   API_URL: "https://api-commerce.learnsou.com",

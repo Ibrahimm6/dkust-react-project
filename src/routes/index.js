@@ -14,6 +14,8 @@ const CartPage = React.lazy(() => import("../pages/cart"));
 const BlogPage = React.lazy(() => import("../pages/blog"));
 const ForgotPasswordPage = React.lazy(() => import("../pages/forgot-password"));
 const ResetPasswordPage = React.lazy(() => import("../pages/reset-password"));
+const AboutPage = React.lazy(() => import("../pages/AboutPage"));
+const ServicesPage = React.lazy(() => import("../pages/ServicesPage"));
 
 const routes = [
   { path: PathConstants.HOME, element: <HomePage /> },
@@ -29,6 +31,8 @@ const routes = [
   { path: PathConstants.BLOG, element: <BlogPage /> },
   { path: PathConstants.FORGOT_PASSWORD, element: <ForgotPasswordPage /> },
   { path: PathConstants.RESET_PASSWORD, element: <ResetPasswordPage /> },
+  { path: PathConstants.ABOUT, element: <AboutPage /> },
+  { path: PathConstants.SERVICES, element: <ServicesPage /> },
 ];
 
 export default routes;

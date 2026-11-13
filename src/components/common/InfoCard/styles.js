@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-export const InfoCardStyles = styled.div`
+export const InfoCardStyles = styled.article`
   border: 1px solid var(--border-subtle);
   background-color: var(--surface);
   border-radius: 12px;
@@ -8,8 +8,10 @@ export const InfoCardStyles = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
-  align-items: flex-start;
+  /* align-items: flex-start; */
   font-family: var(--arabic-font);
+
+  width: 100%;
 
   span {
     color: var(--dark-color);
@@ -24,5 +26,17 @@ export const InfoCardStyles = styled.div`
   p {
     color: var(--muted-color);
     font-size: var(--font-size-sm);
+    max-width: 576px;
   }
+
+  ${(props) =>
+    props.$variant === "aboutPageCard" &&
+    css`
+      text-align: center;
+      align-items: center;
+      h3 {
+        font-size: var(--font-size-lg);
+        font-weight: 800;
+      }
+    `}
 `;
