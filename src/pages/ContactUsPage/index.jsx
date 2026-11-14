@@ -46,6 +46,53 @@ function ContactUsPage() {
     onSubmit: (values) => handleSubmit(values),
   });
 
+  const InputFields = [
+    {
+      name: "name",
+      fieldLabel: "Full Name",
+      value: formik.values.name,
+      onChange: formik.handleChange,
+      onBlur: formik.handleBlur,
+      placeholder: "Full Name",
+      type: "text",
+      error: formik.errors.name,
+      touched: formik.touched.name,
+    },
+    {
+      name: "email",
+      fieldLabel: "Email Address",
+      value: formik.values.email,
+      onChange: formik.handleChange,
+      onBlur: formik.handleBlur,
+      placeholder: "you@example.com",
+      type: "email",
+      error: formik.errors.email,
+      touched: formik.touched.email,
+    },
+    {
+      name: "subject",
+      fieldLabel: "Subject",
+      value: formik.values.subject,
+      onChange: formik.handleChange,
+      onBlur: formik.handleBlur,
+      placeholder: "Subject",
+      type: "text",
+      error: formik.errors.subject,
+      touched: formik.touched.subject,
+    },
+    {
+      name: "message",
+      fieldLabel: "Message",
+      value: formik.values.message,
+      onChange: formik.handleChange,
+      onBlur: formik.handleBlur,
+      placeholder: "Message",
+      type: "textarea",
+      error: formik.errors.message,
+      touched: formik.touched.message,
+    },
+  ];
+
   return (
     <AppTemplate pageTitle="Contact" path={PathConstants.CONTACT}>
       <HeroSection
@@ -65,50 +112,9 @@ function ContactUsPage() {
       ) : (
         <AuthProvider $theme="var(--page-bg)" alertMessage={error}>
           <form onSubmit={formik.handleSubmit}>
-            <InputComponent
-              name="name"
-              fieldLabel="Full Name"
-              value={formik.values.name}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              placeholder="Full Name"
-              type="text"
-              error={formik.errors.name}
-              touched={formik.touched.name}
-            />
-            <InputComponent
-              name="email"
-              fieldLabel="Email Address"
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              placeholder="you@example.com"
-              type="email"
-              error={formik.errors.email}
-              touched={formik.touched.email}
-            />
-            <InputComponent
-              name="subject"
-              fieldLabel="Subject"
-              value={formik.values.subject}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              placeholder="Subject"
-              type="text"
-              error={formik.errors.subject}
-              touched={formik.touched.subject}
-            />
-            <InputComponent
-              name="message"
-              fieldLabel="Message"
-              value={formik.values.message}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              placeholder="Message"
-              type="textarea"
-              error={formik.errors.message}
-              touched={formik.touched.message}
-            />
+            {InputFields.map((field, index) => (
+              <InputComponent key={index} {...field} />
+            ))}
             <CustomButton
               type="submit"
               disabled={loading}
