@@ -8,7 +8,8 @@ export const AuthProviderWrapper = styled.div`
   justify-content: center;
   padding: 55px 20px;
   flex-grow: 1;
-  background-color: var(--color-page-bg);
+  background-color: ${(props) => props?.$theme};
+  /* background-color: var(--color-page-bg); */
 
   .auth-card {
     background-color: #ffffff;

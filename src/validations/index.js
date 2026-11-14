@@ -34,3 +34,12 @@ export const resetPasswordSchema = Yup.object().shape({
     .oneOf([Yup.ref("newPassword"), null], "Passwords must match")
     .required("Confirm password is required"),
 });
+
+export const contactSchema = Yup.object().shape({
+  name: Yup.string().required("Name is required"),
+  email: Yup.string()
+    .email("Invalid email address")
+    .required("Email is required"),
+  subject: Yup.string().required("Subject is required"),
+  message: Yup.string().required("Message is required"),
+});
