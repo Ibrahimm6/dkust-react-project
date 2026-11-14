@@ -17,10 +17,15 @@ const AuthProvider = ({
   backLinkTo = PathConstants.HOME,
   maxWidth = "480px",
   centered = false,
+  $theme = "var(--color-page-bg)",
   children,
 }) => {
   return (
-    <AuthProviderWrapper $maxWidth={maxWidth} $centered={centered}>
+    <AuthProviderWrapper
+      $maxWidth={maxWidth}
+      $centered={centered}
+      $theme={$theme}
+    >
       <div className="auth-card">
         {icon && <div className="auth-icon-box">{icon}</div>}
         {title && <h2 className="auth-title">{title}</h2>}
