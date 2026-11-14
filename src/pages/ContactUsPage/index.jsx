@@ -1,5 +1,4 @@
 import { useFormik } from "formik";
-import { ContactUsPageStyles } from "./styles";
 import { contactSchema } from "../../validations";
 import PathConstants from "../../routes/pathConstants";
 import AppTemplate from "../../components/app-template";
@@ -19,6 +18,7 @@ function ContactUsPage() {
 
   const handleSubmit = async (values) => {
     setLoading(true);
+    setError("");
     // console.log(values);
 
     const response = await sendMessage({
@@ -37,7 +37,7 @@ function ContactUsPage() {
       } else {
         setError("Failed to send message. Please try again.");
       }
-    }, 2000);
+    },);
   };
 
   const formik = useFormik({
