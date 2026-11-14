@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import PathConstants from "../../routes/pathConstants";
 import {
   FaFacebookF,
@@ -7,118 +8,155 @@ import {
   FaInstagram,
   FaRegPaperPlane,
 } from "react-icons/fa";
-import {
-  FooterWrapper,
-  FooterTop,
-  FooterCol,
-  ColumnTitle,
-  FooterList,
-  FooterListItem,
-  StyledFooterLink,
-  NewsletterText,
-  NewsletterForm,
-  EmailInput,
-  SubmitButton,
-  Divider,
-  FooterBottom,
-  CopyrightText,
-  SocialIcons,
-  SocialIconLink,
-} from "./styles";
+import { subscribeNewsletter } from "../../services/subscribers/subscribers.service";
+import { FooterWrapper } from "./styles";
+
+const QUICK_LINKS = [
+  { label: "About Us", to: PathConstants.ABOUT },
+  { label: "Services", to: PathConstants.SERVICES },
+  { label: "Portfolio", to: PathConstants.PORTFOLIO },
+  { label: "Blog", to: PathConstants.BLOG },
+  { label: "Contact Us", to: PathConstants.CONTACT },
+];
+
+const SERVICE_LINKS = [
+  { label: "Web Development", to: PathConstants.SERVICES },
+  { label: "Machine Learning", to: PathConstants.SERVICES },
+  { label: "Robotics", to: PathConstants.SERVICES },
+  { label: "Industrial Consulting", to: PathConstants.SERVICES },
+  { label: "Data Analytics", to: PathConstants.SERVICES },
+];
 
 const Footer = () => {
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [feedback, setFeedback] = useState({ type: "", text: "" });
+
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail) return;
+
+    setLoading(true);
+    setFeedback({ type: "", text: "" });
+
+    const response = await subscribeNewsletter({ email: trimmedEmail });
+    setLoading(false);
+
+    if (response.status === 200 || response.status === 201) {
+      setEmail("");
+      setFeedback({
+        type: "success",
+        text: "Subscribed successfully! Thank you.",
+      });
+    } else {
+      setFeedback({
+        type: "error",
+        text:
+          response.data?.message ||
+          "Subscription failed. Please try again.",
+      });
+    }
+  };
+
   return (
     <FooterWrapper>
       <div className="container">
-        <FooterTop>
-          <FooterCol>
-            <ColumnTitle>CONTACT DETAIL</ColumnTitle>
-            <FooterList>
-              <FooterListItem>
+        <div className="footer-top">
+          <div className="footer-col">
+            <h6 className="col-title">CONTACT DETAIL</h6>
+            <ul className="footer-list">
+              <li>
                 123 Business Street, Suite 100,
                 <br />
                 New York, NY 10001
-              </FooterListItem>
-              <FooterListItem>Phone: +1 234 567 8900</FooterListItem>
-              <FooterListItem>Email: info@dkust.com</FooterListItem>
-            </FooterList>
-          </FooterCol>
+              </li>
+              <li>Phone: +1 234 567 8900</li>
+              <li>Email: info@dkust.com</li>
+            </ul>
+          </div>
 
-          <FooterCol>
-            <ColumnTitle>QUICK LINKS</ColumnTitle>
-            <FooterList>
-              <FooterListItem>
-                <StyledFooterLink to={PathConstants.ABOUT}>About Us</StyledFooterLink>
-              </FooterListItem>
-              <FooterListItem>
-                <StyledFooterLink to={PathConstants.SERVICES}>Services</StyledFooterLink>
-              </FooterListItem>
-              <FooterListItem>
-                <StyledFooterLink to={PathConstants.PORTFOLIO}>Portfolio</StyledFooterLink>
-              </FooterListItem>
-              <FooterListItem>
-                <StyledFooterLink to={PathConstants.BLOG}>Blog</StyledFooterLink>
-              </FooterListItem>
-              <FooterListItem>
-                <StyledFooterLink to={PathConstants.CONTACT}>Contact Us</StyledFooterLink>
-              </FooterListItem>
-            </FooterList>
-          </FooterCol>
+          <div className="footer-col">
+            <h6 className="col-title">QUICK LINKS</h6>
+            <ul className="footer-list">
+              {QUICK_LINKS.map((link) => (
+                <li key={link.label}>
+                  <Link to={link.to}>{link.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-          <FooterCol>
-            <ColumnTitle>OUR SERVICES</ColumnTitle>
-            <FooterList>
-              <FooterListItem>
-                <StyledFooterLink to="/services/web">Web Development</StyledFooterLink>
-              </FooterListItem>
-              <FooterListItem>
-                <StyledFooterLink to="/services/ml">Machine Learning</StyledFooterLink>
-              </FooterListItem>
-              <FooterListItem>
-                <StyledFooterLink to="/services/robotics">Robotics</StyledFooterLink>
-              </FooterListItem>
-              <FooterListItem>
-                <StyledFooterLink to="/services/consulting">Industrial Consulting</StyledFooterLink>
-              </FooterListItem>
-              <FooterListItem>
-                <StyledFooterLink to="/services/analytics">Data Analytics</StyledFooterLink>
-              </FooterListItem>
-            </FooterList>
-          </FooterCol>
+          <div className="footer-col">
+            <h6 className="col-title">OUR SERVICES</h6>
+            <ul className="footer-list">
+              {SERVICE_LINKS.map((service) => (
+                <li key={service.label}>
+                  <Link to={service.to}>{service.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-          <FooterCol>
-            <ColumnTitle>SUBSCRIBE NEWSLETTER</ColumnTitle>
-            <NewsletterText>Get the latest updates and news.</NewsletterText>
-            <NewsletterForm onSubmit={(e) => e.preventDefault()}>
-              <EmailInput type="email" placeholder="Email Address" required />
-              <SubmitButton type="submit" aria-label="Subscribe">
-                <FaRegPaperPlane />
-              </SubmitButton>
-            </NewsletterForm>
-          </FooterCol>
-        </FooterTop>
+          <div className="footer-col">
+            <h6 className="col-title">SUBSCRIBE NEWSLETTER</h6>
+            <p className="newsletter-text">
+              Get the latest updates and news.
+            </p>
+            <form className="newsletter-form" onSubmit={handleSubscribe}>
+              <input
+                type="email"
+                placeholder="Email Address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={loading}
+                required
+              />
+              <button
+                type="submit"
+                aria-label="Subscribe"
+                disabled={loading || !email.trim()}
+              >
+                {loading ? (
+                  <span
+                    className="spinner-border spinner-border-sm"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                ) : (
+                  <FaRegPaperPlane />
+                )}
+              </button>
+            </form>
+            {feedback.text && (
+              <div className={`subscribe-feedback ${feedback.type}`}>
+                {feedback.text}
+              </div>
+            )}
+          </div>
+        </div>
 
-        <Divider />
+        <hr className="footer-divider" />
 
-        <FooterBottom>
-          <CopyrightText>
+        <div className="footer-bottom">
+          <p className="copyright">
             Copyright &copy; DKUST | All Rights Reserved
-          </CopyrightText>
-          <SocialIcons>
-            <SocialIconLink href="#fb" aria-label="Facebook">
+          </p>
+          <div className="social-icons">
+            <a href="#fb" aria-label="Facebook">
               <FaFacebookF />
-            </SocialIconLink>
-            <SocialIconLink href="#tw" aria-label="Twitter">
+            </a>
+            <a href="#tw" aria-label="Twitter">
               <FaTwitter />
-            </SocialIconLink>
-            <SocialIconLink href="#in" aria-label="LinkedIn">
+            </a>
+            <a href="#in" aria-label="LinkedIn">
               <FaLinkedinIn />
-            </SocialIconLink>
-            <SocialIconLink href="#ig" aria-label="Instagram">
+            </a>
+            <a href="#ig" aria-label="Instagram">
               <FaInstagram />
-            </SocialIconLink>
-          </SocialIcons>
-        </FooterBottom>
+            </a>
+          </div>
+        </div>
       </div>
     </FooterWrapper>
   );

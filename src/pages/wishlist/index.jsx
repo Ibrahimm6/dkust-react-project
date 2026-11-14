@@ -1,11 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { FiHeart } from "react-icons/fi";
 import AppTemplate from "../../components/app-template";
 import PathConstants from "../../routes/pathConstants";
 import { useWishlist } from "../../contexts/wishlistContext";
-import { FiHeart } from "react-icons/fi";
 import CustomButton from "../../components/common/custom-button";
-
+import ProductCardProvider from "../../components/common/ProductCardProvider";
+import MainLoader from "../../components/main-loader";
 import {
   PageWrapper,
   HeroSection,
@@ -15,13 +16,12 @@ import {
   EmptyStateWrapper,
   EmptyIcon,
   EmptyText,
-  ProductsGrid, //ResultsText
+  ProductsGrid,
 } from "./styles";
-import ProductCardProvider from "../../components/common/ProductCardProvider";
 
 const WishlistPage = () => {
   const navigate = useNavigate();
-  const { wishlist } = useWishlist();
+  const { wishlist, loading } = useWishlist();
 
   return (
     <AppTemplate pageTitle="My Favorites" path={PathConstants.WISHLIST}>
@@ -36,19 +36,18 @@ const WishlistPage = () => {
         </HeroSection>
 
         <ContentContainer className="container">
-          {wishlist.length > 0 ? (
-            <>
-              {/* <ResultsText>{wishlist.length} products saved</ResultsText> */}
-              <ProductsGrid>
-                {wishlist.map((product) => (
-                  <ProductCardProvider
-                    $variant="normal-grid"
-                    key={product.id}
-                    product={product}
-                  />
-                ))}
-              </ProductsGrid>
-            </>
+          {loading ? (
+            <MainLoader />
+          ) : wishlist.length > 0 ? (
+            <ProductsGrid>
+              {wishlist.map((product) => (
+                <ProductCardProvider
+                  $variant="normal-grid"
+                  key={product.id}
+                  product={product}
+                />
+              ))}
+            </ProductsGrid>
           ) : (
             <EmptyStateWrapper>
               <EmptyIcon>
