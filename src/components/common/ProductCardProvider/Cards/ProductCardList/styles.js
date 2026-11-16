@@ -1,26 +1,6 @@
 import styled from "styled-components";
 import { devicesBreakpoints } from "../../../../../constants/Breakpoints";
-
-const handleBadgeColor = (text) => {
-  if (!text || typeof text !== "string") {
-    return { bg: "#f3f4f6", text: "#374151" };
-  }
-
-  switch (text.toLowerCase()) {
-    case "best seller":
-      return { bg: "#dcfce7", text: "#15803d" };
-    case "new":
-      return { bg: "#dbeafe", text: "#1d4ed8" };
-    case "popular":
-      return { bg: "#f3e8ff", text: "#7e22ce" };
-    case "sale":
-      return { bg: "#fee2e2", text: "#b91c1c" };
-    case "top rated":
-      return { bg: "#fef9c3", text: "#b45309" };
-    default:
-      return { bg: "#f3f4f6", text: "#374151" };
-  }
-};
+import { getBadgeColors } from "../../../../../helpers/product.helpers";
 
 export const ProductCardListStyles = styled.div``;
 
@@ -32,7 +12,7 @@ export const ListImageArea = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) => props.bgColor || "var(--color-navy)"};
+  background-color: ${(props) => props.$bgColor || "var(--color-navy)"};
   color: rgba(255, 255, 255, 0.8);
   font-size: 55px;
   position: relative;
@@ -63,12 +43,12 @@ export const ListInfo = styled.div``;
 
 export const ListBadge = styled.span`
   display: inline-block;
-  background-color: ${(props) => handleBadgeColor(props.text).bg};
-  color: ${(props) => handleBadgeColor(props.text).text};
+  background-color: ${(props) => getBadgeColors(props.$text).bg};
+  color: ${(props) => getBadgeColors(props.$text).text};
   font-size: 12px;
   font-weight: 600;
   padding: 2px 8px;
-  border-radius: 3.40282e38px;
+  border-radius: 9999px;
   margin-bottom: 4px;
 `;
 
@@ -189,7 +169,6 @@ export const ListBottomRow = styled.div`
     gap: 8px !important;
   }
 
-  /* (View Details) */
   & > div:last-child > button:first-child {
     background-color: var(--color-bg-white) !important;
     border: 1px solid var(--color-primary) !important;
@@ -205,7 +184,6 @@ export const ListBottomRow = styled.div`
     background-color: #f0fdf4 !important;
   }
 
-  /* (Add to Cart) */
   & > div:last-child > button:last-child {
     background-color: var(--color-primary) !important;
     border: 1px solid var(--color-primary) !important;
@@ -220,33 +198,6 @@ export const ListBottomRow = styled.div`
   & > div:last-child > button:last-child:hover {
     background-color: var(--color-primary-hover) !important;
     border-color: var(--color-primary-hover) !important;
-  }
-`;
-
-export const ListWishlistButton = styled.button`
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background-color: #f3f4f6;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #9ca3af;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background-color: #e5e7eb;
-    color: var(--color-primary);
-  }
-
-  &.active {
-    color: #ef4444;
-    background-color: #fee2e2;
   }
 `;
 
@@ -275,7 +226,6 @@ export const WishlistButton = styled.button`
   }
 `;
 
-// Root Wrapper & Responsive Media Queries
 export const ListCard = styled.div`
   background-color: var(--color-bg-white);
   border: 1px solid #ebe6e7;
