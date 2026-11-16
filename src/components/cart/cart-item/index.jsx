@@ -1,6 +1,7 @@
-import React from 'react';
-import { FiBox, FiTrash2 } from 'react-icons/fi';
-import { useCart } from '../../../contexts/cartContext';
+import React from "react";
+import { FiBox, FiTrash2 } from "react-icons/fi";
+import { useDispatch } from "react-redux";
+import { updateQuantity, removeFromCart } from "../../../store/cart/cartSlice";
 import {
   ItemCard,
   IconBox,
@@ -15,28 +16,26 @@ import {
   QtyBtn,
   QtyValue,
   ItemPrice,
-} from './styles';
+} from "./styles";
 import { getProductBgColor } from "../../../helpers/product.helpers";
 
 const CartItem = ({ item }) => {
-  const { updateQuantity, removeFromCart } = useCart();
+  const dispatch = useDispatch();
 
   return (
     <ItemCard>
       <IconBox $bgColor={getProductBgColor(item.category, item.color)}>
         <FiBox size={28} />
       </IconBox>
-
       <ItemContent>
         <TopRow>
           <ItemInfo>
             <ItemTitle to={`/products/${item.id}`}>{item.name}</ItemTitle>
             <ItemCategory>{item.category}</ItemCategory>
           </ItemInfo>
-
           <DeleteButton
             type="button"
-            onClick={() => removeFromCart(item.id)}
+            onClick={() => dispatch(removeFromCart(item.id))}
             aria-label="Remove item"
           >
             <FiTrash2 size={15} />
@@ -47,20 +46,23 @@ const CartItem = ({ item }) => {
           <QuantityControl>
             <QtyBtn
               type="button"
-              onClick={() => updateQuantity(item.id, item.quantity - 1)}
+              onClick={() =>
+                dispatch(updateQuantity({ productId: item.id, quantity: item.quantity - 1 }))
+              }
               disabled={item.quantity <= 1}
             >
-              −
+              -
             </QtyBtn>
             <QtyValue>{item.quantity}</QtyValue>
             <QtyBtn
               type="button"
-              onClick={() => updateQuantity(item.id, item.quantity + 1)}
+              onClick={() =>
+                dispatch(updateQuantity({ productId: item.id, quantity: item.quantity + 1 }))
+              }
             >
               +
             </QtyBtn>
           </QuantityControl>
-
           <ItemPrice>
             ${(item.price * item.quantity).toLocaleString()}
             <span>/mo</span>

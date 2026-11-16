@@ -1,12 +1,18 @@
 import React from "react";
 import { FiArrowLeft } from "react-icons/fi";
+import { useSelector } from "react-redux";
 import AppTemplate from "../../components/app-template";
 import PathConstants from "../../routes/pathConstants";
-import { useCart } from "../../contexts/cartContext";
 import CartItem from "../../components/cart/cart-item";
 import OrderSummary from "../../components/cart/order-summary";
 import EmptyCart from "../../components/cart/empty-cart";
 import MainLoader from "../../components/main-loader";
+import {
+  selectCartItems,
+  selectCartCount,
+  selectCartLoading,
+} from "../../store/cart/cartSelectors";
+
 import {
   PageWrapper,
   HeroSection,
@@ -20,7 +26,9 @@ import {
 } from "./styles";
 
 const CartPage = () => {
-  const { cart, cartCount, loading } = useCart();
+  const cart = useSelector(selectCartItems);
+  const cartCount = useSelector(selectCartCount);
+  const loading = useSelector(selectCartLoading);
 
   const getSubtitleText = () => {
     if (cartCount === 0) return "Your cart is empty";
@@ -35,6 +43,7 @@ const CartPage = () => {
           <HeroTitle>Your Cart</HeroTitle>
           <HeroSubtitle>{getSubtitleText()}</HeroSubtitle>
         </HeroSection>
+
         <ContentContainer>
           {loading ? (
             <MainLoader />
@@ -51,6 +60,7 @@ const CartPage = () => {
                   <span>Continue Shopping</span>
                 </ContinueShoppingLink>
               </ItemsColumn>
+
               <OrderSummary />
             </CartGrid>
           ) : (

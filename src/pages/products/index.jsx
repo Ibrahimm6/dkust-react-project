@@ -23,6 +23,7 @@ import PathConstants from "../../routes/pathConstants";
 import ProductCardProvider from "../../components/common/ProductCardProvider";
 import { getProducts } from "../../services/products/products.service";
 import MainLoader from "../../components/main-loader";
+import { mapProductData } from "../../helpers/product.helpers";
 
 const categories = [
   "All",
@@ -44,26 +45,12 @@ const ProductsPage = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const getData = async () => {
+const getData = async () => {
     setLoading(true);
     const response = await getProducts();
-    
+
     if (response.status === 200 && Array.isArray(response.data)) {
-      const mappedData = response.data.map((p) => {
-        const badgeText = p.badge?.[lang] || "";
-        
-        return {
-          id: p.id,
-          name: p.name?.[lang] || "",
-          category: p.category?.[lang] || "",
-          description: p.description?.[lang] || "",
-          badge: badgeText.trim() === "" ? null : badgeText,
-          reviewsCount: p.reviews || 0,
-          price: p.price || 0,
-          rating: p.rating || 0,
-          color: p.color || "",
-        };
-      });
+      const mappedData = response.data.map((p) => mapProductData(p, lang));
       setData(mappedData);
     } else {
       setData([]);
