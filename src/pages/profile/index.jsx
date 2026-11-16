@@ -10,6 +10,8 @@ import {
   PageWrapper,
   ContentContainer,
   TwoColumnGrid,
+  ProfileCard,
+  SectionTitle,
   PasswordTitle,
   PasswordForm,
   PasswordInput,
@@ -117,7 +119,6 @@ const UpdatePassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage(null);
-
     if (form.next.length < 8)
       return setMessage({ error: true, text: "Password must be at least 8 characters" });
     if (form.next !== form.confirm)
@@ -131,8 +132,6 @@ const UpdatePassword = () => {
         currentPassword: form.current,
         newPassword: form.next,
       });
-      console.log("password response:", res);
-
       if ([200, 201, 204].includes(res?.status)) {
         setMessage({ error: false, text: res?.data?.message || "Password updated" });
         setForm({ current: "", next: "", confirm: "" });
@@ -141,7 +140,6 @@ const UpdatePassword = () => {
         setMessage({ error: true, text: `Could not update password: ${serverMsg}` });
       }
     } catch (err) {
-      console.log("password error:", err?.response || err);
       const serverMsg = err?.response?.data?.message || err?.message || "Unknown error";
       setMessage({ error: true, text: `Could not update password: ${serverMsg}` });
     } finally {
@@ -150,8 +148,8 @@ const UpdatePassword = () => {
   };
 
   return (
-    <div style={{marginTop: "24px", paddingTop: "20px", borderTop: "1px solid #f3f4f6"}}>
-      <passwordTitle>Update Password</passwordTitle>
+    <div style={{ marginTop: "24px", paddingTop: "20px", borderTop: "1px solid #f3f4f6" }}>
+      <PasswordTitle>Update Password</PasswordTitle>
       <PasswordForm onSubmit={handleSubmit}>
         <PasswordInput
           type="password"
@@ -220,23 +218,11 @@ const ProfilePage = () => {
     <AppTemplate pageTitle="Profile" path={PathConstants.PROFILE}>
       <PageWrapper>
         <ProfileHero fullName={profile.fullName} email={profile.email} />
-
         <ContentContainer>
           <ProfileStats ordersCount={initialOrders.length} />
-
           <TwoColumnGrid>
-            <div
-              style={{
-                background: "#fff",
-                border: "1px solid #e5e7eb",
-                borderRadius: "16px",
-                padding: "28px",
-              }}
-            >
-              <h3 style={{ marginBottom: "20px", fontWeight: 700 }}>
-                Profile Info
-              </h3>
-
+            <ProfileCard>
+              <SectionTitle>Profile Info</SectionTitle>
               {FIELDS.map(({ key, label, readOnly, multiline }) => (
                 <div key={key} style={{ marginBottom: "18px" }}>
                   <div
@@ -257,13 +243,10 @@ const ProfilePage = () => {
                   />
                 </div>
               ))}
-
               <UpdatePassword />
-            </div>
-
+            </ProfileCard>
             <OrderHistory orders={initialOrders} />
           </TwoColumnGrid>
-
           <QuickActions />
         </ContentContainer>
       </PageWrapper>

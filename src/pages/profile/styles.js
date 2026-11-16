@@ -32,7 +32,6 @@ export const PageWrapper = styled.div`
 
   @media ${devicesBreakpoints.pocket} {
     padding-bottom: 40px;
-
     ${ContentContainer} {
       padding: 28px 20px;
       gap: 20px;
@@ -50,6 +49,8 @@ export const ProfileCard = styled.div`
 export const SectionTitle = styled.h3`
   margin-bottom: 20px;
   font-weight: 700;
+  color: var(--color-text-dark);
+  font-size: 16px;
 `;
 
 export const FieldGroup = styled.div`
@@ -85,11 +86,11 @@ export const PasswordCard = styled.div`
 `;
 
 export const PasswordTitle = styled.h3`
-font-size:16px;
-font-weight:700;
-color:#111827;
-margin: 0 0 16 0;
-letter-spacing:-0.01em;
+  font-size: 16px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.01em;
 `;
 
 export const PasswordForm = styled.form`
@@ -105,7 +106,6 @@ export const PasswordInput = styled.input`
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   outline: none;
-
   &:focus {
     border-color: #00a651;
   }
@@ -126,7 +126,6 @@ export const SubmitButton = styled.button`
   color: #fff;
   font-weight: 600;
   cursor: pointer;
-
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
