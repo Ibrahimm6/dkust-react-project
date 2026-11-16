@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import AppTemplate from "../../components/app-template";
 import CustomButton from "../../components/common/custom-button";
 import InputComponent from "../../components/common/input-component";
-import AuthProvider from "../../components/common/AuthProvider";
+import AuthCard from "../../components/common/AuthCard";
 import PathConstants from "../../routes/pathConstants";
 import { forgotPassword } from "../../services/auth/auth.service";
 
@@ -50,7 +50,7 @@ const ForgotPasswordPage = () => {
       pageTitle="Forgot Password"
       path={PathConstants.FORGOT_PASSWORD}
     >
-      <AuthProvider
+      <AuthCard
         icon={<i className="fas fa-envelope-open-text"></i>}
         title="Enter Your Email"
         description="We will send a 6-digit verification code to your email address for verification."
@@ -90,7 +90,7 @@ const ForgotPasswordPage = () => {
             }
           />
         </form>
-      </AuthProvider>
+      </AuthCard>
     </AppTemplate>
   );
 };

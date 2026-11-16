@@ -5,15 +5,16 @@ import { loginSchema } from "../../validations";
 import InputComponent from "../../components/common/input-component";
 import CustomButton from "../../components/common/custom-button";
 import AppTemplate from "../../components/app-template";
-import AuthProvider from "../../components/common/AuthProvider";
+import AuthCard from "../../components/common/AuthCard";
 import PathConstants from "../../routes/pathConstants";
-import { loginUser } from "../../services/auth/auth.service";
+import { useAuth } from "../../context/auth/useAuth";
 import { LoginFormStyles } from "./styles";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState("");
+  const { login } = useAuth();
 
   const formik = useFormik({
     initialValues: { email: "", password: "", rememberMe: false },
@@ -22,7 +23,7 @@ const LoginPage = () => {
       setLoading(true);
       setApiError("");
 
-      const response = await loginUser({
+      const response = await login({
         email: values.email,
         password: values.password,
       });
@@ -44,7 +45,7 @@ const LoginPage = () => {
 
   return (
     <AppTemplate pageTitle="Login" path={PathConstants.LOGIN}>
-      <AuthProvider
+      <AuthCard
         title="Welcome Back"
         description="Sign in to your DKUST account"
         alertMessage={apiError}
@@ -114,7 +115,7 @@ const LoginPage = () => {
             }
           />
         </LoginFormStyles>
-      </AuthProvider>
+      </AuthCard>
     </AppTemplate>
   );
 };

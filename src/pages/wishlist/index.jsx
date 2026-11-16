@@ -1,12 +1,17 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { FiHeart } from "react-icons/fi";
+import { useSelector } from "react-redux";
 import AppTemplate from "../../components/app-template";
 import PathConstants from "../../routes/pathConstants";
-import { useWishlist } from "../../contexts/wishlistContext";
 import CustomButton from "../../components/common/custom-button";
 import ProductCardProvider from "../../components/common/ProductCardProvider";
 import MainLoader from "../../components/main-loader";
+import {
+  selectWishlistItems,
+  selectWishlistLoading,
+} from "../../store/wishlist/wishlistSelectors";
+
 import {
   PageWrapper,
   HeroSection,
@@ -21,7 +26,8 @@ import {
 
 const WishlistPage = () => {
   const navigate = useNavigate();
-  const { wishlist, loading } = useWishlist();
+  const wishlist = useSelector(selectWishlistItems);
+  const loading = useSelector(selectWishlistLoading);
 
   return (
     <AppTemplate pageTitle="My Favorites" path={PathConstants.WISHLIST}>

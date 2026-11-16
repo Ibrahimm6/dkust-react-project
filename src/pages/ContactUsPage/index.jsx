@@ -4,7 +4,7 @@ import PathConstants from "../../routes/pathConstants";
 import AppTemplate from "../../components/app-template";
 import HeroSection from "../../components/common/HeroSection";
 import InputComponent from "../../components/common/input-component";
-import AuthProvider from "../../components/common/AuthProvider";
+import AuthCard from "../../components/common/AuthCard";
 import CustomButton from "../../components/common/custom-button";
 import { useState } from "react";
 import { sendMessage } from "../../services/contact-us/messages.service";
@@ -101,16 +101,16 @@ function ContactUsPage() {
       />
       {isSentSuccessfully ? (
         <>
-          <AuthProvider
+          <AuthCard
             $theme="var(--color-white)"
             title="Message sent"
             description="Thank you. We will reply as soon as possible."
             icon={<FiCheck />}
-          ></AuthProvider>
+          ></AuthCard>
           <ScrollToTop />
         </>
       ) : (
-        <AuthProvider $theme="var(--page-bg)" alertMessage={error}>
+        <AuthCard $theme="var(--page-bg)" alertMessage={error}>
           <form onSubmit={formik.handleSubmit}>
             {InputFields.map((field, index) => (
               <InputComponent key={index} {...field} />
@@ -136,7 +136,7 @@ function ContactUsPage() {
               }
             />
           </form>
-        </AuthProvider>
+        </AuthCard>
       )}
     </AppTemplate>
   );

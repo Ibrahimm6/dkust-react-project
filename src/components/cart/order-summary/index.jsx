@@ -1,6 +1,7 @@
 import React from 'react';
 import { FiShield } from 'react-icons/fi';
-import { useCart } from '../../../contexts/cartContext';
+import { useSelector } from 'react-redux';
+import { selectCartItems } from '../../../store/cart/cartSelectors';
 import {
   SummaryCard,
   SummaryTitle,
@@ -17,12 +18,13 @@ import {
 } from './styles';
 
 const OrderSummary = () => {
-  const { cart } = useCart();
+  const cart = useSelector(selectCartItems);
 
   const subtotal = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );
+
   const taxRate = 0.08;
   const tax = subtotal * taxRate;
   const total = subtotal + tax;
@@ -33,12 +35,11 @@ const OrderSummary = () => {
   return (
     <SummaryCard>
       <SummaryTitle>Order Summary</SummaryTitle>
-
       <ItemsBreakdown>
         {cart.map((item) => (
           <SummaryRow key={item.id}>
             <ItemNameText>
-              {truncateName(item.name)} ×{item.quantity}
+              {truncateName(item.name)} × {item.quantity}
             </ItemNameText>
             <ItemPriceText>
               ${(item.price * item.quantity).toLocaleString()}
@@ -66,9 +67,9 @@ const OrderSummary = () => {
         <strong>${total.toFixed(2)}</strong>
       </TotalRow>
 
-      {/* Proceed to Checkout button intentionally does nothing */}
+      {/* Proceed to Checkout button intentionally does nothing yet */}
       <CheckoutButton type="button">Proceed to Checkout</CheckoutButton>
-
+      
       <SecureNote>
         <FiShield size={13} />
         <span>Secure checkout</span>

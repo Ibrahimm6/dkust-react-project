@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import AppTemplate from "../../components/app-template";
 import CustomButton from "../../components/common/custom-button";
 import InputComponent from "../../components/common/input-component";
-import AuthProvider from "../../components/common/AuthProvider";
+import AuthCard from "../../components/common/AuthCard";
 import PathConstants from "../../routes/pathConstants";
 import { resetPassword } from "../../services/auth/auth.service";
 import { resetPasswordSchema } from "../../validations";
@@ -53,7 +53,7 @@ const ResetPasswordPage = () => {
 
   return (
     <AppTemplate pageTitle="Reset Password" path={PathConstants.RESET_PASSWORD}>
-      <AuthProvider
+      <AuthCard
         icon={isReset ? <i className="fas fa-check"></i> : null}
         title={isReset ? "Password Reset Successfully!" : "Enter Your New Password"}
         description={
@@ -120,7 +120,7 @@ const ResetPasswordPage = () => {
             />
           </form>
         )}
-      </AuthProvider>
+      </AuthCard>
     </AppTemplate>
   );
 };

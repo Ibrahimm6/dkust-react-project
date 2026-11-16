@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PathConstants from "../../../routes/pathConstants";
-import { AuthProviderWrapper } from "./styles";
+import { AuthCardWrapper } from "./styles";
 
-const AuthProvider = ({
+const AuthCard = ({
   title,
   description,
   icon,
@@ -21,7 +21,7 @@ const AuthProvider = ({
   children,
 }) => {
   return (
-    <AuthProviderWrapper
+    <AuthCardWrapper
       $maxWidth={maxWidth}
       $centered={centered}
       $theme={$theme}
@@ -74,8 +74,8 @@ const AuthProvider = ({
           {backLinkText}
         </Link>
       )}
-    </AuthProviderWrapper>
+    </AuthCardWrapper>
   );
 };
 
-export default AuthProvider;
+export default AuthCard;

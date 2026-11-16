@@ -5,7 +5,7 @@ import { registerSchema } from "../../validations";
 import InputComponent from "../../components/common/input-component";
 import CustomButton from "../../components/common/custom-button";
 import AppTemplate from "../../components/app-template";
-import AuthProvider from "../../components/common/AuthProvider";
+import AuthCard from "../../components/common/AuthCard";
 import PathConstants from "../../routes/pathConstants";
 import { registerUser } from "../../services/auth/auth.service";
 import { RegisterFormStyles } from "./styles";
@@ -68,7 +68,7 @@ const Register = () => {
 
   return (
     <AppTemplate pageTitle="Create Account" path={PathConstants.REGISTER}>
-      <AuthProvider
+      <AuthCard
         title="Create Account"
         description="Join DKUST today — it's free"
         alertMessage={apiError}
@@ -202,7 +202,7 @@ const Register = () => {
             }
           />
         </RegisterFormStyles>
-      </AuthProvider>
+      </AuthCard>
     </AppTemplate>
   );
 };
