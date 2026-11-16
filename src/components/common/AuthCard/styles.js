@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { devicesBreakpoints } from "../../../constants/Breakpoints";
 
-export const AuthProviderWrapper = styled.div`
+export const AuthCardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import CustomButton from "../../../custom-button";
 import { DetailedCardWrapper } from "./styles";
-import { useCart } from "../../../../../contexts/cartContext";
 import PathConstants from "../../../../../routes/pathConstants";
 import { getProductBgColor } from "../../../../../helpers/product.helpers";
+import { addToCart } from "../../../../../store/cart/cartSlice";
 
 const defaultFeatures = [
   "High-quality performance",
@@ -15,7 +16,7 @@ const defaultFeatures = [
 
 function DetailedProductCard({ product }) {
   const navigate = useNavigate();
-  const { addToCart } = useCart();
+  const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
@@ -26,11 +27,11 @@ function DetailedProductCard({ product }) {
   const handleDecrease = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
   const handleAddToCart = () => {
-    addToCart(product, quantity);
+    dispatch(addToCart({ product, quantity }));
   };
 
   const handleBuyNow = () => {
-    addToCart(product, quantity);
+    dispatch(addToCart({ product, quantity }));
     navigate(PathConstants.CART);
   };
 
@@ -48,11 +49,9 @@ function DetailedProductCard({ product }) {
         <i className="fas fa-cube product-icon"></i>
         {product.badge && <span className="badge-pill">{product.badge}</span>}
       </div>
-
       <div className="info-area">
         <span className="category-tag">{product.category}</span>
         <h1 className="product-title">{product.name}</h1>
-
         <div className="rating-box">
           <div className="stars">
             <i className="fas fa-star"></i>
@@ -65,9 +64,7 @@ function DetailedProductCard({ product }) {
             {product.rating} ({product.reviewsCount} reviews)
           </span>
         </div>
-
         <p className="description">{product.description}</p>
-
         <ul className="features-list">
           {featuresToRender.map((feature, idx) => (
             <li key={idx}>
@@ -76,11 +73,9 @@ function DetailedProductCard({ product }) {
             </li>
           ))}
         </ul>
-
         <div className="price-box">
           ${product.price} <span>/mo</span>
         </div>
-
         <div className="quantity-control">
           <span className="qty-label">Qty</span>
           <div className="controls">
@@ -97,7 +92,6 @@ function DetailedProductCard({ product }) {
             </button>
           </div>
         </div>
-
         <div className="action-buttons">
           <CustomButton
             title={

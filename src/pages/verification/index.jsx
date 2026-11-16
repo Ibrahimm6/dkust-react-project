@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import AppTemplate from "../../components/app-template";
 import CustomButton from "../../components/common/custom-button";
-import AuthProvider from "../../components/common/AuthProvider";
+import AuthCard from "../../components/common/AuthCard";
 import PathConstants from "../../routes/pathConstants";
 import {
   verifyEmailCode,
@@ -137,7 +137,7 @@ const VerificationPage = () => {
 
   return (
     <AppTemplate pageTitle="Verify Email" path={PathConstants.VERIFY}>
-      <AuthProvider
+      <AuthCard
         centered
         icon={
           <i
@@ -238,7 +238,7 @@ const VerificationPage = () => {
             </div>
           </VerificationContentStyles>
         )}
-      </AuthProvider>
+      </AuthCard>
     </AppTemplate>
   );
 };

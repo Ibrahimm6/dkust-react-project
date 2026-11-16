@@ -1,11 +1,11 @@
-import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
-import Layout from './components/layout';
-import routes from './routes';
-import PageNotFound from './pages/page-not-found';
-import { WishlistProvider } from './contexts/wishlistContext';
-import { CartProvider } from './contexts/cartContext';
+import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Provider } from "react-redux";
+import { store } from "./store";
+import { AppProviders } from "./context/AppProviders";
+import Layout from "./components/layout";
+import routes from "./routes";
+import PageNotFound from "./pages/page-not-found";
 
 const router = createBrowserRouter([
   {
@@ -17,13 +17,11 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <HelmetProvider>
-      <WishlistProvider>
-        <CartProvider>
-          <RouterProvider router={router} />
-        </CartProvider>
-      </WishlistProvider>
-    </HelmetProvider>
+    <Provider store={store}>
+      <AppProviders>
+        <RouterProvider router={router} />
+      </AppProviders>
+    </Provider>
   );
 }
 

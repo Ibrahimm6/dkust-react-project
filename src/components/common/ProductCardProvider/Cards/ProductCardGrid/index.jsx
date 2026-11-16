@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
   GridCard,
   GridImageArea,
@@ -17,15 +18,18 @@ import {
 import CustomButton from "../../../../common/custom-button";
 import { FiShoppingCart, FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
-import { useWishlist } from "../../../../../contexts/wishlistContext";
-import { useCart } from "../../../../../contexts/cartContext";
 import { getProductBgColor } from "../../../../../helpers/product.helpers";
+
+// Redux Imports
+import { addToCart } from "../../../../../store/cart/cartSlice";
+import { toggleWishlistItem } from "../../../../../store/wishlist/wishlistSlice";
+import { selectIsInWishlist } from "../../../../../store/wishlist/wishlistSelectors";
 
 const ProductCardGrid = ({ product, compact }) => {
   const navigate = useNavigate();
-  const { addToCart } = useCart();
-  const { toggleWishlist, isInWishlist } = useWishlist();
-  const isFavorite = isInWishlist(product.id);
+  const dispatch = useDispatch();
+  
+  const isFavorite = useSelector((state) => selectIsInWishlist(state, product.id));
 
   return (
     <GridCard>
@@ -37,7 +41,7 @@ const ProductCardGrid = ({ product, compact }) => {
         {!compact && (
           <WishlistButton
             className={isFavorite ? "active" : ""}
-            onClick={() => toggleWishlist(product)}
+            onClick={() => dispatch(toggleWishlistItem(product))}
           >
             {isFavorite ? <FaHeart size={14} /> : <FiHeart size={14} />}
           </WishlistButton>
@@ -80,7 +84,7 @@ const ProductCardGrid = ({ product, compact }) => {
                     <FiShoppingCart /> Add
                   </>
                 }
-                onClickFunction={() => addToCart(product)}
+                onClickFunction={() => dispatch(addToCart({ product }))}
               />
             </ActionButtons>
           )}

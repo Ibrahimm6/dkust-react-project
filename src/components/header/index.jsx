@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import PathConstants from "../../routes/pathConstants";
+import { useSelector } from "react-redux";
 import { FiHeart, FiShoppingCart, FiUser, FiMenu, FiX } from "react-icons/fi";
+import PathConstants from "../../routes/pathConstants";
+import { useAuth } from "../../context/auth/useAuth";
+import { selectCartCount } from "../../store/cart/cartSelectors";
+import { selectWishlistCount } from "../../store/wishlist/wishlistSelectors";
 import {
   HeaderWrapper,
   HeaderContainer,
@@ -23,11 +27,6 @@ import {
   MobileNavItem,
   MobileLogoutButton,
 } from "./styles";
-import { useWishlist } from "../../contexts/wishlistContext";
-import { useCart } from "../../contexts/cartContext";
-import { logoutUser } from "../../services/auth/auth.service";
-import { getCookie } from "../../helpers/cookies";
-import environment from "../../environment";
 
 const NAV_LINKS = [
   { label: "Home", path: PathConstants.HOME },
@@ -42,23 +41,20 @@ const NAV_LINKS = [
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const { wishlist } = useWishlist();
-  const { cartCount } = useCart();
+
+  const { isAuthenticated, logout } = useAuth();
+  const wishlistCount = useSelector(selectWishlistCount);
+  const cartCount = useSelector(selectCartCount);
 
   useEffect(() => {
     setIsMenuOpen(false);
-    const token = getCookie(environment.TOKEN_KEY);
-    setIsLoggedIn(!!token);
   }, [pathname]);
 
   const handleLogout = async () => {
     setLoggingOut(true);
-    await logoutUser();
-    setIsLoggedIn(false); 
+    await logout();
     setLoggingOut(false);
     navigate(PathConstants.LOGIN);
   };
@@ -82,7 +78,7 @@ const Header = () => {
           <IconGroup>
             <IconButton to={PathConstants.WISHLIST} aria-label="Wishlist">
               <FiHeart />
-              {wishlist.length > 0 && <IconBadge>{wishlist.length}</IconBadge>}
+              {wishlistCount > 0 && <IconBadge>{wishlistCount}</IconBadge>}
             </IconButton>
             <IconButton to={PathConstants.CART} aria-label="Cart">
               <FiShoppingCart />
@@ -96,7 +92,7 @@ const Header = () => {
           <Divider />
 
           <AuthGroup>
-            {isLoggedIn ? (
+            {isAuthenticated ? (
               <LogoutButton
                 type="button"
                 onClick={handleLogout}
@@ -118,7 +114,9 @@ const Header = () => {
             ) : (
               <>
                 <LoginLink to={PathConstants.LOGIN}>Login</LoginLink>
-                <RegisterButton to={PathConstants.REGISTER}>Register</RegisterButton>
+                <RegisterButton to={PathConstants.REGISTER}>
+                  Register
+                </RegisterButton>
               </>
             )}
           </AuthGroup>
@@ -142,8 +140,8 @@ const Header = () => {
         <MobileNavItem to={PathConstants.WISHLIST}>Favorites</MobileNavItem>
         <MobileNavItem to={PathConstants.CART}>Cart</MobileNavItem>
         <MobileNavItem to={PathConstants.PROFILE}>Profile</MobileNavItem>
-        
-        {isLoggedIn ? (
+
+        {isAuthenticated ? (
           <MobileLogoutButton
             type="button"
             onClick={handleLogout}

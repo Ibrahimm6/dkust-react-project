@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
   ListCard,
   ListImageArea,
@@ -19,15 +20,17 @@ import {
 import CustomButton from "../../../custom-button";
 import { FiShoppingCart, FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
-import { useWishlist } from "../../../../../contexts/wishlistContext";
-import { useCart } from "../../../../../contexts/cartContext";
 import { getProductBgColor } from "../../../../../helpers/product.helpers";
+
+// Redux Imports
+import { addToCart } from "../../../../../store/cart/cartSlice";
+import { toggleWishlistItem } from "../../../../../store/wishlist/wishlistSlice";
+import { selectIsInWishlist } from "../../../../../store/wishlist/wishlistSelectors";
 
 const ProductCardList = ({ product }) => {
   const navigate = useNavigate();
-  const { addToCart } = useCart();
-  const { toggleWishlist, isInWishlist } = useWishlist();
-  const isFavorite = isInWishlist(product.id);
+  const dispatch = useDispatch();
+  const isFavorite = useSelector((state) => selectIsInWishlist(state, product.id));
 
   return (
     <ListCard>
@@ -35,7 +38,7 @@ const ProductCardList = ({ product }) => {
         <i className="fas fa-cube"></i>
         <WishlistButton
           className={isFavorite ? "active" : ""}
-          onClick={() => toggleWishlist(product)}
+          onClick={() => dispatch(toggleWishlistItem(product))}
         >
           {isFavorite ? <FaHeart size={16} /> : <FiHeart size={16} />}
         </WishlistButton>
@@ -81,7 +84,7 @@ const ProductCardList = ({ product }) => {
                   <FiShoppingCart /> Add to Cart
                 </>
               }
-              onClickFunction={() => addToCart(product)}
+              onClickFunction={() => dispatch(addToCart({ product }))}
             />
           </ActionButtons>
         </ListBottomRow>
