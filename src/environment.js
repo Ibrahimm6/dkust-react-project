@@ -28,9 +28,8 @@ const environment = {
   login: "auth/login",
   logout: "auth/logout",
   refresh: "auth/refresh",
-  forgetPassword: "auth/forget-password",
-  resetPassword: "auth/reset-password",
   profile:"profile",
+  updatepassword: "auth/change-password",
 
   // Base API URL;
   API_URL: "https://api-commerce.learnsou.com",

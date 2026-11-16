@@ -57,3 +57,22 @@ export const logoutUser = async () => {
   clearAuthSession();
   return response;
 };
+export const forgetPassword = async (email) => {
+  const response = await POST(environment.forgetPassword, { email });
+  return response;
+};
+export const resetPassword = async({email,code,newPassord})=>{
+  const response = await POST(environment.resetPassword, { 
+    email, 
+    code, 
+    newPassord 
+  });
+  return response;
+};
+export const updatePassword = async ({ currentPassword, newPassword }) => {
+  const response = await POST(environment.updatePassword, {
+    currentPassword,
+    newPassword,
+  });
+  return response;
+};

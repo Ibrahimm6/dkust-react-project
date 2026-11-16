@@ -28,12 +28,21 @@ const LoginPage = () => {
 
       setLoading(false);
 
+      console.log(response);
+
       if (response.status === 200 || response.status === 201) {
         navigate(PathConstants.HOME);
       } else {
+        if (response.data.requiresEmailVerification) {
+          navigate(PathConstants.VERIFY, {
+            state: { email: values.email },   
+          });
+        } else {
+          navigate(PathConstants.HOME);
+        }
         setApiError(
           response.data?.message ||
-            "Invalid email or password. Please try again."
+          "Invalid email or password. Please try again.",
         );
       }
     },
@@ -47,12 +56,20 @@ const LoginPage = () => {
           <p className="subtitle">Sign in to your DKUST account</p>
 
           {apiError && (
-            <div className="alert alert-danger py-2 small text-center" role="alert">
+            <div
+              className="alert alert-danger py-2 small text-center"
+              role="alert"
+            >
               {apiError}
             </div>
           )}
 
-          <form onSubmit={formik.handleSubmit}>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              formik.handleSubmit();
+            }}
+          >
             <InputComponent
               name="email"
               fieldLabel="Email Address"
