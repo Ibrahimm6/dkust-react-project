@@ -12,6 +12,11 @@ import {
   TwoColumnGrid,
   ProfileCard,
   SectionTitle,
+  FieldGroup,
+  FieldLabel,
+  FieldDisplay,
+  FieldInput,
+  PasswordCard,
   PasswordTitle,
   PasswordForm,
   PasswordInput,
@@ -74,36 +79,25 @@ const EditableField = ({ value, onSave, multiline, readOnly, placeholder }) => {
 
   if (readOnly || !editing) {
     return (
-      <span
+      <FieldDisplay
+        $readOnly={readOnly}
+        $hasValue={Boolean(value)}
         onClick={() => !readOnly && setEditing(true)}
-        style={{
-          display: "block",
-          minHeight: "24px",
-          cursor: readOnly ? "default" : "text",
-          color: value ? "#111827" : "#9ca3af",
-        }}
       >
         {value || placeholder}
-      </span>
+      </FieldDisplay>
     );
   }
 
-  const Tag = multiline ? "textarea" : "input";
   return (
-    <Tag
+    <FieldInput
+      as={multiline ? "textarea" : "input"}
       autoFocus
+      rows={multiline ? 3 : undefined}
       value={draft}
       onChange={(e) => setDraft(e.target.value)}
       onBlur={commit}
       onKeyDown={handleKeyDown}
-      style={{
-        width: "100%",
-        padding: "6px 8px",
-        border: "1px solid #00a651",
-        borderRadius: "6px",
-        font: "inherit",
-        outline: "none",
-      }}
     />
   );
 };
@@ -148,7 +142,7 @@ const UpdatePassword = () => {
   };
 
   return (
-    <div style={{ marginTop: "24px", paddingTop: "20px", borderTop: "1px solid #f3f4f6" }}>
+    <PasswordCard>
       <PasswordTitle>Update Password</PasswordTitle>
       <PasswordForm onSubmit={handleSubmit}>
         <PasswordInput
@@ -182,7 +176,7 @@ const UpdatePassword = () => {
           {saving ? "Saving..." : "Update Password"}
         </SubmitButton>
       </PasswordForm>
-    </div>
+    </PasswordCard>
   );
 };
 
@@ -224,16 +218,8 @@ const ProfilePage = () => {
             <ProfileCard>
               <SectionTitle>Profile Info</SectionTitle>
               {FIELDS.map(({ key, label, readOnly, multiline }) => (
-                <div key={key} style={{ marginBottom: "18px" }}>
-                  <div
-                    style={{
-                      fontSize: "13px",
-                      color: "#9ca3af",
-                      marginBottom: "4px",
-                    }}
-                  >
-                    {label}
-                  </div>
+                <FieldGroup key={key}>
+                  <FieldLabel>{label}</FieldLabel>
                   <EditableField
                     value={profile[key]}
                     readOnly={readOnly}
@@ -241,7 +227,7 @@ const ProfilePage = () => {
                     placeholder="Click to add"
                     onSave={(v) => handleSave(key, v)}
                   />
-                </div>
+                </FieldGroup>
               ))}
               <UpdatePassword />
             </ProfileCard>
