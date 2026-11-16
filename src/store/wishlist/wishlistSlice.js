@@ -72,7 +72,11 @@ const wishlistSlice = createSlice({
     items: [],
     loading: false,
   },
-  reducers: {},
+  reducers: {
+    clearWishlist: (state) => {
+      state.items = [];
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchWishlist.pending, (state) => {
@@ -116,4 +120,5 @@ const wishlistSlice = createSlice({
   },
 });
 
+export const { clearWishlist } = wishlistSlice.actions;
 export default wishlistSlice.reducer;
