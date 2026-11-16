@@ -1,12 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import AppTemplate from "../../components/app-template";
 import PathConstants from "../../routes/pathConstants";
 import ProfileHero from "../../components/profile/hero-section";
 import ProfileStats from "../../components/profile/stats-section";
-import ProfileInfo from "../../components/profile/profile-info";
 import OrderHistory from "../../components/profile/order-history";
 import QuickActions from "../../components/profile/quick-actions";
-import { PageWrapper, ContentContainer, TwoColumnGrid } from "./styles";
+import {
+  PageWrapper,
+  ContentContainer,
+  TwoColumnGrid,
+  PasswordTitle,
+  PasswordForm,
+  PasswordInput,
+  FormMessage,
+  SubmitButton,
+} from "./styles";
+import {
+  getProfile,
+  updateProfile,
+} from "../../services/profile/profile.service";
+import { updatePassword } from "../../services/auth/auth.service";
 
 const initialOrders = [
   { id: 1, name: "AI Analytics Dashboard", date: "Sep 12, 2026", price: 299, status: "Active" },
@@ -14,14 +28,193 @@ const initialOrders = [
   { id: 6, name: "CyberShield VPN", date: "Jun 15, 2026", price: 79, status: "Expired" },
 ];
 
+const FIELDS = [
+  { key: "fullName", label: "Full Name" },
+  { key: "email", label: "Email", readOnly: true },
+  { key: "phone", label: "Phone" },
+  { key: "location", label: "Location" },
+  { key: "bio", label: "Bio", multiline: true },
+];
+
+const toViewModel = (data) => ({
+  fullName: `${data.firstName || ""} ${data.lastName || ""}`.trim(),
+  email: data.email || "",
+  phone: data.phone?.trim() || "",
+  location: data.location?.trim() || "",
+  bio: data.bio?.trim() || "",
+});
+
+const splitName = (fullName = "") => {
+  const [firstName, ...rest] = fullName.trim().split(/\s+/);
+  return { firstName: firstName || "", lastName: rest.join(" ") };
+};
+
+const EditableField = ({ value, onSave, multiline, readOnly, placeholder }) => {
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState(value);
+
+  useEffect(() => {
+    setDraft(value);
+  }, [value]);
+
+  const commit = () => {
+    setEditing(false);
+    if (draft !== value) onSave(draft);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !multiline) e.target.blur();
+    if (e.key === "Escape") {
+      setDraft(value);
+      setEditing(false);
+    }
+  };
+
+  if (readOnly || !editing) {
+    return (
+      <span
+        onClick={() => !readOnly && setEditing(true)}
+        style={{
+          display: "block",
+          minHeight: "24px",
+          cursor: readOnly ? "default" : "text",
+          color: value ? "#111827" : "#9ca3af",
+        }}
+      >
+        {value || placeholder}
+      </span>
+    );
+  }
+
+  const Tag = multiline ? "textarea" : "input";
+  return (
+    <Tag
+      autoFocus
+      value={draft}
+      onChange={(e) => setDraft(e.target.value)}
+      onBlur={commit}
+      onKeyDown={handleKeyDown}
+      style={{
+        width: "100%",
+        padding: "6px 8px",
+        border: "1px solid #00a651",
+        borderRadius: "6px",
+        font: "inherit",
+        outline: "none",
+      }}
+    />
+  );
+};
+
+const UpdatePassword = () => {
+  const [form, setForm] = useState({ current: "", next: "", confirm: "" });
+  const [message, setMessage] = useState(null);
+  const [saving, setSaving] = useState(false);
+
+  const handleChange = (e) =>
+    setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setMessage(null);
+
+    if (form.next.length < 8)
+      return setMessage({ error: true, text: "Password must be at least 8 characters" });
+    if (form.next !== form.confirm)
+      return setMessage({ error: true, text: "Passwords do not match" });
+    if (form.next === form.current)
+      return setMessage({ error: true, text: "New password must be different" });
+
+    setSaving(true);
+    try {
+      const res = await updatePassword({
+        currentPassword: form.current,
+        newPassword: form.next,
+      });
+      console.log("password response:", res);
+
+      if ([200, 201, 204].includes(res?.status)) {
+        setMessage({ error: false, text: res?.data?.message || "Password updated" });
+        setForm({ current: "", next: "", confirm: "" });
+      } else {
+        const serverMsg = res?.data?.message || res?.data?.error || `Status ${res?.status}`;
+        setMessage({ error: true, text: `Could not update password: ${serverMsg}` });
+      }
+    } catch (err) {
+      console.log("password error:", err?.response || err);
+      const serverMsg = err?.response?.data?.message || err?.message || "Unknown error";
+      setMessage({ error: true, text: `Could not update password: ${serverMsg}` });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <div style={{marginTop: "24px", paddingTop: "20px", borderTop: "1px solid #f3f4f6"}}>
+      <passwordTitle>Update Password</passwordTitle>
+      <PasswordForm onSubmit={handleSubmit}>
+        <PasswordInput
+          type="password"
+          name="current"
+          placeholder="Current Password"
+          value={form.current}
+          onChange={handleChange}
+          required
+        />
+        <PasswordInput
+          type="password"
+          name="next"
+          placeholder="New Password"
+          value={form.next}
+          onChange={handleChange}
+          required
+        />
+        <PasswordInput
+          type="password"
+          name="confirm"
+          placeholder="Confirm New Password"
+          value={form.confirm}
+          onChange={handleChange}
+          required
+        />
+        {message && (
+          <FormMessage $error={message.error}>{message.text}</FormMessage>
+        )}
+        <SubmitButton type="submit" disabled={saving}>
+          {saving ? "Saving..." : "Update Password"}
+        </SubmitButton>
+      </PasswordForm>
+    </div>
+  );
+};
+
 const ProfilePage = () => {
-  const [profile, setProfile] = useState({
-    fullName: "Alex Johnson",
-    email: "alex.johnson@example.com",
-    phone: "+1 555 234 9876",
-    location: "New York, USA",
-    bio: "Full-stack developer and tech enthusiast. Love exploring new tools.",
-  });
+  const navigate = useNavigate();
+  const [profile, setProfile] = useState(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const res = await getProfile();
+      if (res?.status === 200) setProfile(toViewModel(res.data));
+      else navigate(PathConstants.LOGIN);
+    };
+    fetchProfile();
+  }, [navigate]);
+
+  const handleSave = async (key, newValue) => {
+    const updated = { ...profile, [key]: newValue };
+    const { firstName, lastName } = splitName(updated.fullName);
+    const res = await updateProfile({
+      firstName,
+      lastName,
+      phone: updated.phone,
+      location: updated.location,
+      bio: updated.bio,
+    });
+    if (res?.status === 200) setProfile(toViewModel(res.data));
+  };
+
+  if (!profile) return null;
 
   return (
     <AppTemplate pageTitle="Profile" path={PathConstants.PROFILE}>
@@ -32,7 +225,42 @@ const ProfilePage = () => {
           <ProfileStats ordersCount={initialOrders.length} />
 
           <TwoColumnGrid>
-            <ProfileInfo profile={profile} onUpdateProfile={setProfile} />
+            <div
+              style={{
+                background: "#fff",
+                border: "1px solid #e5e7eb",
+                borderRadius: "16px",
+                padding: "28px",
+              }}
+            >
+              <h3 style={{ marginBottom: "20px", fontWeight: 700 }}>
+                Profile Info
+              </h3>
+
+              {FIELDS.map(({ key, label, readOnly, multiline }) => (
+                <div key={key} style={{ marginBottom: "18px" }}>
+                  <div
+                    style={{
+                      fontSize: "13px",
+                      color: "#9ca3af",
+                      marginBottom: "4px",
+                    }}
+                  >
+                    {label}
+                  </div>
+                  <EditableField
+                    value={profile[key]}
+                    readOnly={readOnly}
+                    multiline={multiline}
+                    placeholder="Click to add"
+                    onSave={(v) => handleSave(key, v)}
+                  />
+                </div>
+              ))}
+
+              <UpdatePassword />
+            </div>
+
             <OrderHistory orders={initialOrders} />
           </TwoColumnGrid>
 

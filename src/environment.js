@@ -30,13 +30,15 @@ const environment = {
   login: "auth/login",
   logout: "auth/logout",
   refresh: "auth/refresh",
+  profile: "profile",
+  updatePassword: "auth/change-password",
   forgotPassword: "auth/forgot-password",
   resetPassword: "auth/reset-password",
 
   // this endpoint does not exist in the backend, but it is here in case we need to use it in the future
   about: "about",
 
-  // Base API URL
+  // Base API URL;
   API_URL: "https://api-commerce.learnsou.com",
 };
 

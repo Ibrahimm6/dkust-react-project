@@ -37,7 +37,7 @@ const LoginPage = () => {
       } else {
         setApiError(
           response.data?.message ||
-            "Invalid email or password. Please try again."
+            "Invalid email or password. Please try again.",
         );
       }
     },

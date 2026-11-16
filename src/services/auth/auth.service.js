@@ -58,11 +58,18 @@ export const logoutUser = async () => {
   return response;
 };
 
-
 export const forgotPassword = async (payload) => {
   return await POST(environment.forgotPassword, payload);
-}
+};
 
 export const resetPassword = async (payload) => {
   return await POST(environment.resetPassword, payload);
-}
+};
+
+export const updatePassword = async ({ currentPassword, newPassword }) => {
+  const response = await POST(environment.updatePassword, {
+    currentPassword,
+    newPassword,
+  });
+  return response;
+};
