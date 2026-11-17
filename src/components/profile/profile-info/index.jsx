@@ -1,38 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FiUser, FiMail, FiPhone, FiMapPin, FiEdit2 } from "react-icons/fi";
-import {
-  SectionCard,
-  CardHeader,
-  CardTitle,
-  EditButton,
-  InfoList,
-  InfoItem,
-  InfoIconCircle,
-  InfoTextGroup,
-  InfoLabel,
-  InfoValue,
-  BioWrapper,
-  BioText,
-  EditForm,
-  FormGroup,
-  FormLabel,
-  EditInput,
-  EditTextarea,
-  SaveChangesButton,
-} from "./styles";
+import { ProfileInfoWrapper } from "./styles";
 
 const ProfileInfo = ({ profile, onUpdateProfile }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState(profile);
+  const [saving, setSaving] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+
+  useEffect(() => {
+    setFormData(profile);
+  }, [profile]);
 
   const handleToggleEdit = () => {
-    if (isEditing) {
-      setFormData(profile);
-      setIsEditing(false);
-    } else {
-      setFormData(profile);
-      setIsEditing(true);
-    }
+    setFormData(profile);
+    setErrorMsg("");
+    setIsEditing((prev) => !prev);
   };
 
   const handleChange = (e) => {
@@ -40,77 +23,111 @@ const ProfileInfo = ({ profile, onUpdateProfile }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
-    onUpdateProfile(formData);
-    setIsEditing(false);
+    setSaving(true);
+    setErrorMsg("");
+    const success = await onUpdateProfile(formData);
+    setSaving(false);
+
+    if (success) {
+      setIsEditing(false);
+    } else {
+      setErrorMsg("Failed to update profile. Please try again.");
+    }
   };
 
   const fields = [
     { name: "fullName", label: "Full Name", type: "text", icon: <FiUser size={16} /> },
-    { name: "email", label: "Email", type: "email", icon: <FiMail size={16} /> },
+    { name: "email", label: "Email", type: "email", icon: <FiMail size={16} />, readOnly: true },
     { name: "phone", label: "Phone", type: "text", icon: <FiPhone size={16} /> },
     { name: "location", label: "Location", type: "text", icon: <FiMapPin size={16} /> },
   ];
 
   return (
-    <SectionCard>
-      <CardHeader>
-        <CardTitle>Profile Info</CardTitle>
-        <EditButton type="button" onClick={handleToggleEdit}>
+    <ProfileInfoWrapper>
+      <div className="card-header">
+        <h3>Profile Info</h3>
+        <button
+          type="button"
+          className="edit-btn"
+          onClick={handleToggleEdit}
+          disabled={saving}
+        >
           <FiEdit2 size={14} />
           <span>{isEditing ? "Cancel" : "Edit"}</span>
-        </EditButton>
-      </CardHeader>
+        </button>
+      </div>
 
       {isEditing ? (
-        <EditForm onSubmit={handleSave}>
+        <form className="edit-form" onSubmit={handleSave}>
           {fields.map((field, index) => (
-            <FormGroup key={field.name}>
-              <FormLabel>{field.label}</FormLabel>
-              <EditInput
+            <div className="form-group" key={field.name}>
+              <label htmlFor={`profile-${field.name}`}>{field.label}</label>
+              <input
+                id={`profile-${field.name}`}
                 name={field.name}
                 type={field.type}
-                value={formData[field.name]}
+                value={formData[field.name] || ""}
                 onChange={handleChange}
+                disabled={field.readOnly || saving}
                 autoFocus={index === 0}
               />
-            </FormGroup>
+            </div>
           ))}
 
-          <FormGroup>
-            <FormLabel>Bio</FormLabel>
-            <EditTextarea
+          <div className="form-group">
+            <label htmlFor="profile-bio">Bio</label>
+            <textarea
+              id="profile-bio"
               name="bio"
               rows={3}
-              value={formData.bio}
+              value={formData.bio || ""}
               onChange={handleChange}
+              disabled={saving}
             />
-          </FormGroup>
+          </div>
 
-          <SaveChangesButton type="submit">Save Changes</SaveChangesButton>
-        </EditForm>
+          {errorMsg && <p className="status-msg">{errorMsg}</p>}
+
+          <button type="submit" className="save-btn" disabled={saving}>
+            {saving ? "Saving..." : "Save Changes"}
+          </button>
+        </form>
       ) : (
         <>
-          <InfoList>
-            {fields.map((field) => (
-              <InfoItem key={field.name}>
-                <InfoIconCircle>{field.icon}</InfoIconCircle>
-                <InfoTextGroup>
-                  <InfoLabel>{field.label}</InfoLabel>
-                  <InfoValue>{profile[field.name]}</InfoValue>
-                </InfoTextGroup>
-              </InfoItem>
-            ))}
-          </InfoList>
+          <div className="info-list">
+            {fields.map((field) => {
+              const value = profile[field.name];
+              return (
+                <div className="info-item" key={field.name}>
+                  <div className="icon-circle">{field.icon}</div>
+                  <div className="text-group">
+                    <span className="info-label">{field.label}</span>
+                    <span
+                      className="info-value"
+                      style={{
+                        color: value ? "var(--color-text-dark)" : "#9ca3af",
+                        fontStyle: value ? "normal" : "italic",
+                      }}
+                    >
+                      {value || "Not provided"}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
 
-          <BioWrapper>
-            <InfoLabel>Bio</InfoLabel>
-            <BioText>{profile.bio}</BioText>
-          </BioWrapper>
+          <div className="bio-wrapper">
+            <span className="info-label">Bio</span>
+            <p className={!profile.bio ? "empty" : ""}>
+              {profile.bio || "No bio added yet."}
+            </p>
+          </div>
         </>
       )}
-    </SectionCard>
+    </ProfileInfoWrapper>
   );
 };
 

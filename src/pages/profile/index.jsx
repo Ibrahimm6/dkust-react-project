@@ -1,54 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import AppTemplate from "../../components/app-template";
+import MainLoader from "../../components/main-loader";
 import PathConstants from "../../routes/pathConstants";
 import ProfileHero from "../../components/profile/hero-section";
 import ProfileStats from "../../components/profile/stats-section";
+import ProfileInfo from "../../components/profile/profile-info";
+import UpdatePassword from "../../components/profile/update-password";
 import OrderHistory from "../../components/profile/order-history";
 import QuickActions from "../../components/profile/quick-actions";
+import { getLocalizedText } from "../../helpers/product.helpers";
 import {
   PageWrapper,
   ContentContainer,
   TwoColumnGrid,
-  ProfileCard,
-  SectionTitle,
-  FieldGroup,
-  FieldLabel,
-  FieldDisplay,
-  FieldInput,
-  PasswordCard,
-  PasswordTitle,
-  PasswordForm,
-  PasswordInput,
-  FormMessage,
-  SubmitButton,
 } from "./styles";
 import {
   getProfile,
   updateProfile,
 } from "../../services/profile/profile.service";
-import { updatePassword } from "../../services/auth/auth.service";
-
-const initialOrders = [
-  { id: 1, name: "AI Analytics Dashboard", date: "Sep 12, 2026", price: 299, status: "Active" },
-  { id: 3, name: "DataSync Cloud", date: "Aug 01, 2026", price: 49, status: "Active" },
-  { id: 6, name: "CyberShield VPN", date: "Jun 15, 2026", price: 79, status: "Expired" },
-];
-
-const FIELDS = [
-  { key: "fullName", label: "Full Name" },
-  { key: "email", label: "Email", readOnly: true },
-  { key: "phone", label: "Phone" },
-  { key: "location", label: "Location" },
-  { key: "bio", label: "Bio", multiline: true },
-];
+import { getOrders } from "../../services/orders/orders.service";
 
 const toViewModel = (data) => ({
-  fullName: `${data.firstName || ""} ${data.lastName || ""}`.trim(),
-  email: data.email || "",
-  phone: data.phone?.trim() || "",
-  location: data.location?.trim() || "",
-  bio: data.bio?.trim() || "",
+  id: data?.id,
+  fullName: `${data?.firstName || ""} ${data?.lastName || ""}`.trim(),
+  email: data?.email || "",
+  phone: data?.phone?.trim() || "",
+  location: data?.location?.trim() || "",
+  bio: data?.bio?.trim() || "",
 });
 
 const splitName = (fullName = "") => {
@@ -56,185 +36,95 @@ const splitName = (fullName = "") => {
   return { firstName: firstName || "", lastName: rest.join(" ") };
 };
 
-const EditableField = ({ value, onSave, multiline, readOnly, placeholder }) => {
-  const [editing, setEditing] = useState(false);
-  const [draft, setDraft] = useState(value);
-
-  useEffect(() => {
-    setDraft(value);
-  }, [value]);
-
-  const commit = () => {
-    setEditing(false);
-    if (draft !== value) onSave(draft);
+const mapOrderData = (order, lang = "en") => {
+  const statusEn =
+    typeof order.status === "string" ? order.status : order.status?.en || "";
+  return {
+    id: order.id,
+    orderNumber: order.orderNumber || "",
+    name: getLocalizedText(order.product, lang) || `Product #${order.productId}`,
+    date: order.date || "",
+    price: order.amount ?? order.price ?? 0,
+    status: getLocalizedText(order.status, lang) || "Active",
+    isActive: statusEn.toLowerCase() === "active",
   };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter" && !multiline) e.target.blur();
-    if (e.key === "Escape") {
-      setDraft(value);
-      setEditing(false);
-    }
-  };
-
-  if (readOnly || !editing) {
-    return (
-      <FieldDisplay
-        $readOnly={readOnly}
-        $hasValue={Boolean(value)}
-        onClick={() => !readOnly && setEditing(true)}
-      >
-        {value || placeholder}
-      </FieldDisplay>
-    );
-  }
-
-  return (
-    <FieldInput
-      as={multiline ? "textarea" : "input"}
-      autoFocus
-      rows={multiline ? 3 : undefined}
-      value={draft}
-      onChange={(e) => setDraft(e.target.value)}
-      onBlur={commit}
-      onKeyDown={handleKeyDown}
-    />
-  );
-};
-
-const UpdatePassword = () => {
-  const [form, setForm] = useState({ current: "", next: "", confirm: "" });
-  const [message, setMessage] = useState(null);
-  const [saving, setSaving] = useState(false);
-
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setMessage(null);
-    if (form.next.length < 8)
-      return setMessage({ error: true, text: "Password must be at least 8 characters" });
-    if (form.next !== form.confirm)
-      return setMessage({ error: true, text: "Passwords do not match" });
-    if (form.next === form.current)
-      return setMessage({ error: true, text: "New password must be different" });
-
-    setSaving(true);
-    try {
-      const res = await updatePassword({
-        currentPassword: form.current,
-        newPassword: form.next,
-      });
-      if ([200, 201, 204].includes(res?.status)) {
-        setMessage({ error: false, text: res?.data?.message || "Password updated" });
-        setForm({ current: "", next: "", confirm: "" });
-      } else {
-        const serverMsg = res?.data?.message || res?.data?.error || `Status ${res?.status}`;
-        setMessage({ error: true, text: `Could not update password: ${serverMsg}` });
-      }
-    } catch (err) {
-      const serverMsg = err?.response?.data?.message || err?.message || "Unknown error";
-      setMessage({ error: true, text: `Could not update password: ${serverMsg}` });
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  return (
-    <PasswordCard>
-      <PasswordTitle>Update Password</PasswordTitle>
-      <PasswordForm onSubmit={handleSubmit}>
-        <PasswordInput
-          type="password"
-          name="current"
-          placeholder="Current Password"
-          value={form.current}
-          onChange={handleChange}
-          required
-        />
-        <PasswordInput
-          type="password"
-          name="next"
-          placeholder="New Password"
-          value={form.next}
-          onChange={handleChange}
-          required
-        />
-        <PasswordInput
-          type="password"
-          name="confirm"
-          placeholder="Confirm New Password"
-          value={form.confirm}
-          onChange={handleChange}
-          required
-        />
-        {message && (
-          <FormMessage $error={message.error}>{message.text}</FormMessage>
-        )}
-        <SubmitButton type="submit" disabled={saving}>
-          {saving ? "Saving..." : "Update Password"}
-        </SubmitButton>
-      </PasswordForm>
-    </PasswordCard>
-  );
 };
 
 const ProfilePage = () => {
   const navigate = useNavigate();
+  const { i18n } = useTranslation();
+  const lang = i18n?.language || "en";
+
   const [profile, setProfile] = useState(null);
+  const [rawOrders, setRawOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchProfile = async () => {
+    const fetchProfileAndOrders = async () => {
+      setLoading(true);
       const res = await getProfile();
-      if (res?.status === 200) setProfile(toViewModel(res.data));
-      else navigate(PathConstants.LOGIN);
+      if (res?.status === 200 && res.data) {
+        const vm = toViewModel(res.data);
+        setProfile(vm);
+
+        const ordersRes = await getOrders(vm.id);
+        if (ordersRes?.status === 200 && Array.isArray(ordersRes.data)) {
+          setRawOrders(ordersRes.data);
+        }
+      } else {
+        navigate(PathConstants.LOGIN);
+      }
+      setLoading(false);
     };
-    fetchProfile();
+    fetchProfileAndOrders();
   }, [navigate]);
 
-  const handleSave = async (key, newValue) => {
-    const updated = { ...profile, [key]: newValue };
-    const { firstName, lastName } = splitName(updated.fullName);
+  const handleUpdateProfile = async (updatedForm) => {
+    const { firstName, lastName } = splitName(updatedForm.fullName);
     const res = await updateProfile({
       firstName,
       lastName,
-      phone: updated.phone,
-      location: updated.location,
-      bio: updated.bio,
+      phone: updatedForm.phone,
+      location: updatedForm.location,
+      bio: updatedForm.bio,
     });
-    if (res?.status === 200) setProfile(toViewModel(res.data));
+
+    if (res?.status === 200) {
+      setProfile((prev) => ({
+        ...prev,
+        ...toViewModel(res.data || updatedForm),
+        id: res.data?.id ?? prev.id,
+        email: res.data?.email || prev.email,
+      }));
+      return true;
+    }
+    return false;
   };
 
-  if (!profile) return null;
+  const orders = rawOrders.map((order) => mapOrderData(order, lang));
 
   return (
     <AppTemplate pageTitle="Profile" path={PathConstants.PROFILE}>
       <PageWrapper>
-        <ProfileHero fullName={profile.fullName} email={profile.email} />
-        <ContentContainer>
-          <ProfileStats ordersCount={initialOrders.length} />
-          <TwoColumnGrid>
-            <ProfileCard>
-              <SectionTitle>Profile Info</SectionTitle>
-              {FIELDS.map(({ key, label, readOnly, multiline }) => (
-                <FieldGroup key={key}>
-                  <FieldLabel>{label}</FieldLabel>
-                  <EditableField
-                    value={profile[key]}
-                    readOnly={readOnly}
-                    multiline={multiline}
-                    placeholder="Click to add"
-                    onSave={(v) => handleSave(key, v)}
-                  />
-                </FieldGroup>
-              ))}
-              <UpdatePassword />
-            </ProfileCard>
-            <OrderHistory orders={initialOrders} />
-          </TwoColumnGrid>
-          <QuickActions />
-        </ContentContainer>
+        {loading || !profile ? (
+          <MainLoader />
+        ) : (
+          <>
+            <ProfileHero fullName={profile.fullName} email={profile.email} />
+            <ContentContainer>
+              <ProfileStats ordersCount={orders.length} />
+              <TwoColumnGrid>
+                <ProfileInfo
+                  profile={profile}
+                  onUpdateProfile={handleUpdateProfile}
+                />
+                <OrderHistory orders={orders} />
+                <UpdatePassword />
+                <QuickActions />
+              </TwoColumnGrid>
+            </ContentContainer>
+          </>
+        )}
       </PageWrapper>
     </AppTemplate>
   );

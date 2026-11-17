@@ -1,7 +1,14 @@
-import React from 'react';
-import { FiShield } from 'react-icons/fi';
-import { useSelector } from 'react-redux';
-import { selectCartItems } from '../../../store/cart/cartSelectors';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { FiShield } from "react-icons/fi";
+import { useSelector, useDispatch } from "react-redux";
+import { selectCartItems } from "../../../store/cart/cartSelectors";
+import { clearCart } from "../../../store/cart/cartSlice";
+import { useAuth } from "../../../context/auth/useAuth";
+import { getProfile } from "../../../services/profile/profile.service";
+import { createOrder } from "../../../services/orders/orders.service";
+import { removeCartItem } from "../../../services/cart/cart.service";
+import PathConstants from "../../../routes/pathConstants";
 import {
   SummaryCard,
   SummaryTitle,
@@ -13,12 +20,19 @@ import {
   SubtotalRow,
   TaxRow,
   TotalRow,
+  CheckoutError,
   CheckoutButton,
   SecureNote,
-} from './styles';
+} from "./styles";
 
 const OrderSummary = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const cart = useSelector(selectCartItems);
+  const { user, isAuthenticated } = useAuth();
+
+  const [checkingOut, setCheckingOut] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const subtotal = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -31,6 +45,76 @@ const OrderSummary = () => {
 
   const truncateName = (name) =>
     name.length > 20 ? `${name.slice(0, 20)}...` : name;
+
+  const handleCheckout = async () => {
+    if (!isAuthenticated) {
+      navigate(PathConstants.LOGIN);
+      return;
+    }
+    if (cart.length === 0) return;
+
+    setCheckingOut(true);
+    setErrorMsg("");
+
+    try {
+      let userId = user?.id;
+      if (!userId) {
+        const profileRes = await getProfile();
+        userId = profileRes?.data?.id;
+      }
+
+      if (!userId) {
+        setCheckingOut(false);
+        setErrorMsg("Unable to verify user session. Please sign in again.");
+        return;
+      }
+
+      const formattedDate = new Date().toLocaleDateString("en-US", {
+        month: "short",
+        day: "2-digit",
+        year: "numeric",
+      });
+
+      const orderResponses = await Promise.all(
+        cart.map((item, idx) =>
+          createOrder({
+            id: 0,
+            orderNumber: `ORD-${Date.now()}-${idx + 1}`,
+            userId: Number(userId),
+            productId: Number(item.id),
+            date: formattedDate,
+            amount: Number((item.price * item.quantity).toFixed(2)),
+            status: {
+              en: "Active",
+              ar: "نشط",
+            },
+            product: {
+              en: item.nameEn || item.name,
+              ar: item.nameAr || item.name,
+            },
+          })
+        )
+      );
+
+      const allSucceeded = orderResponses.every(
+        (res) => res.status === 200 || res.status === 201
+      );
+
+      if (allSucceeded) {
+        await Promise.all(
+          cart.map((item) => removeCartItem(item.cartItemId ?? item.id))
+        );
+        dispatch(clearCart());
+        navigate(PathConstants.PROFILE);
+      } else {
+        setErrorMsg("Some items could not be ordered. Please try again.");
+      }
+    } catch (error) {
+      setErrorMsg("Checkout failed. Please try again.");
+    } finally {
+      setCheckingOut(false);
+    }
+  };
 
   return (
     <SummaryCard>
@@ -67,9 +151,16 @@ const OrderSummary = () => {
         <strong>${total.toFixed(2)}</strong>
       </TotalRow>
 
-      {/* Proceed to Checkout button intentionally does nothing yet */}
-      <CheckoutButton type="button">Proceed to Checkout</CheckoutButton>
-      
+      {errorMsg && <CheckoutError>{errorMsg}</CheckoutError>}
+
+      <CheckoutButton
+        type="button"
+        onClick={handleCheckout}
+        disabled={checkingOut || cart.length === 0}
+      >
+        {checkingOut ? "Processing..." : "Proceed to Checkout"}
+      </CheckoutButton>
+
       <SecureNote>
         <FiShield size={13} />
         <span>Secure checkout</span>

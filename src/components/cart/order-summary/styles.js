@@ -74,6 +74,13 @@ export const TotalRow = styled.div`
   }
 `;
 
+export const CheckoutError = styled.p`
+  color: #dc2626;
+  font-size: 12px;
+  text-align: center;
+  margin: 0 0 12px 0;
+`;
+
 export const CheckoutButton = styled.button`
   width: 100%;
   padding: 12px;
@@ -84,10 +91,15 @@ export const CheckoutButton = styled.button`
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: #008236;
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
   }
 `;
 
@@ -101,7 +113,6 @@ export const SecureNote = styled.div`
   color: #9ca3af;
 `;
 
-// Root Wrapper & Responsive Media Queries
 export const SummaryCard = styled.div`
   background-color: var(--color-bg-white);
   border: 1px solid #ebe6e7;
