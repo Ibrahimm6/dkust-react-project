@@ -10,7 +10,7 @@ import { getLocalizedText } from "../../helpers/product.helpers";
 
 export const fetchCart = createAsyncThunk(
   "cart/fetchCart",
-  async (lang = "en") => {
+  async (lang = "en", { rejectWithValue }) => {
     const [cartRes, productsRes] = await Promise.all([
       getCart(),
       getProducts(),
@@ -30,6 +30,8 @@ export const fetchCart = createAsyncThunk(
           return {
             id: product.id,
             name: getLocalizedText(product.name, lang),
+            nameEn: getLocalizedText(product.name, "en"),
+            nameAr: getLocalizedText(product.name, "ar"),
             category: getLocalizedText(product.category, lang),
             price: product.price || 0,
             color: product.color || "",
@@ -39,7 +41,7 @@ export const fetchCart = createAsyncThunk(
         })
         .filter(Boolean);
     }
-    return [];
+    return rejectWithValue("Failed to fetch cart");
   }
 );
 
@@ -49,8 +51,9 @@ export const addToCart = createAsyncThunk(
     const existing = getState().cart.items.find(
       (item) => Number(item.id) === Number(product.id)
     );
+    const wasAlreadyInCart = existing && !existing._isOptimisticNew;
 
-    if (existing) {
+    if (wasAlreadyInCart) {
       const response = await updateCartItem(existing.cartItemId, {
         quantity: existing.quantity,
       });
@@ -110,10 +113,8 @@ export const updateQuantity = createAsyncThunk(
 export const removeFromCart = createAsyncThunk(
   "cart/removeFromCart",
   async (productId, { getState, rejectWithValue }) => {
-    const existing = getState().cart.items.find(
-      (item) => Number(item.id) === Number(productId)
-    );
-    const targetId = existing?.cartItemId ?? productId;
+    const targetId =
+      getState().cart._lastRemovedCartItemId ?? productId;
 
     const response = await removeCartItem(targetId);
     if (response.status === 200 || response.status === 204) {
@@ -128,6 +129,7 @@ const cartSlice = createSlice({
   initialState: {
     items: [],
     loading: false,
+    _lastRemovedCartItemId: null,
   },
   reducers: {
     clearCart: (state) => {
@@ -136,19 +138,23 @@ const cartSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Fetch Cart
       .addCase(fetchCart.pending, (state) => {
         state.loading = true;
       })
       .addCase(fetchCart.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload;
+        const merged = [...action.payload];
+        state.items.forEach((localItem) => {
+          if (!merged.some((i) => Number(i.id) === Number(localItem.id))) {
+            merged.push(localItem);
+          }
+        });
+        state.items = merged;
       })
       .addCase(fetchCart.rejected, (state) => {
         state.loading = false;
       })
 
-      // Add To Cart (Optimistic)
       .addCase(addToCart.pending, (state, action) => {
         const { product, quantity = 1 } = action.meta.arg;
         const existing = state.items.find(
@@ -161,15 +167,17 @@ const cartSlice = createSlice({
             ...product,
             quantity,
             cartItemId: product.id,
+            _isOptimisticNew: true,
           });
         }
       })
       .addCase(addToCart.fulfilled, (state, action) => {
-        if (action.payload.action === "added") {
-          const item = state.items.find(
-            (i) => Number(i.id) === Number(action.payload.productId)
-          );
-          if (item) {
+        const item = state.items.find(
+          (i) => Number(i.id) === Number(action.payload.productId)
+        );
+        if (item) {
+          delete item._isOptimisticNew;
+          if (action.payload.action === "added") {
             item.cartItemId = action.payload.cartItemId;
           }
         }
@@ -191,7 +199,6 @@ const cartSlice = createSlice({
         }
       })
 
-      // Update Quantity (Optimistic)
       .addCase(updateQuantity.pending, (state, action) => {
         const { productId, quantity } = action.meta.arg;
         if (quantity < 1) return;
@@ -222,14 +229,15 @@ const cartSlice = createSlice({
         }
       })
 
-      // Remove From Cart (Optimistic)
       .addCase(removeFromCart.pending, (state, action) => {
         const productId = action.meta.arg;
         const index = state.items.findIndex(
           (item) => Number(item.id) === Number(productId)
         );
         if (index !== -1) {
-          action.meta._removedItem = state.items[index];
+          const removed = state.items[index];
+          state._lastRemovedCartItemId = removed.cartItemId ?? removed.id;
+          action.meta._removedItem = removed;
           state.items.splice(index, 1);
         }
       })

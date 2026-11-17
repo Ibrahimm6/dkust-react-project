@@ -9,7 +9,7 @@ import { mapProductData } from "../../helpers/product.helpers";
 
 export const fetchWishlist = createAsyncThunk(
   "wishlist/fetchWishlist",
-  async (lang = "en") => {
+  async (lang = "en", { rejectWithValue }) => {
     const [favRes, productsRes] = await Promise.all([
       getFavorites(),
       getProducts(),
@@ -34,22 +34,22 @@ export const fetchWishlist = createAsyncThunk(
         })
         .filter(Boolean);
     }
-    return [];
+    return rejectWithValue("Failed to fetch wishlist");
   }
 );
 
 export const toggleWishlistItem = createAsyncThunk(
   "wishlist/toggleWishlistItem",
   async (product, { getState, rejectWithValue }) => {
-    const existing = getState().wishlist.items.find(
-      (item) => Number(item.id) === Number(product.id)
-    );
+    const removedItem = getState().wishlist._lastRemovedItem;
+    const wasRemoved =
+      removedItem && Number(removedItem.id) === Number(product.id);
 
-    if (existing) {
-      const targetId = existing.favoriteId ?? existing.id;
+    if (wasRemoved) {
+      const targetId = removedItem.favoriteId ?? removedItem.id;
       const res = await removeFavorite(targetId);
-      if (res.status && res.status !== 200 && res.status !== 204) {
-        return rejectWithValue(existing);
+      if (res.status !== 200 && res.status !== 204) {
+        return rejectWithValue({ action: "remove_failed", item: removedItem });
       }
       return { action: "removed", productId: product.id };
     } else {
@@ -57,6 +57,9 @@ export const toggleWishlistItem = createAsyncThunk(
         id: Number(product.id),
         productId: Number(product.id),
       });
+      if (res.status !== 200 && res.status !== 201) {
+        return rejectWithValue({ action: "add_failed", productId: product.id });
+      }
       return {
         action: "added",
         productId: product.id,
@@ -71,6 +74,7 @@ const wishlistSlice = createSlice({
   initialState: {
     items: [],
     loading: false,
+    _lastRemovedItem: null,
   },
   reducers: {
     clearWishlist: (state) => {
@@ -84,25 +88,34 @@ const wishlistSlice = createSlice({
       })
       .addCase(fetchWishlist.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload;
+        const merged = [...action.payload];
+        state.items.forEach((localItem) => {
+          if (!merged.some((i) => Number(i.id) === Number(localItem.id))) {
+            merged.push(localItem);
+          }
+        });
+        state.items = merged;
       })
       .addCase(fetchWishlist.rejected, (state) => {
         state.loading = false;
       })
       .addCase(toggleWishlistItem.pending, (state, action) => {
         const product = action.meta.arg;
-        const exists = state.items.some(
+        const existing = state.items.find(
           (item) => Number(item.id) === Number(product.id)
         );
-        if (exists) {
+        if (existing) {
+          state._lastRemovedItem = existing;
           state.items = state.items.filter(
             (item) => Number(item.id) !== Number(product.id)
           );
         } else {
+          state._lastRemovedItem = null;
           state.items.push({ ...product, favoriteId: product.id });
         }
       })
       .addCase(toggleWishlistItem.fulfilled, (state, action) => {
+        state._lastRemovedItem = null;
         if (action.payload.action === "added") {
           const item = state.items.find(
             (i) => Number(i.id) === Number(action.payload.productId)
@@ -113,8 +126,15 @@ const wishlistSlice = createSlice({
         }
       })
       .addCase(toggleWishlistItem.rejected, (state, action) => {
-        if (action.payload) {
-          state.items.push(action.payload);
+        state._lastRemovedItem = null;
+        const payload = action.payload;
+        if (!payload) return;
+        if (payload.action === "remove_failed" && payload.item) {
+          state.items.push(payload.item);
+        } else if (payload.action === "add_failed") {
+          state.items = state.items.filter(
+            (i) => Number(i.id) !== Number(payload.productId)
+          );
         }
       });
   },

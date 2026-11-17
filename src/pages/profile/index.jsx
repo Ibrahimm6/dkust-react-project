@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import AppTemplate from "../../components/app-template";
 import MainLoader from "../../components/main-loader";
 import PathConstants from "../../routes/pathConstants";
@@ -9,6 +10,7 @@ import ProfileInfo from "../../components/profile/profile-info";
 import UpdatePassword from "../../components/profile/update-password";
 import OrderHistory from "../../components/profile/order-history";
 import QuickActions from "../../components/profile/quick-actions";
+import { getLocalizedText } from "../../helpers/product.helpers";
 import {
   PageWrapper,
   ContentContainer,
@@ -18,14 +20,10 @@ import {
   getProfile,
   updateProfile,
 } from "../../services/profile/profile.service";
-
-const initialOrders = [
-  { id: 1, name: "AI Analytics Dashboard", date: "Sep 12, 2026", price: 299, status: "Active" },
-  { id: 3, name: "DataSync Cloud", date: "Aug 01, 2026", price: 49, status: "Active" },
-  { id: 6, name: "CyberShield VPN", date: "Jun 15, 2026", price: 79, status: "Expired" },
-];
+import { getOrders } from "../../services/orders/orders.service";
 
 const toViewModel = (data) => ({
+  id: data?.id,
   fullName: `${data?.firstName || ""} ${data?.lastName || ""}`.trim(),
   email: data?.email || "",
   phone: data?.phone?.trim() || "",
@@ -38,23 +36,47 @@ const splitName = (fullName = "") => {
   return { firstName: firstName || "", lastName: rest.join(" ") };
 };
 
+const mapOrderData = (order, lang = "en") => {
+  const statusEn =
+    typeof order.status === "string" ? order.status : order.status?.en || "";
+  return {
+    id: order.id,
+    orderNumber: order.orderNumber || "",
+    name: getLocalizedText(order.product, lang) || `Product #${order.productId}`,
+    date: order.date || "",
+    price: order.amount ?? order.price ?? 0,
+    status: getLocalizedText(order.status, lang) || "Active",
+    isActive: statusEn.toLowerCase() === "active",
+  };
+};
+
 const ProfilePage = () => {
   const navigate = useNavigate();
+  const { i18n } = useTranslation();
+  const lang = i18n?.language || "en";
+
   const [profile, setProfile] = useState(null);
+  const [rawOrders, setRawOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchProfile = async () => {
+    const fetchProfileAndOrders = async () => {
       setLoading(true);
       const res = await getProfile();
       if (res?.status === 200 && res.data) {
-        setProfile(toViewModel(res.data));
+        const vm = toViewModel(res.data);
+        setProfile(vm);
+
+        const ordersRes = await getOrders(vm.id);
+        if (ordersRes?.status === 200 && Array.isArray(ordersRes.data)) {
+          setRawOrders(ordersRes.data);
+        }
       } else {
         navigate(PathConstants.LOGIN);
       }
       setLoading(false);
     };
-    fetchProfile();
+    fetchProfileAndOrders();
   }, [navigate]);
 
   const handleUpdateProfile = async (updatedForm) => {
@@ -71,12 +93,15 @@ const ProfilePage = () => {
       setProfile((prev) => ({
         ...prev,
         ...toViewModel(res.data || updatedForm),
+        id: res.data?.id ?? prev.id,
         email: res.data?.email || prev.email,
       }));
       return true;
     }
     return false;
   };
+
+  const orders = rawOrders.map((order) => mapOrderData(order, lang));
 
   return (
     <AppTemplate pageTitle="Profile" path={PathConstants.PROFILE}>
@@ -87,13 +112,13 @@ const ProfilePage = () => {
           <>
             <ProfileHero fullName={profile.fullName} email={profile.email} />
             <ContentContainer>
-              <ProfileStats ordersCount={initialOrders.length} />
+              <ProfileStats ordersCount={orders.length} />
               <TwoColumnGrid>
                 <ProfileInfo
                   profile={profile}
                   onUpdateProfile={handleUpdateProfile}
                 />
-                <OrderHistory orders={initialOrders} />
+                <OrderHistory orders={orders} />
                 <UpdatePassword />
                 <QuickActions />
               </TwoColumnGrid>

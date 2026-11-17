@@ -21,6 +21,38 @@ export const OrdersList = styled.div`
   flex-direction: column;
   gap: 12px;
   flex: 1;
+  max-height: 255px;
+  overflow-y: auto;
+  padding-inline-end: 6px;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 9999px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 9999px;
+    transition: background-color 0.2s ease;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-primary);
+  }
+`;
+
+export const EmptyOrders = styled.p`
+  color: #9ca3af;
+  font-size: 14px;
+  text-align: center;
+  margin: auto 0;
+  padding: 24px 0;
 `;
 
 export const OrderCard = styled.div`
@@ -31,6 +63,7 @@ export const OrderCard = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 10px;
+  flex-shrink: 0;
 `;
 
 export const OrderLeft = styled.div`
@@ -116,7 +149,6 @@ export const BrowseMoreButton = styled(Link)`
   }
 `;
 
-// Root Wrapper & Responsive Media Queries
 export const SectionCard = styled.div`
   background-color: var(--color-bg-white);
   border: 1px solid #ebe6e7;
