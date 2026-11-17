@@ -55,7 +55,7 @@ export const ProfileInfoWrapper = styled.div`
 
   .info-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 12px;
 
     .icon-circle {
@@ -68,6 +68,7 @@ export const ProfileInfoWrapper = styled.div`
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      margin-top: 2px;
     }
 
     .text-group {
@@ -84,30 +85,89 @@ export const ProfileInfoWrapper = styled.div`
     margin-bottom: 3px;
   }
 
-  .info-value {
+  .field-display {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    min-height: 28px;
+    padding: 3px 8px;
+    margin-inline-start: -8px;
+    border-radius: 8px;
     font-size: 14px;
     font-weight: 500;
-    color: ${({ $isEmpty }) => ($isEmpty ? "#9ca3af" : "var(--color-text-dark)")};
-    font-style: ${({ $isEmpty }) => ($isEmpty ? "italic" : "normal")};
+    color: var(--color-text-dark);
     word-break: break-word;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    .inline-edit-icon {
+      color: var(--color-primary);
+      opacity: 0;
+      flex-shrink: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    &:hover {
+      background-color: #f8fafc;
+
+      .inline-edit-icon {
+        opacity: 1;
+      }
+    }
+
+    &.empty {
+      color: #9ca3af;
+      font-style: italic;
+    }
+
+    &.readonly {
+      cursor: default;
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
+
+  .field-input {
+    width: 100%;
+    padding: 6px 10px;
+    font-size: 14px;
+    font-family: inherit;
+    border: 1px solid var(--color-primary);
+    border-radius: 8px;
+    color: var(--color-text-dark);
+    background-color: var(--color-bg-white);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 166, 81, 0.12);
+    transition: border-color 0.2s ease;
+
+    &:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+  }
+
+  textarea.field-input {
+    resize: none;
+    line-height: 1.5;
   }
 
   .bio-wrapper {
-    margin-top: 18px;
+    margin-top: 16px;
     padding-top: 14px;
     border-top: 1px solid #f3f4f6;
     display: flex;
     flex-direction: column;
 
-    p {
-      font-size: 14px;
-      color: #4a5565;
-      margin: 4px 0 0 0;
+    .field-display {
       line-height: 1.6;
+      font-weight: 400;
+      color: #4a5565;
 
       &.empty {
         color: #9ca3af;
-        font-style: italic;
       }
     }
   }
@@ -158,12 +218,6 @@ export const ProfileInfoWrapper = styled.div`
       }
     }
 
-    .status-msg {
-      margin: 0;
-      font-size: 13px;
-      color: #dc2626;
-    }
-
     .save-btn {
       margin-top: 4px;
       width: 100%;
@@ -186,6 +240,12 @@ export const ProfileInfoWrapper = styled.div`
         cursor: not-allowed;
       }
     }
+  }
+
+  .status-msg {
+    margin: 12px 0 0 0;
+    font-size: 12px;
+    color: #dc2626;
   }
 
   @media ${devicesBreakpoints.thumb} {
