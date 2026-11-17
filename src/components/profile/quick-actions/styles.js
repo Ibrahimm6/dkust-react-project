@@ -18,14 +18,15 @@ export const CardTitle = styled.h3`
 
 export const QuickActionsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  flex: 1;
 `;
 
 export const QuickActionButton = styled(Link)`
   border: 1px solid #ebe6e7;
   border-radius: 10px;
-  padding: 20px 12px;
+  padding: 18px 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,7 +34,7 @@ export const QuickActionButton = styled(Link)`
   gap: 8px;
   color: var(--color-text-dark);
   text-decoration: none;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
   transition: all 0.2s ease;
 
@@ -53,7 +54,6 @@ export const QuickActionButton = styled(Link)`
   }
 `;
 
-// Root Wrapper & Responsive Media Queries
 export const SectionCard = styled.div`
   background-color: var(--color-bg-white);
   border: 1px solid #ebe6e7;
@@ -62,12 +62,6 @@ export const SectionCard = styled.div`
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
   display: flex;
   flex-direction: column;
-
-  @media ${devicesBreakpoints.pocket} {
-    ${QuickActionsGrid} {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
 
   @media ${devicesBreakpoints.thumb} {
     padding: 18px;
