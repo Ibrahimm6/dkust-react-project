@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { useFormik } from "formik";
+import { FiCheck } from "react-icons/fi";
 import { contactSchema } from "../../validations";
 import PathConstants from "../../routes/pathConstants";
 import AppTemplate from "../../components/app-template";
@@ -6,44 +8,52 @@ import HeroSection from "../../components/common/HeroSection";
 import InputComponent from "../../components/common/input-component";
 import AuthCard from "../../components/common/AuthCard";
 import CustomButton from "../../components/common/custom-button";
-import { useState } from "react";
-import { sendMessage } from "../../services/contact-us/messages.service";
-import { FiCheck } from "react-icons/fi";
 import ScrollToTop from "../../helpers/ScrollToTop";
+import { useAuth } from "../../context/auth/useAuth";
+import { sendMessage } from "../../services/contact-us/messages.service";
 
 function ContactUsPage() {
+  const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [isSentSuccessfully, setIsSentSuccessfully] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = async (values) => {
-    setLoading(true);
-    setError("");
-    // console.log(values);
-
-    const response = await sendMessage({
-      id: 0,
-      name: values.name,
-      email: values.email,
-      subject: values.subject,
-      message: values.message,
-    });
-
-    setTimeout(() => {
-      setLoading(false);
-      // console.log(response);
-      if (response.status === 200 || response.status === 201) {
-        setIsSentSuccessfully(true);
-      } else {
-        setError("Failed to send message. Please try again.");
-      }
-    },);
-  };
+  const defaultName = user
+    ? `${user.firstName || ""} ${user.lastName || ""}`.trim() || user.name || ""
+    : "";
 
   const formik = useFormik({
-    initialValues: { name: "", email: "", subject: "", message: "" },
+    enableReinitialize: true,
+    initialValues: {
+      name: defaultName,
+      email: user?.email || "",
+      subject: "",
+      message: "",
+    },
     validationSchema: contactSchema,
-    onSubmit: (values) => handleSubmit(values),
+    onSubmit: async (values, { resetForm }) => {
+      setLoading(true);
+      setError("");
+
+      const response = await sendMessage({
+        id: 0,
+        name: values.name.trim(),
+        email: values.email.trim(),
+        subject: values.subject.trim(),
+        message: values.message.trim(),
+      });
+
+      setLoading(false);
+
+      if (response.status === 200 || response.status === 201) {
+        resetForm();
+        setIsSentSuccessfully(true);
+      } else {
+        setError(
+          response.data?.message || "Failed to send message. Please try again."
+        );
+      }
+    },
   });
 
   const InputFields = [
@@ -86,7 +96,7 @@ function ContactUsPage() {
       value: formik.values.message,
       onChange: formik.handleChange,
       onBlur: formik.handleBlur,
-      placeholder: "Message",
+      placeholder: "Write your message here...",
       type: "textarea",
       error: formik.errors.message,
       touched: formik.touched.message,
@@ -102,18 +112,25 @@ function ContactUsPage() {
       {isSentSuccessfully ? (
         <>
           <AuthCard
-            $theme="var(--color-white)"
-            title="Message sent"
-            description="Thank you. We will reply as soon as possible."
+            centered
+            $theme="var(--page-bg)"
+            title="Message Sent"
+            description="Thank you for reaching out. Our team will reply as soon as possible."
             icon={<FiCheck />}
-          ></AuthCard>
+          >
+            <CustomButton
+              title="Send Another Message"
+              onClickFunction={() => setIsSentSuccessfully(false)}
+              bgColor="#00a651"
+            />
+          </AuthCard>
           <ScrollToTop />
         </>
       ) : (
         <AuthCard $theme="var(--page-bg)" alertMessage={error}>
           <form onSubmit={formik.handleSubmit}>
-            {InputFields.map((field, index) => (
-              <InputComponent key={index} {...field} />
+            {InputFields.map((field) => (
+              <InputComponent key={field.name} {...field} />
             ))}
             <CustomButton
               type="submit"
