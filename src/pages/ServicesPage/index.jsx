@@ -1,58 +1,57 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import AppTemplate from "../../components/app-template";
 import HeroSection from "../../components/common/HeroSection";
 import InfoCard from "../../components/common/InfoCard";
+import MainLoader from "../../components/main-loader";
 import PathConstants from "../../routes/pathConstants";
-import { ServicesPageStyles } from "./styles";
 import { getServices } from "../../services/services-page/servicesPage.service";
-
-// const servicesData = [
-//   {
-//     title: "Web Development",
-//     description:
-//       "Custom websites and product platforms built for performance and growth.",
-//   },
-//   {
-//     title: "Machine Learning",
-//     description:
-//       "Predictive models, pipelines, and applied AI for business data.",
-//   },
-//   {
-//     title: "Robotics",
-//     description: "Industrial robotics design, integration, and support.",
-//   },
-//   {
-//     title: "Industrial Consulting",
-//     description:
-//       "Process improvement and technology strategy for operations teams.",
-//   },
-//   {
-//     title: "Data Analytics",
-//     description:
-//       "Dashboards, reporting, and insight systems for decision makers.",
-//   },
-// ];
+import { getLocalizedText } from "../../helpers/product.helpers";
+import { ServicesPageStyles } from "./styles";
 
 function ServicesPage() {
+  const { i18n } = useTranslation();
+  const lang = i18n?.language || "en";
+
   const [servicesData, setServicesData] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const fetchData = async () => {
-    setLoading(true);
-    const response = await getServices();
-    console.log(response);
-    if (response.status === 200) {
-      console.log("Services fetched successfully");
-      setServicesData(response.data);
-    } else {
-      console.error("Failed to fetch services");
-    }
-    setLoading(false);
-  };
+  const [error, setError] = useState("");
 
   useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      setError("");
+      const response = await getServices();
+      if (response.status === 200 && Array.isArray(response.data)) {
+        setServicesData(response.data);
+      } else {
+        setServicesData([]);
+        setError("Failed to load services. Please try again later.");
+      }
+      setLoading(false);
+    };
+
     fetchData();
   }, []);
+
+  const displayedServices = useMemo(() => {
+    const hasLangField = servicesData.some((item) => Boolean(item.lang));
+    const filtered = hasLangField
+      ? servicesData.filter((item) => item.lang === lang)
+      : servicesData;
+
+    const source =
+      filtered.length > 0
+        ? filtered
+        : servicesData.filter((item) => item.lang === "en");
+
+    return source.map((item) => ({
+      id: item.id,
+      title: getLocalizedText(item.title, lang),
+      description: getLocalizedText(item.description, lang),
+      date: item.date,
+    }));
+  }, [servicesData, lang]);
 
   return (
     <AppTemplate pageTitle="Services" path={PathConstants.SERVICES}>
@@ -63,19 +62,22 @@ function ServicesPage() {
       <ServicesPageStyles>
         <div className="container">
           {loading ? (
-            <p>Loading services...</p>
+            <MainLoader />
+          ) : error ? (
+            <p className="empty-state">{error}</p>
+          ) : displayedServices.length === 0 ? (
+            <p className="empty-state">No services available at the moment.</p>
           ) : (
-            servicesData.map((item) => {
-              if (item.lang === "en")
-                return (
-                  <InfoCard
-                    key={item.id}
-                    title={item.title}
-                    description={item.description}
-                    date={item.date}
-                  />
-                );
-            })
+            <div className="services-grid">
+              {displayedServices.map((item) => (
+                <InfoCard
+                  key={item.id}
+                  title={item.title}
+                  description={item.description}
+                  date={item.date}
+                />
+              ))}
+            </div>
           )}
         </div>
       </ServicesPageStyles>

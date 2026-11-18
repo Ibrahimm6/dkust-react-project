@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useState } from "react";
+import styled from "styled-components";
 
 const InputWrapper = styled.div`
   position: relative;
@@ -23,13 +23,15 @@ const InputFieldContainer = styled.div`
 const StyledInput = styled.input`
   width: 100%;
   padding: 10px 12px;
-  padding-right: ${(props) => (props.type === 'password' ? '40px' : '12px')};
+  padding-right: ${(props) => (props.$isPassword ? "40px" : "12px")};
   border-radius: 6px;
-  border: 1px solid ${(props) => (props.$hasError ? '#ef4444' : '#d1d5db')};
+  border: 1px solid ${(props) => (props.$hasError ? "#ef4444" : "#d1d5db")};
   box-sizing: border-box;
   font-size: 15px;
+  font-family: inherit;
   color: #111827;
   outline: none;
+  resize: ${(props) => (props.$isTextarea ? "vertical" : "none")};
   transition: border-color 0.2s;
 
   &::placeholder {
@@ -37,7 +39,7 @@ const StyledInput = styled.input`
   }
 
   &:focus {
-    border-color: ${(props) => (props.$hasError ? '#ef4444' : '#00a651')};
+    border-color: ${(props) => (props.$hasError ? "#ef4444" : "#00a651")};
   }
 `;
 
@@ -60,26 +62,42 @@ const ErrorText = styled.div`
   line-height: 1.2;
 `;
 
-const InputComponent = ({ fieldLabel, name, value, onChange, onBlur, placeholder, type, error, touched }) => {
+const InputComponent = ({
+  fieldLabel,
+  name,
+  value,
+  onChange,
+  onBlur,
+  placeholder,
+  type = "text",
+  error,
+  touched,
+}) => {
   const [showPassword, setShowPassword] = useState(false);
-  const inputType = type === 'password' && showPassword ? 'text' : type;
+  const isTextarea = type === "textarea";
+  const isPassword = type === "password";
+  const inputType = isPassword && showPassword ? "text" : type;
 
   return (
     <InputWrapper>
       <StyledLabel>{fieldLabel}</StyledLabel>
       <InputFieldContainer>
         <StyledInput
+          as={isTextarea ? "textarea" : "input"}
+          rows={isTextarea ? 4 : undefined}
           name={name}
-          type={inputType}
+          type={isTextarea ? undefined : inputType}
           value={value}
           onChange={onChange}
           onBlur={onBlur}
           placeholder={placeholder}
+          $isPassword={isPassword}
+          $isTextarea={isTextarea}
           $hasError={touched && Boolean(error)}
         />
-        {type === 'password' && (
+        {isPassword && (
           <IconWrapper onClick={() => setShowPassword(!showPassword)}>
-            <i className={`far ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+            <i className={`far ${showPassword ? "fa-eye-slash" : "fa-eye"}`}></i>
           </IconWrapper>
         )}
       </InputFieldContainer>
