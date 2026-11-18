@@ -1,5 +1,6 @@
 import React from "react";
 import { FiShield, FiPackage, FiStar } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 import {
   FeaturesContainer,
   FeaturesGrid,
@@ -9,31 +10,30 @@ import {
   FeatureDescription,
 } from "./styles";
 
-const featuresData = [
-  {
-    id: 1,
-    icon: <FiShield />,
-    title: "Enterprise Security",
-    description:
-      "AES-256 encryption and zero-log policy across all our platform services.",
-  },
-  {
-    id: 2,
-    icon: <FiPackage />,
-    title: "Instant Delivery",
-    description:
-      "Access your products immediately after purchase — no waiting, no friction.",
-  },
-  {
-    id: 3,
-    icon: <FiStar />,
-    title: "Top-Rated Support",
-    description:
-      "24/7 expert support with an average response time under 2 hours.",
-  },
-];
-
 const FeaturesSection = () => {
+  const { t } = useTranslation();
+
+  const featuresData = [
+    {
+      id: 1,
+      icon: <FiShield />,
+      title: t("home.feature1Title"),
+      description: t("home.feature1Desc"),
+    },
+    {
+      id: 2,
+      icon: <FiPackage />,
+      title: t("home.feature2Title"),
+      description: t("home.feature2Desc"),
+    },
+    {
+      id: 3,
+      icon: <FiStar />,
+      title: t("home.feature3Title"),
+      description: t("home.feature3Desc"),
+    },
+  ];
+
   return (
     <FeaturesContainer>
       <FeaturesGrid className="container">

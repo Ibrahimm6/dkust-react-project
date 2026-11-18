@@ -9,9 +9,16 @@ export const ProductsSwiperWrapper = styled.div`
     padding: 4px 20px 28px !important;
   }
 
+  .swiper-slide {
+    height: auto;
+    display: flex;
+  }
+
   .slide-inner {
+    width: 100%;
     height: 100%;
     padding-bottom: 10px;
+    display: flex;
   }
 
   .swiper-pagination {
@@ -59,6 +66,7 @@ export const ProductsSwiperWrapper = styled.div`
     background-position: center !important;
     background-size: 16px !important;
     right: 0px !important;
+    left: auto !important;
   }
 
   .swiper-button-prev {
@@ -67,6 +75,19 @@ export const ProductsSwiperWrapper = styled.div`
     background-position: center !important;
     background-size: 16px !important;
     left: 0px !important;
+    right: auto !important;
+  }
+
+  .swiper-rtl .swiper-button-next {
+    left: 0px !important;
+    right: auto !important;
+    transform: scaleX(-1);
+  }
+
+  .swiper-rtl .swiper-button-prev {
+    right: 0px !important;
+    left: auto !important;
+    transform: scaleX(-1);
   }
 
   .swiper-button-next:hover:not(.swiper-button-disabled) {

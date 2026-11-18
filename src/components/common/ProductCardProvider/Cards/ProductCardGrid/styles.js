@@ -5,8 +5,8 @@ import { getBadgeColors } from "../../../../../helpers/product.helpers";
 export const ProductCardGridStyles = styled.div``;
 
 export const GridImageArea = styled.div`
-  height: 100%;
-  min-height: 140px;
+  height: 165px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,7 +19,7 @@ export const GridImageArea = styled.div`
 export const GridBadge = styled.span`
   position: absolute;
   top: 10px;
-  left: 10px;
+  inset-inline-start: 10px;
   background-color: ${(props) => getBadgeColors(props.$text).bg};
   color: ${(props) => getBadgeColors(props.$text).text};
   font-size: 10px;
@@ -33,9 +33,8 @@ export const GridContent = styled.div`
   padding: 16px;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  flex: 1;
   width: 100%;
-  height: 100%;
 `;
 
 export const GridCategory = styled.p`
@@ -175,7 +174,7 @@ export const GridFooter = styled.div`
 export const WishlistButton = styled.button`
   position: absolute;
   top: 10px;
-  right: 10px;
+  inset-inline-end: 10px;
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -197,15 +196,15 @@ export const WishlistButton = styled.button`
   }
 `;
 
-// Root Wrapper & Responsive Media Queries
 export const GridCard = styled.div`
   overflow: hidden;
-  min-height: 240px;
+  width: 100%;
+  height: 100%;
   background-color: var(--color-bg-white);
   border: 1px solid #e5e7eb;
   border-radius: 12px;
-  display: grid;
-  grid-template-rows: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   transition: all 0.3s ease;
 
   &:hover {

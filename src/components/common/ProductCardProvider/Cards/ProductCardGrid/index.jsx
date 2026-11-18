@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import {
   GridCard,
   GridImageArea,
@@ -19,8 +20,6 @@ import CustomButton from "../../../../common/custom-button";
 import { FiShoppingCart, FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
 import { getProductBgColor } from "../../../../../helpers/product.helpers";
-
-// Redux Imports
 import { addToCart } from "../../../../../store/cart/cartSlice";
 import { toggleWishlistItem } from "../../../../../store/wishlist/wishlistSlice";
 import { selectIsInWishlist } from "../../../../../store/wishlist/wishlistSelectors";
@@ -28,8 +27,10 @@ import { selectIsInWishlist } from "../../../../../store/wishlist/wishlistSelect
 const ProductCardGrid = ({ product, compact }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
-  const isFavorite = useSelector((state) => selectIsInWishlist(state, product.id));
+  const { t } = useTranslation();
+  const isFavorite = useSelector((state) =>
+    selectIsInWishlist(state, product.id)
+  );
 
   return (
     <GridCard>
@@ -47,6 +48,7 @@ const ProductCardGrid = ({ product, compact }) => {
           </WishlistButton>
         )}
       </GridImageArea>
+
       <GridContent>
         <GridCategory>
           <i className="fas fa-tag"></i> {product.category}
@@ -68,12 +70,12 @@ const ProductCardGrid = ({ product, compact }) => {
         <GridFooter>
           <ListPrice>
             ${product.price}
-            <span>/mo</span>
+            <span>{t("common.perMonth")}</span>
           </ListPrice>
           {!compact && (
             <ActionButtons>
               <CustomButton
-                title="Details"
+                title={t("common.details")}
                 onClickFunction={() => navigate(`/products/${product.id}`)}
                 bgColor="transparent"
                 color="var(--color-text-gray)"
@@ -81,7 +83,7 @@ const ProductCardGrid = ({ product, compact }) => {
               <CustomButton
                 title={
                   <>
-                    <FiShoppingCart /> Add
+                    <FiShoppingCart /> {t("common.add")}
                   </>
                 }
                 onClickFunction={() => dispatch(addToCart({ product }))}

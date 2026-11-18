@@ -9,9 +9,8 @@ import { mapProductData } from "../../../helpers/product.helpers";
 import { TrendingWrapper } from "./styles";
 
 const TrendingProducts = () => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const lang = i18n.language || "en";
-
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -34,15 +33,12 @@ const TrendingProducts = () => {
     <TrendingWrapper>
       <div className="container section-header">
         <div>
-          <span className="hot-badge">HOT RIGHT NOW</span>
-          <h2 className="section-title">Trending Products</h2>
-          <p className="section-subtitle">
-            Our most popular tools and solutions, loved by teams around the
-            world.
-          </p>
+          <span className="hot-badge">{t("home.hotBadge")}</span>
+          <h2 className="section-title">{t("home.trendingTitle")}</h2>
+          <p className="section-subtitle">{t("home.trendingSubtitle")}</p>
         </div>
         <Link to={PathConstants.PRODUCTS} className="view-all-btn">
-          View All <i className="fas fa-chevron-right"></i>
+          {t("common.viewAll")} <i className="fas fa-chevron-right"></i>
         </Link>
       </div>
 

@@ -1,28 +1,29 @@
-import React from 'react';
-import PathConstants from '../../../routes/pathConstants';
+import React from "react";
+import { useTranslation } from "react-i18next";
+import PathConstants from "../../../routes/pathConstants";
 import {
   CtaContainer,
   Title,
   Description,
   ButtonsGroup,
   PrimaryButton,
-  SecondaryButton
-} from './styles';
+  SecondaryButton,
+} from "./styles";
 
 const CtaSection = () => {
+  const { t } = useTranslation();
+
   return (
     <CtaContainer>
       <div className="container">
-        <Title>Ready to get started?</Title>
-        <Description>
-          Join thousands of teams using DKUST solutions to build, automate, and scale their operations.
-        </Description>
+        <Title>{t("home.ctaTitle")}</Title>
+        <Description>{t("home.ctaDesc")}</Description>
         <ButtonsGroup>
           <PrimaryButton to={PathConstants.REGISTER}>
-            Create Free Account
+            {t("home.ctaRegister")}
           </PrimaryButton>
           <SecondaryButton to={PathConstants.LOGIN}>
-            Sign In
+            {t("home.ctaLogin")}
           </SecondaryButton>
         </ButtonsGroup>
       </div>

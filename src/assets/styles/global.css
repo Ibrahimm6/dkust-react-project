@@ -63,3 +63,17 @@ svg {
   padding-right: 0px !important;
   margin: 0 auto;
 }
+
+/* RTL Support */
+[dir="rtl"] body,
+[dir="rtl"] button,
+[dir="rtl"] input,
+[dir="rtl"] textarea,
+[dir="rtl"] select {
+  font-family: var(--arabic-font), var(--font-primary);
+}
+
+[dir="rtl"] .fa-chevron-right,
+[dir="rtl"] .fa-chevron-left {
+  transform: scaleX(-1);
+}
