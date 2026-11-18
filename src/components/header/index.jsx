@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { FiHeart, FiShoppingCart, FiUser, FiMenu, FiX } from "react-icons/fi";
 import PathConstants from "../../routes/pathConstants";
 import { useAuth } from "../../context/auth/useAuth";
 import { selectCartCount } from "../../store/cart/cartSelectors";
 import { selectWishlistCount } from "../../store/wishlist/wishlistSelectors";
+import LanguageSwitcher from "../language-switcher";
 import {
   HeaderWrapper,
   HeaderContainer,
@@ -29,13 +31,13 @@ import {
 } from "./styles";
 
 const NAV_LINKS = [
-  { label: "Home", path: PathConstants.HOME },
-  { label: "Products", path: PathConstants.PRODUCTS },
-  { label: "Services", path: PathConstants.SERVICES },
-  { label: "Blog", path: PathConstants.BLOG },
-  { label: "Quiz", path: PathConstants.QUIZ },
-  { label: "About", path: PathConstants.ABOUT },
-  { label: "Contact", path: PathConstants.CONTACT },
+  { key: "nav.home", path: PathConstants.HOME },
+  { key: "nav.products", path: PathConstants.PRODUCTS },
+  { key: "nav.services", path: PathConstants.SERVICES },
+  { key: "nav.blog", path: PathConstants.BLOG },
+  { key: "nav.quiz", path: PathConstants.QUIZ },
+  { key: "nav.about", path: PathConstants.ABOUT },
+  { key: "nav.contact", path: PathConstants.CONTACT },
 ];
 
 const Header = () => {
@@ -43,8 +45,8 @@ const Header = () => {
   const [loggingOut, setLoggingOut] = useState(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
-
   const { isAuthenticated, logout } = useAuth();
+  const { t } = useTranslation();
   const wishlistCount = useSelector(selectWishlistCount);
   const cartCount = useSelector(selectCartCount);
 
@@ -69,22 +71,24 @@ const Header = () => {
         <NavSection>
           {NAV_LINKS.map((link) => (
             <NavItem key={link.path} to={link.path}>
-              {link.label}
+              {t(link.key)}
             </NavItem>
           ))}
         </NavSection>
 
         <RightSection>
           <IconGroup>
-            <IconButton to={PathConstants.WISHLIST} aria-label="Wishlist">
+            <LanguageSwitcher />
+
+            <IconButton to={PathConstants.WISHLIST} aria-label={t("nav.favorites")}>
               <FiHeart />
               {wishlistCount > 0 && <IconBadge>{wishlistCount}</IconBadge>}
             </IconButton>
-            <IconButton to={PathConstants.CART} aria-label="Cart">
+            <IconButton to={PathConstants.CART} aria-label={t("nav.cart")}>
               <FiShoppingCart />
               {cartCount > 0 && <IconBadge>{cartCount}</IconBadge>}
             </IconButton>
-            <IconButton to={PathConstants.PROFILE} aria-label="User Profile">
+            <IconButton to={PathConstants.PROFILE} aria-label={t("nav.profile")}>
               <FiUser />
             </IconButton>
           </IconGroup>
@@ -105,17 +109,17 @@ const Header = () => {
                       role="status"
                       aria-hidden="true"
                     ></span>
-                    <span>Logging out...</span>
+                    <span>{t("nav.loggingOut")}</span>
                   </>
                 ) : (
-                  "Logout"
+                  t("nav.logout")
                 )}
               </LogoutButton>
             ) : (
               <>
-                <LoginLink to={PathConstants.LOGIN}>Login</LoginLink>
+                <LoginLink to={PathConstants.LOGIN}>{t("nav.login")}</LoginLink>
                 <RegisterButton to={PathConstants.REGISTER}>
-                  Register
+                  {t("nav.register")}
                 </RegisterButton>
               </>
             )}
@@ -134,25 +138,32 @@ const Header = () => {
       <MobileMenu>
         {NAV_LINKS.map((link) => (
           <MobileNavItem key={link.path} to={link.path}>
-            {link.label}
+            {t(link.key)}
           </MobileNavItem>
         ))}
-        <MobileNavItem to={PathConstants.WISHLIST}>Favorites</MobileNavItem>
-        <MobileNavItem to={PathConstants.CART}>Cart</MobileNavItem>
-        <MobileNavItem to={PathConstants.PROFILE}>Profile</MobileNavItem>
-
+        <MobileNavItem to={PathConstants.WISHLIST}>
+          {t("nav.favorites")}
+        </MobileNavItem>
+        <MobileNavItem to={PathConstants.CART}>{t("nav.cart")}</MobileNavItem>
+        <MobileNavItem to={PathConstants.PROFILE}>
+          {t("nav.profile")}
+        </MobileNavItem>
         {isAuthenticated ? (
           <MobileLogoutButton
             type="button"
             onClick={handleLogout}
             disabled={loggingOut}
           >
-            {loggingOut ? "Logging out..." : "Logout"}
+            {loggingOut ? t("nav.loggingOut") : t("nav.logout")}
           </MobileLogoutButton>
         ) : (
           <>
-            <MobileNavItem to={PathConstants.LOGIN}>Login</MobileNavItem>
-            <MobileNavItem to={PathConstants.REGISTER}>Register</MobileNavItem>
+            <MobileNavItem to={PathConstants.LOGIN}>
+              {t("nav.login")}
+            </MobileNavItem>
+            <MobileNavItem to={PathConstants.REGISTER}>
+              {t("nav.register")}
+            </MobileNavItem>
           </>
         )}
       </MobileMenu>

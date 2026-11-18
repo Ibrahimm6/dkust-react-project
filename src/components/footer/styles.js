@@ -76,8 +76,11 @@ export const FooterWrapper = styled.footer`
       color: var(--color-text-dark);
       background-color: #ffffff;
       border: 1px solid #d1d5db;
-      border-right: none;
-      border-radius: 8px 0 0 8px;
+      border-inline-end: none;
+      border-start-start-radius: 8px;
+      border-end-start-radius: 8px;
+      border-start-end-radius: 0;
+      border-end-end-radius: 0;
       outline: none;
       transition: border-color 0.2s ease;
 
@@ -96,7 +99,10 @@ export const FooterWrapper = styled.footer`
       color: var(--color-text-white);
       border: 1px solid var(--color-primary);
       padding: 0 14px;
-      border-radius: 0 8px 8px 0;
+      border-start-start-radius: 0;
+      border-end-start-radius: 0;
+      border-start-end-radius: 8px;
+      border-end-end-radius: 8px;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -117,6 +123,10 @@ export const FooterWrapper = styled.footer`
       svg {
         transform: rotate(45deg) translate(-1px, 1px);
         font-size: 0.95rem;
+      }
+
+      [dir="rtl"] & svg {
+        transform: scaleX(-1) rotate(45deg) translate(-1px, 1px);
       }
     }
   }

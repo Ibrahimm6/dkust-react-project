@@ -45,13 +45,13 @@ export const NavItem = styled(NavLink)`
 export const RightSection = styled.div`
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 18px;
 `;
 
 export const IconGroup = styled.div`
   display: flex;
   align-items: center;
-  gap: 22px;
+  gap: 18px;
 `;
 
 export const IconButton = styled(Link)`
@@ -72,7 +72,7 @@ export const IconButton = styled(Link)`
 export const IconBadge = styled.span`
   position: absolute;
   top: -8px;
-  right: -10px;
+  inset-inline-end: -10px;
   background-color: var(--color-primary-hover);
   color: var(--color-text-white);
   font-size: 10px;
@@ -95,7 +95,7 @@ export const Divider = styled.div`
 export const AuthGroup = styled.div`
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 14px;
 `;
 
 export const LoginLink = styled(Link)`
@@ -200,7 +200,7 @@ export const MobileLogoutButton = styled.button`
   background: none;
   border: none;
   color: var(--color-text-white);
-  text-align: left;
+  text-align: start;
   font-size: 1rem;
   font-weight: 500;
   padding: 15px 0;
@@ -245,11 +245,11 @@ export const HeaderWrapper = styled.header`
 
   @media ${devicesBreakpoints.thumb} {
     ${RightSection} {
-      gap: 14px;
+      gap: 12px;
     }
 
     ${IconGroup} {
-      gap: 16px;
+      gap: 12px;
     }
   }
 `;

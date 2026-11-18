@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import PathConstants from "../../routes/pathConstants";
 import {
   FaFacebookF,
@@ -12,22 +13,23 @@ import { subscribeNewsletter } from "../../services/subscribers/subscribers.serv
 import { FooterWrapper } from "./styles";
 
 const QUICK_LINKS = [
-  { label: "About Us", to: PathConstants.ABOUT },
-  { label: "Services", to: PathConstants.SERVICES },
-  { label: "Portfolio", to: PathConstants.PORTFOLIO },
-  { label: "Blog", to: PathConstants.BLOG },
-  { label: "Contact Us", to: PathConstants.CONTACT },
+  { key: "footer.aboutUs", to: PathConstants.ABOUT },
+  { key: "footer.services", to: PathConstants.SERVICES },
+  { key: "footer.portfolio", to: PathConstants.PORTFOLIO },
+  { key: "footer.blog", to: PathConstants.BLOG },
+  { key: "footer.contactUs", to: PathConstants.CONTACT },
 ];
 
 const SERVICE_LINKS = [
-  { label: "Web Development", to: PathConstants.SERVICES },
-  { label: "Machine Learning", to: PathConstants.SERVICES },
-  { label: "Robotics", to: PathConstants.SERVICES },
-  { label: "Industrial Consulting", to: PathConstants.SERVICES },
-  { label: "Data Analytics", to: PathConstants.SERVICES },
+  { key: "footer.webDev", to: PathConstants.SERVICES },
+  { key: "footer.ml", to: PathConstants.SERVICES },
+  { key: "footer.robotics", to: PathConstants.SERVICES },
+  { key: "footer.consulting", to: PathConstants.SERVICES },
+  { key: "footer.dataAnalytics", to: PathConstants.SERVICES },
 ];
 
 const Footer = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [feedback, setFeedback] = useState({ type: "", text: "" });
@@ -47,14 +49,12 @@ const Footer = () => {
       setEmail("");
       setFeedback({
         type: "success",
-        text: "Subscribed successfully! Thank you.",
+        text: t("footer.subscribeSuccess"),
       });
     } else {
       setFeedback({
         type: "error",
-        text:
-          response.data?.message ||
-          "Subscription failed. Please try again.",
+        text: response.data?.message || t("footer.subscribeError"),
       });
     }
   };
@@ -64,49 +64,47 @@ const Footer = () => {
       <div className="container">
         <div className="footer-top">
           <div className="footer-col">
-            <h6 className="col-title">CONTACT DETAIL</h6>
+            <h6 className="col-title">{t("footer.contactDetail")}</h6>
             <ul className="footer-list">
               <li>
-                123 Business Street, Suite 100,
+                {t("footer.addressLine1")}
                 <br />
-                New York, NY 10001
+                {t("footer.addressLine2")}
               </li>
-              <li>Phone: +1 234 567 8900</li>
-              <li>Email: info@dkust.com</li>
+              <li>{t("footer.phone")}</li>
+              <li>{t("footer.email")}</li>
             </ul>
           </div>
 
           <div className="footer-col">
-            <h6 className="col-title">QUICK LINKS</h6>
+            <h6 className="col-title">{t("footer.quickLinks")}</h6>
             <ul className="footer-list">
               {QUICK_LINKS.map((link) => (
-                <li key={link.label}>
-                  <Link to={link.to}>{link.label}</Link>
+                <li key={link.key}>
+                  <Link to={link.to}>{t(link.key)}</Link>
                 </li>
               ))}
             </ul>
           </div>
 
           <div className="footer-col">
-            <h6 className="col-title">OUR SERVICES</h6>
+            <h6 className="col-title">{t("footer.ourServices")}</h6>
             <ul className="footer-list">
               {SERVICE_LINKS.map((service) => (
-                <li key={service.label}>
-                  <Link to={service.to}>{service.label}</Link>
+                <li key={service.key}>
+                  <Link to={service.to}>{t(service.key)}</Link>
                 </li>
               ))}
             </ul>
           </div>
 
           <div className="footer-col">
-            <h6 className="col-title">SUBSCRIBE NEWSLETTER</h6>
-            <p className="newsletter-text">
-              Get the latest updates and news.
-            </p>
+            <h6 className="col-title">{t("footer.subscribeTitle")}</h6>
+            <p className="newsletter-text">{t("footer.subscribeText")}</p>
             <form className="newsletter-form" onSubmit={handleSubscribe}>
               <input
                 type="email"
-                placeholder="Email Address"
+                placeholder={t("footer.emailPlaceholder")}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={loading}
@@ -114,7 +112,7 @@ const Footer = () => {
               />
               <button
                 type="submit"
-                aria-label="Subscribe"
+                aria-label={t("footer.subscribeTitle")}
                 disabled={loading || !email.trim()}
               >
                 {loading ? (
@@ -139,9 +137,7 @@ const Footer = () => {
         <hr className="footer-divider" />
 
         <div className="footer-bottom">
-          <p className="copyright">
-            Copyright &copy; DKUST | All Rights Reserved
-          </p>
+          <p className="copyright">{t("footer.copyright")}</p>
           <div className="social-icons">
             <a href="#fb" aria-label="Facebook">
               <FaFacebookF />
