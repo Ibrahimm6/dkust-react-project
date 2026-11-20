@@ -7,7 +7,7 @@ const MainLoader = () => {
 
   return (
     <Loader role="status">
-      {t("Loading")}
+      {t("common-loading")}
     </Loader>
   );
 };
