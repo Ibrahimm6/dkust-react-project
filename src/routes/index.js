@@ -1,5 +1,6 @@
 import React from "react";
 import PathConstants from "./pathConstants";
+import ProtectedRoute from "./ProtectedRoute";
 
 const HomePage = React.lazy(() => import("../pages/home"));
 const LoginPage = React.lazy(() => import("../pages/login"));
@@ -26,9 +27,30 @@ const routes = [
   { path: PathConstants.PRODUCTS, element: <ProductsPage /> },
   { path: PathConstants.PRODUCT_DETAILS, element: <ProductDetailsPage /> },
   { path: PathConstants.QUIZ, element: <QuizPage /> },
-  { path: PathConstants.WISHLIST, element: <WishlistPage /> },
-  { path: PathConstants.PROFILE, element: <ProfilePage /> },
-  { path: PathConstants.CART, element: <CartPage /> },
+  {
+    path: PathConstants.WISHLIST,
+    element: (
+      <ProtectedRoute>
+        <WishlistPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: PathConstants.PROFILE,
+    element: (
+      <ProtectedRoute>
+        <ProfilePage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: PathConstants.CART,
+    element: (
+      <ProtectedRoute>
+        <CartPage />
+      </ProtectedRoute>
+    ),
+  },
   { path: PathConstants.BLOG, element: <BlogPage /> },
   { path: PathConstants.FORGOT_PASSWORD, element: <ForgotPasswordPage /> },
   { path: PathConstants.RESET_PASSWORD, element: <ResetPasswordPage /> },

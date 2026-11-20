@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useFormik } from "formik";
 import { loginSchema } from "../../validations";
 import InputComponent from "../../components/common/input-component";
@@ -12,9 +12,12 @@ import { LoginFormStyles } from "./styles";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState("");
   const { login } = useAuth();
+
+  const from = location.state?.from || PathConstants.HOME;
 
   const formik = useFormik({
     initialValues: { email: "", password: "", rememberMe: false },
@@ -31,7 +34,7 @@ const LoginPage = () => {
       setLoading(false);
 
       if (response.status === 200 || response.status === 201) {
-        navigate(PathConstants.HOME);
+        navigate(from, { replace: true });
       } else if (response?.data?.requiresEmailVerification) {
         navigate(PathConstants.VERIFY, { state: { email: values.email } });
       } else {

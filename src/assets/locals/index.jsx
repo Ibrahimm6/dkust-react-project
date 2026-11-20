@@ -10,9 +10,9 @@ const savedLang =
   getLocalStorage(environment.localLang) ||
   "en";
 
-const initialLang = savedLang === "ar" ? "ar" : "en";
+const initialLang = savedLang === "en" ? "en" : "ar";
 
-document.documentElement.dir = initialLang === "ar" ? "rtl" : "ltr";
+document.documentElement.dir = initialLang === "en" ? "ltr" : "rtl";
 document.documentElement.lang = initialLang;
 
 i18n.use(initReactI18next).init({
