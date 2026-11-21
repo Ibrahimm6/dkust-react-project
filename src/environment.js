@@ -5,6 +5,7 @@ const environment = {
   TOKEN_KEY: "token",
   REFRESH_TOKEN_KEY: "refreshToken",
   USER_KEY: "dkust_user",
+  PENDING_PROFILE_KEY: "dkust_pending_profile",
 
   // App Info
   appName: "DKUST",
