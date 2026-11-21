@@ -26,6 +26,17 @@ export const registerSchema = Yup.object().shape({
   ),
 });
 
+export const registerProfileSchema = Yup.object().shape({
+  phone: Yup.string()
+    .trim()
+    .matches(/^[+\d\s()-]{7,20}$/, {
+      message: "Invalid phone number",
+      excludeEmptyString: true,
+    }),
+  location: Yup.string().trim().max(100, "Location must be at most 100 characters"),
+  bio: Yup.string().trim().max(300, "Bio must be at most 300 characters"),
+});
+
 export const resetPasswordSchema = Yup.object().shape({
   newPassword: Yup.string()
     .min(6, "Password must be at least 6 characters")
