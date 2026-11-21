@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import PathConstants from "../../../routes/pathConstants";
 import { AuthCardWrapper } from "./styles";
 
@@ -13,13 +14,15 @@ const AuthCard = ({
   footerText,
   footerLinkText,
   footerLinkTo,
-  backLinkText = "Back to Home",
+  backLinkText,
   backLinkTo = PathConstants.HOME,
   maxWidth = "480px",
   centered = false,
   $theme = "var(--color-page-bg)",
   children,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <AuthCardWrapper
       $maxWidth={maxWidth}
@@ -44,7 +47,7 @@ const AuthCard = ({
 
         {showSocial && (
           <>
-            <div className="auth-divider">or continue with</div>
+            <div className="auth-divider">{t("auth.orContinueWith")}</div>
             <div className="auth-social-grid">
               <button type="button">
                 <img
@@ -71,7 +74,7 @@ const AuthCard = ({
 
       {backLinkTo && (
         <Link to={backLinkTo} className="auth-back-link">
-          {backLinkText}
+          {backLinkText || t("common.backToHome")}
         </Link>
       )}
     </AuthCardWrapper>

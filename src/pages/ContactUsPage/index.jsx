@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useFormik } from "formik";
+import { useTranslation } from "react-i18next";
 import { FiCheck } from "react-icons/fi";
-import { contactSchema } from "../../validations";
+import { getContactSchema } from "../../validations";
 import PathConstants from "../../routes/pathConstants";
 import AppTemplate from "../../components/app-template";
 import HeroSection from "../../components/common/HeroSection";
@@ -13,10 +14,16 @@ import { useAuth } from "../../context/auth/useAuth";
 import { sendMessage } from "../../services/contact-us/messages.service";
 
 function ContactUsPage() {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [isSentSuccessfully, setIsSentSuccessfully] = useState(false);
-  const [error, setError] = useState("");
+  const [errorState, setErrorState] = useState({
+    hasError: false,
+    message: "",
+  });
+
+  const validationSchema = useMemo(() => getContactSchema(t), [t]);
 
   const defaultName = user
     ? `${user.firstName || ""} ${user.lastName || ""}`.trim() || user.name || ""
@@ -30,10 +37,10 @@ function ContactUsPage() {
       subject: "",
       message: "",
     },
-    validationSchema: contactSchema,
+    validationSchema,
     onSubmit: async (values, { resetForm }) => {
       setLoading(true);
-      setError("");
+      setErrorState({ hasError: false, message: "" });
 
       const response = await sendMessage({
         id: 0,
@@ -49,28 +56,33 @@ function ContactUsPage() {
         resetForm();
         setIsSentSuccessfully(true);
       } else {
-        setError(
-          response.data?.message || "Failed to send message. Please try again."
-        );
+        setErrorState({
+          hasError: true,
+          message: response.data?.message || "",
+        });
       }
     },
   });
 
-  const InputFields = [
+  const alertMessage = errorState.hasError
+    ? errorState.message || t("contact.sendError")
+    : "";
+
+  const inputFields = [
     {
       name: "name",
-      fieldLabel: "Full Name",
+      fieldLabel: t("profile.fullName"),
       value: formik.values.name,
       onChange: formik.handleChange,
       onBlur: formik.handleBlur,
-      placeholder: "Full Name",
+      placeholder: t("profile.fullName"),
       type: "text",
       error: formik.errors.name,
       touched: formik.touched.name,
     },
     {
       name: "email",
-      fieldLabel: "Email Address",
+      fieldLabel: t("auth.emailLabel"),
       value: formik.values.email,
       onChange: formik.handleChange,
       onBlur: formik.handleBlur,
@@ -81,22 +93,22 @@ function ContactUsPage() {
     },
     {
       name: "subject",
-      fieldLabel: "Subject",
+      fieldLabel: t("contact.subject"),
       value: formik.values.subject,
       onChange: formik.handleChange,
       onBlur: formik.handleBlur,
-      placeholder: "Subject",
+      placeholder: t("contact.subject"),
       type: "text",
       error: formik.errors.subject,
       touched: formik.touched.subject,
     },
     {
       name: "message",
-      fieldLabel: "Message",
+      fieldLabel: t("contact.message"),
       value: formik.values.message,
       onChange: formik.handleChange,
       onBlur: formik.handleBlur,
-      placeholder: "Write your message here...",
+      placeholder: t("contact.messagePlaceholder"),
       type: "textarea",
       error: formik.errors.message,
       touched: formik.touched.message,
@@ -104,22 +116,26 @@ function ContactUsPage() {
   ];
 
   return (
-    <AppTemplate pageTitle="Contact" path={PathConstants.CONTACT}>
+    <AppTemplate
+      pageTitle={t("contact.pageTitle")}
+      path={PathConstants.CONTACT}
+    >
       <HeroSection
-        title="Contact Us"
-        subtitle="Send a question and our team will get back to you."
+        title={t("contact.heroTitle")}
+        subtitle={t("contact.heroSubtitle")}
       />
       {isSentSuccessfully ? (
         <>
           <AuthCard
             centered
             $theme="var(--page-bg)"
-            title="Message Sent"
-            description="Thank you for reaching out. Our team will reply as soon as possible."
+            title={t("contact.sentTitle")}
+            description={t("contact.sentDesc")}
             icon={<FiCheck />}
+            backLinkTo={null}
           >
             <CustomButton
-              title="Send Another Message"
+              title={t("contact.sendAnother")}
               onClickFunction={() => setIsSentSuccessfully(false)}
               bgColor="#00a651"
             />
@@ -127,15 +143,18 @@ function ContactUsPage() {
           <ScrollToTop />
         </>
       ) : (
-        <AuthCard $theme="var(--page-bg)" alertMessage={error}>
+        <AuthCard
+          $theme="var(--page-bg)"
+          alertMessage={alertMessage}
+          backLinkTo={null}
+        >
           <form onSubmit={formik.handleSubmit}>
-            {InputFields.map((field) => (
+            {inputFields.map((field) => (
               <InputComponent key={field.name} {...field} />
             ))}
             <CustomButton
               type="submit"
               disabled={loading}
-              onClickFunction={formik.handleSubmit}
               bgColor="#00a651"
               title={
                 loading ? (
@@ -145,10 +164,10 @@ function ContactUsPage() {
                       role="status"
                       aria-hidden="true"
                     ></span>
-                    <span>Sending Message...</span>
+                    <span>{t("contact.sendingBtn")}</span>
                   </>
                 ) : (
-                  "Send Message"
+                  t("contact.sendBtn")
                 )
               }
             />

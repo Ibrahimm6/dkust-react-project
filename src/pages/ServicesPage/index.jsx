@@ -10,23 +10,23 @@ import { getLocalizedText } from "../../helpers/product.helpers";
 import { ServicesPageStyles } from "./styles";
 
 function ServicesPage() {
-  const { i18n } = useTranslation();
-  const lang = i18n?.language || "en";
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language === "ar" ? "ar" : "en";
 
   const [servicesData, setServicesData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      setError("");
+      setHasError(false);
       const response = await getServices();
       if (response.status === 200 && Array.isArray(response.data)) {
         setServicesData(response.data);
       } else {
         setServicesData([]);
-        setError("Failed to load services. Please try again later.");
+        setHasError(true);
       }
       setLoading(false);
     };
@@ -54,19 +54,22 @@ function ServicesPage() {
   }, [servicesData, lang]);
 
   return (
-    <AppTemplate pageTitle="Services" path={PathConstants.SERVICES}>
+    <AppTemplate
+      pageTitle={t("services.pageTitle")}
+      path={PathConstants.SERVICES}
+    >
       <HeroSection
-        title="Our Services"
-        subtitle="From web platforms to machine learning and robotics, we deliver end-to-end solutions."
+        title={t("services.heroTitle")}
+        subtitle={t("services.heroSubtitle")}
       />
       <ServicesPageStyles>
         <div className="container">
           {loading ? (
             <MainLoader />
-          ) : error ? (
-            <p className="empty-state">{error}</p>
+          ) : hasError ? (
+            <p className="empty-state">{t("services.loadError")}</p>
           ) : displayedServices.length === 0 ? (
-            <p className="empty-state">No services available at the moment.</p>
+            <p className="empty-state">{t("services.empty")}</p>
           ) : (
             <div className="services-grid">
               {displayedServices.map((item) => (

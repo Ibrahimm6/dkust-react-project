@@ -23,7 +23,7 @@ const InputFieldContainer = styled.div`
 const StyledInput = styled.input`
   width: 100%;
   padding: 10px 12px;
-  padding-right: ${(props) => (props.$isPassword ? "40px" : "12px")};
+  padding-inline-end: ${(props) => (props.$isPassword ? "40px" : "12px")};
   border-radius: 6px;
   border: 1px solid ${(props) => (props.$hasError ? "#ef4444" : "#d1d5db")};
   box-sizing: border-box;
@@ -45,7 +45,7 @@ const StyledInput = styled.input`
 
 const IconWrapper = styled.span`
   position: absolute;
-  right: 12px;
+  inset-inline-end: 12px;
   top: 50%;
   transform: translateY(-50%);
   color: #aaa;
@@ -56,7 +56,7 @@ const IconWrapper = styled.span`
 const ErrorText = styled.div`
   position: absolute;
   top: calc(100% + 3px);
-  left: 0;
+  inset-inline-start: 0;
   color: #ef4444;
   font-size: 11px;
   line-height: 1.2;

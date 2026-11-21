@@ -54,3 +54,13 @@ export const contactSchema = Yup.object().shape({
   subject: Yup.string().required("Subject is required"),
   message: Yup.string().required("Message is required"),
 });
+
+export const getContactSchema = (t) =>
+  Yup.object().shape({
+    name: Yup.string().required(t("validation.nameRequired")),
+    email: Yup.string()
+      .email(t("validation.emailInvalid"))
+      .required(t("validation.emailRequired")),
+    subject: Yup.string().required(t("validation.subjectRequired")),
+    message: Yup.string().required(t("validation.messageRequired")),
+  });

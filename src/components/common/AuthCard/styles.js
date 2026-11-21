@@ -11,7 +11,7 @@ export const AuthCardWrapper = styled.div`
   background-color: ${(props) => props?.$theme};
   /* background-color: var(--color-page-bg); */
 
-  .auth-card {
+.auth-card {
     background-color: #ffffff;
     padding: 40px;
     border-radius: 10px;
@@ -19,7 +19,7 @@ export const AuthCardWrapper = styled.div`
     max-width: ${({ $maxWidth }) => $maxWidth || "480px"};
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
     border-top: 6px solid #00a63e;
-    text-align: ${({ $centered }) => ($centered ? "center" : "left")};
+    text-align: ${({ $centered }) => ($centered ? "center" : "start")};
   }
 
   .auth-icon-box {

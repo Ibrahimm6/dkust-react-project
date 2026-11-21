@@ -1,39 +1,45 @@
+import { useTranslation } from "react-i18next";
 import AppTemplate from "../../components/app-template";
 import HeroSection from "../../components/common/HeroSection";
 import InfoCard from "../../components/common/InfoCard";
 import PathConstants from "../../routes/pathConstants";
 import { BlogStyles } from "./styles";
 
-const blogData = [
-  {
-    title: "How AI dashboards change operations",
-    description: `A look at real-time analytics and why teams adopt predictive views.`,
-    date: "Sep 10, 2026",
-  },
-  {
-    title: "Choosing a robotics kit for the lab",
-    description: `What to check before buying an industrial arm for research.`,
-    date: "Aug 22, 2026",
-  },
-  {
-    title: "Cloud sync without losing control",
-    description: `Multi-cloud data movement with encryption and conflict handling.`,
-    date: "Jul 04, 2026",
-  },
-];
-
 function Blog() {
+  const { t } = useTranslation();
+
+  const blogData = [
+    {
+      id: 1,
+      title: t("blog.post1Title"),
+      description: t("blog.post1Desc"),
+      date: t("blog.post1Date"),
+    },
+    {
+      id: 2,
+      title: t("blog.post2Title"),
+      description: t("blog.post2Desc"),
+      date: t("blog.post2Date"),
+    },
+    {
+      id: 3,
+      title: t("blog.post3Title"),
+      description: t("blog.post3Desc"),
+      date: t("blog.post3Date"),
+    },
+  ];
+
   return (
-    <AppTemplate pageTitle="Blog" path={PathConstants.BLOG}>
+    <AppTemplate pageTitle={t("blog.pageTitle")} path={PathConstants.BLOG}>
       <HeroSection
-        title="DKUST Blog"
-        subtitle="Updates, product notes, and engineering stories from the team."
+        title={t("blog.heroTitle")}
+        subtitle={t("blog.heroSubtitle")}
       />
       <BlogStyles>
         <div className="container">
-          {blogData.map((item, index) => (
+          {blogData.map((item) => (
             <InfoCard
-              key={index}
+              key={item.id}
               title={item.title}
               description={item.description}
               date={item.date}
