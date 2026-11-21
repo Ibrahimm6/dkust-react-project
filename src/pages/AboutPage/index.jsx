@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import AppTemplate from "../../components/app-template";
 import HeroSection from "../../components/common/HeroSection";
 import InfoCard from "../../components/common/InfoCard";
@@ -5,19 +6,21 @@ import PathConstants from "../../routes/pathConstants";
 import { AboutPageStyles } from "./styles";
 
 function AboutPage() {
+  const { t } = useTranslation();
+
   return (
-    <AppTemplate pageTitle="About" path={PathConstants.ABOUT}>
+    <AppTemplate pageTitle={t("about.pageTitle")} path={PathConstants.ABOUT}>
       <HeroSection
-        title="About DKUST"
-        subtitle="We build software, AI, and robotics products for modern teams."
+        title={t("about.heroTitle")}
+        subtitle={t("about.heroSubtitle")}
       />
       <AboutPageStyles>
         <div className="container">
           <InfoCard
             className="about-card"
             variant="aboutPageCard"
-            title="Our story"
-            description="DKUST started as a technology studio focused on practical tools. Today we help teams ship analytics, automation, and industrial solutions."
+            title={t("about.storyTitle")}
+            description={t("about.storyDesc")}
           />
         </div>
       </AboutPageStyles>

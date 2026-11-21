@@ -4,6 +4,7 @@ import { devicesBreakpoints } from "../../constants/Breakpoints";
 export const BlogStyles = styled.div`
   padding-block: 64px;
   background-color: var(--page-bg);
+  flex-grow: 1;
 
   & > div {
     display: grid;

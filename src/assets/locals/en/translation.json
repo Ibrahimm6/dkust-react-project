@@ -242,7 +242,16 @@
   "blog": {
     "pageTitle": "Blog",
     "heroTitle": "DKUST Blog",
-    "heroSubtitle": "Updates, product notes, and engineering stories from the team."
+    "heroSubtitle": "Updates, product notes, and engineering stories from the team.",
+    "post1Title": "How AI dashboards change operations",
+    "post1Desc": "A look at real-time analytics and why teams adopt predictive views.",
+    "post1Date": "Sep 10, 2026",
+    "post2Title": "Choosing a robotics kit for the lab",
+    "post2Desc": "What to check before buying an industrial arm for research.",
+    "post2Date": "Aug 22, 2026",
+    "post3Title": "Cloud sync without losing control",
+    "post3Desc": "Multi-cloud data movement with encryption and conflict handling.",
+    "post3Date": "Jul 04, 2026"
   },
   "quiz": {
     "pageTitle": "Quiz",
@@ -277,5 +286,12 @@
     "pageTitle": "Page Not Found",
     "title": "Page Not Found",
     "description": "The page you are looking for might have been moved, deleted, or never existed."
+  },
+  "validation": {
+    "nameRequired": "Name is required",
+    "emailInvalid": "Invalid email address",
+    "emailRequired": "Email is required",
+    "subjectRequired": "Subject is required",
+    "messageRequired": "Message is required"
   }
 }
