@@ -27,14 +27,15 @@ const routes = [
   { path: PathConstants.PRODUCTS, element: <ProductsPage /> },
   { path: PathConstants.PRODUCT_DETAILS, element: <ProductDetailsPage /> },
   { path: PathConstants.QUIZ, element: <QuizPage /> },
-  {
-    path: PathConstants.WISHLIST,
-    element: (
-      <ProtectedRoute>
-        <WishlistPage />
-      </ProtectedRoute>
-    ),
-  },
+  // {
+  //   path: PathConstants.WISHLIST,
+  //   element: (
+  //     <ProtectedRoute>
+  //       <WishlistPage />
+  //     </ProtectedRoute>
+  //   ),
+  // },
+  { path: PathConstants.WISHLIST, element: <WishlistPage /> },
   {
     path: PathConstants.PROFILE,
     element: (
