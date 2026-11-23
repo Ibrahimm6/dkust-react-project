@@ -23,8 +23,10 @@ import {
   EmptyText,
   ProductsGrid,
 } from "./styles";
+import { useTranslation } from "react-i18next";
 
 const WishlistPage = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const wishlist = useSelector(selectWishlistItems);
   const loading = useSelector(selectWishlistLoading);
@@ -33,11 +35,11 @@ const WishlistPage = () => {
     <AppTemplate pageTitle="My Favorites" path={PathConstants.WISHLIST}>
       <PageWrapper>
         <HeroSection>
-          <HeroTitle>My Favorites</HeroTitle>
+          <HeroTitle>{t("wishlist.pageTitle")}</HeroTitle>
           <HeroSubtitle>
             {wishlist.length === 1
-              ? "1 saved item"
-              : `${wishlist.length} saved items`}
+              ? t("wishlist.singleSubtitle")
+              : t("wishlist.multiSubtitle", { count: wishlist.length })}
           </HeroSubtitle>
         </HeroSection>
 
@@ -59,10 +61,10 @@ const WishlistPage = () => {
               <EmptyIcon>
                 <FiHeart />
               </EmptyIcon>
-              <EmptyText>You haven't saved any products yet</EmptyText>
+              <EmptyText>{t("wishlist.empty")}</EmptyText>
               <div style={{ width: "200px" }}>
                 <CustomButton
-                  title="Explore Products"
+                  title={t("common.exploreProducts")}
                   onClickFunction={() => navigate(PathConstants.PRODUCTS)}
                   bgColor="var(--color-primary)"
                 />
