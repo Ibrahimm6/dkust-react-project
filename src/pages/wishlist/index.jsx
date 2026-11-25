@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { FiHeart } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import AppTemplate from "../../components/app-template";
 import PathConstants from "../../routes/pathConstants";
@@ -26,18 +27,22 @@ import {
 
 const WishlistPage = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const wishlist = useSelector(selectWishlistItems);
   const loading = useSelector(selectWishlistLoading);
 
   return (
-    <AppTemplate pageTitle="My Favorites" path={PathConstants.WISHLIST}>
+    <AppTemplate
+      pageTitle={t("wishlist.pageTitle")}
+      path={PathConstants.WISHLIST}
+    >
       <PageWrapper>
         <HeroSection>
-          <HeroTitle>My Favorites</HeroTitle>
+          <HeroTitle>{t("wishlist.heroTitle")}</HeroTitle>
           <HeroSubtitle>
             {wishlist.length === 1
-              ? "1 saved item"
-              : `${wishlist.length} saved items`}
+              ? t("wishlist.singleSubtitle")
+              : t("wishlist.multiSubtitle", { count: wishlist.length })}
           </HeroSubtitle>
         </HeroSection>
 
@@ -59,10 +64,10 @@ const WishlistPage = () => {
               <EmptyIcon>
                 <FiHeart />
               </EmptyIcon>
-              <EmptyText>You haven't saved any products yet</EmptyText>
+              <EmptyText>{t("wishlist.empty")}</EmptyText>
               <div style={{ width: "200px" }}>
                 <CustomButton
-                  title="Explore Products"
+                  title={t("common.exploreProducts")}
                   onClickFunction={() => navigate(PathConstants.PRODUCTS)}
                   bgColor="var(--color-primary)"
                 />
