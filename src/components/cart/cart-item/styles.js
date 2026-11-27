@@ -57,14 +57,19 @@ export const DeleteButton = styled.button`
   border: none;
   color: #9ca3af;
   cursor: pointer;
-  padding: 4px;
+  min-width: 36px;
+  min-height: 36px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color 0.2s ease;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
 
   &:hover {
     color: #ef4444;
+    background-color: #fef2f2;
   }
 `;
 
@@ -82,18 +87,18 @@ export const QuantityControl = styled.div`
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   overflow: hidden;
-  height: 32px;
+  height: 38px;
 `;
 
 export const QtyBtn = styled.button`
   background-color: var(--color-bg-white);
   border: none;
-  width: 30px;
+  width: 38px;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 16px;
   color: var(--color-text-gray);
   cursor: pointer;
   transition: background-color 0.2s ease;

@@ -166,7 +166,7 @@ export const FooterWrapper = styled.footer`
     margin: 0;
   }
 
-  .social-icons {
+.social-icons {
     display: flex;
     gap: 10px;
 
@@ -174,14 +174,14 @@ export const FooterWrapper = styled.footer`
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 32px;
-      height: 32px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       background-color: #f3f4f6;
       color: #4b5563;
       text-decoration: none;
       transition: all 0.2s ease;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
 
       &:hover {
         background-color: var(--color-primary);
@@ -207,12 +207,17 @@ export const FooterWrapper = styled.footer`
     }
   }
 
-  @media ${devicesBreakpoints.thumb} {
+@media ${devicesBreakpoints.thumb} {
     padding: 34px 0 18px;
 
     .footer-top {
-      grid-template-columns: 1fr;
-      gap: 24px;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px 16px;
+    }
+
+    .footer-col:first-child,
+    .footer-col:last-child {
+      grid-column: 1 / -1;
     }
 
     .newsletter-form {

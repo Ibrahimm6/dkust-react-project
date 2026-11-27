@@ -19,7 +19,7 @@ export const ListImageArea = styled.div`
 
   & > button {
     top: 4px !important;
-    right: 4px !important;
+    inset-inline-end: 4px !important;
     width: 28px !important;
     height: 28px !important;
   }
@@ -204,7 +204,7 @@ export const ListBottomRow = styled.div`
 export const WishlistButton = styled.button`
   position: absolute;
   top: 10px;
-  right: 10px;
+  inset-inline-end: 10px;
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -253,11 +253,11 @@ export const ListCard = styled.div`
       height: 140px;
 
       & > button {
-        top: 10px !important;
-        right: 10px !important;
-        width: 32px !important;
-        height: 32px !important;
-      }
+              top: 10px !important;
+              inset-inline-end: 10px !important;
+              width: 34px !important;
+              height: 34px !important;
+            }
     }
   }
 

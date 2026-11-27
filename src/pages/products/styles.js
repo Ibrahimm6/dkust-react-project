@@ -72,6 +72,7 @@ export const CategoryButton = styled.button`
   cursor: pointer;
   transition: all 0.2s ease;
   white-space: nowrap;
+  flex-shrink: 0;
 
   &:hover {
     background-color: ${(props) =>
@@ -117,8 +118,8 @@ export const IconButton = styled.button`
     props.$isActive ? "var(--color-primary)" : "transparent"};
   color: ${(props) =>
     props.$isActive ? "var(--color-text-white)" : "var(--color-text-gray)"};
-  width: 32px;
-  height: 30px;
+  width: 34px;
+  height: 34px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -150,7 +151,6 @@ export const ProductsList = styled.div`
   gap: 20px;
 `;
 
-// Root Wrapper & Responsive Media Queries
 export const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -167,28 +167,37 @@ export const PageWrapper = styled.div`
 
   @media ${devicesBreakpoints.pocket} {
     ${HeroSection} {
-      padding: 40px 20px;
+      padding: 36px 20px;
     }
 
     ${HeroTitle} {
-      font-size: 28px;
+      font-size: 26px;
     }
 
     ${FilterContainer} {
       flex-direction: column;
       align-items: stretch;
-      padding-block: 12px;
-      gap: 10px;
+      padding-block: 10px;
+      gap: 8px;
     }
 
     ${CategoriesWrapper} {
       width: 100%;
-      gap: 6px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      gap: 8px;
+      padding-bottom: 2px;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
 
     ${CategoryButton} {
-      padding: 5px 12px;
-      font-size: 11px;
+      padding: 7px 14px;
+      font-size: 12px;
     }
 
     ${ControlsWrapper} {
@@ -199,10 +208,16 @@ export const PageWrapper = styled.div`
     ${SortSelect} {
       flex: 1;
       width: 100%;
+      height: 36px;
+    }
+
+    ${IconButton} {
+      width: 36px;
+      height: 36px;
     }
 
     ${ContentContainer} {
-      padding-block: 30px;
+      padding-block: 24px;
     }
 
     ${ProductsGrid} {
