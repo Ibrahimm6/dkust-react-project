@@ -35,7 +35,7 @@ export const CompactCardWrapper = styled(Link)`
     .compact-badge {
       position: absolute;
       top: 10px;
-      left: 10px;
+      inset-inline-start: 10px;
       background-color: rgba(255, 255, 255, 0.9);
       color: #111827;
       font-size: 10px;

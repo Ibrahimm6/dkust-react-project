@@ -87,8 +87,8 @@ export const ProductDetailsWrapper = styled.div`
     }
   }
 
-  @media ${devicesBreakpoints.pocket} {
-    padding-block: 28px 45px;
+@media ${devicesBreakpoints.pocket} {
+    padding-block: 28px 96px;
 
     .back-link {
       margin-bottom: 20px;
@@ -101,7 +101,7 @@ export const ProductDetailsWrapper = styled.div`
   }
 
   @media ${devicesBreakpoints.thumb} {
-    padding-block: 20px 35px;
+    padding-block: 20px 96px;
 
     .breadcrumb-nav {
       font-size: 13px;

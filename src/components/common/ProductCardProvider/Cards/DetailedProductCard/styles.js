@@ -239,3 +239,61 @@ export const DetailedCardWrapper = styled.div`
     }
   }
 `;
+
+export const MobileProductBar = styled.div`
+  display: none;
+
+  @media ${devicesBreakpoints.pocket} {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    position: fixed;
+    bottom: 0;
+    inset-inline: 0;
+    z-index: 1030;
+    background-color: var(--color-bg-white);
+    border-top: 1px solid #e5e7eb;
+    box-shadow: 0 -4px 16px rgba(11, 31, 58, 0.08);
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+
+    .mobile-price {
+      display: flex;
+      align-items: baseline;
+      gap: 3px;
+      flex-shrink: 0;
+
+      strong {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--color-primary);
+      }
+
+      span {
+        font-size: 12px;
+        color: var(--color-text-gray);
+      }
+    }
+
+    .mobile-add-btn {
+      flex: 1;
+      min-height: 44px;
+      background-color: var(--color-primary);
+      color: var(--color-text-white);
+      border: none;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: #008236;
+      }
+    }
+  }
+`;

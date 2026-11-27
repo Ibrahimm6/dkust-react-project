@@ -87,7 +87,7 @@ export const PageWrapper = styled.div`
     }
   }
 
-  @media ${devicesBreakpoints.pocket} {
+@media ${devicesBreakpoints.pocket} {
     ${HeroSection} {
       padding: 40px 20px;
     }
@@ -97,7 +97,7 @@ export const PageWrapper = styled.div`
     }
 
     ${ContentContainer} {
-      padding: 30px 20px;
+      padding: 30px 20px 96px;
     }
-  }
+}
 `;

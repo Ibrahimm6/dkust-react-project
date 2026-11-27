@@ -23,6 +23,12 @@ import {
   CheckoutError,
   CheckoutButton,
   SecureNote,
+  MobileCheckoutBar,
+  MobileBarRow,
+  MobileTotalGroup,
+  MobileTotalLabel,
+  MobileTotalValue,
+  MobileCheckoutButton,
 } from "./styles";
 
 const OrderSummary = () => {
@@ -36,7 +42,7 @@ const OrderSummary = () => {
 
   const subtotal = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
-    0
+    0,
   );
 
   const taxRate = 0.08;
@@ -92,17 +98,17 @@ const OrderSummary = () => {
               en: item.nameEn || item.name,
               ar: item.nameAr || item.name,
             },
-          })
-        )
+          }),
+        ),
       );
 
       const allSucceeded = orderResponses.every(
-        (res) => res.status === 200 || res.status === 201
+        (res) => res.status === 200 || res.status === 201,
       );
 
       if (allSucceeded) {
         await Promise.all(
-          cart.map((item) => removeCartItem(item.cartItemId ?? item.id))
+          cart.map((item) => removeCartItem(item.cartItemId ?? item.id)),
         );
         dispatch(clearCart());
         navigate(PathConstants.PROFILE);
@@ -117,55 +123,76 @@ const OrderSummary = () => {
   };
 
   return (
-    <SummaryCard>
-      <SummaryTitle>Order Summary</SummaryTitle>
-      <ItemsBreakdown>
-        {cart.map((item) => (
-          <SummaryRow key={item.id}>
-            <ItemNameText>
-              {truncateName(item.name)} × {item.quantity}
-            </ItemNameText>
-            <ItemPriceText>
-              ${(item.price * item.quantity).toLocaleString()}
-            </ItemPriceText>
-          </SummaryRow>
-        ))}
-      </ItemsBreakdown>
+    <>
+      <SummaryCard>
+        <SummaryTitle>Order Summary</SummaryTitle>
+        <ItemsBreakdown>
+          {cart.map((item) => (
+            <SummaryRow key={item.id}>
+              <ItemNameText>
+                {truncateName(item.name)} × {item.quantity}
+              </ItemNameText>
+              <ItemPriceText>
+                ${(item.price * item.quantity).toLocaleString()}
+              </ItemPriceText>
+            </SummaryRow>
+          ))}
+        </ItemsBreakdown>
 
-      <Divider />
+        <Divider />
 
-      <SubtotalRow>
-        <span>Subtotal</span>
-        <strong>${subtotal.toLocaleString()}</strong>
-      </SubtotalRow>
+        <SubtotalRow>
+          <span>Subtotal</span>
+          <strong>${subtotal.toLocaleString()}</strong>
+        </SubtotalRow>
 
-      <TaxRow>
-        <span>Tax (8%)</span>
-        <span>${tax.toFixed(2)}</span>
-      </TaxRow>
+        <TaxRow>
+          <span>Tax (8%)</span>
+          <span>${tax.toFixed(2)}</span>
+        </TaxRow>
 
-      <Divider />
+        <Divider />
 
-      <TotalRow>
-        <span>Total</span>
-        <strong>${total.toFixed(2)}</strong>
-      </TotalRow>
+        <TotalRow>
+          <span>Total</span>
+          <strong>${total.toFixed(2)}</strong>
+        </TotalRow>
 
-      {errorMsg && <CheckoutError>{errorMsg}</CheckoutError>}
+        {errorMsg && <CheckoutError>{errorMsg}</CheckoutError>}
 
-      <CheckoutButton
-        type="button"
-        onClick={handleCheckout}
-        disabled={checkingOut || cart.length === 0}
-      >
-        {checkingOut ? "Processing..." : "Proceed to Checkout"}
-      </CheckoutButton>
+        <CheckoutButton
+          type="button"
+          onClick={handleCheckout}
+          disabled={checkingOut || cart.length === 0}
+        >
+          {checkingOut ? "Processing..." : "Proceed to Checkout"}
+        </CheckoutButton>
 
-      <SecureNote>
-        <FiShield size={13} />
-        <span>Secure checkout</span>
-      </SecureNote>
-    </SummaryCard>
+        <SecureNote>
+          <FiShield size={13} />
+          <span>Secure checkout</span>
+        </SecureNote>
+      </SummaryCard>
+
+      {cart.length > 0 && (
+        <MobileCheckoutBar>
+          {errorMsg && <CheckoutError>{errorMsg}</CheckoutError>}
+          <MobileBarRow>
+            <MobileTotalGroup>
+              <MobileTotalLabel>Total</MobileTotalLabel>
+              <MobileTotalValue>${total.toFixed(2)}</MobileTotalValue>
+            </MobileTotalGroup>
+            <MobileCheckoutButton
+              type="button"
+              onClick={handleCheckout}
+              disabled={checkingOut || cart.length === 0}
+            >
+              {checkingOut ? "Processing..." : "Proceed to Checkout"}
+            </MobileCheckoutButton>
+          </MobileBarRow>
+        </MobileCheckoutBar>
+      )}
+    </>
   );
 };
 

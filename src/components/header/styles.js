@@ -45,34 +45,40 @@ export const NavItem = styled(NavLink)`
 export const RightSection = styled.div`
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 14px;
 `;
 
 export const IconGroup = styled.div`
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 8px;
 `;
 
 export const IconButton = styled(Link)`
   color: var(--color-text-white);
   font-size: 18px;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition:
+    color 0.3s ease,
+    background-color 0.2s ease;
   position: relative;
 
   &:hover {
     color: var(--color-primary);
+    background-color: rgba(255, 255, 255, 0.06);
   }
 `;
 
 export const IconBadge = styled.span`
   position: absolute;
-  top: -8px;
-  inset-inline-end: -10px;
+  top: 1px;
+  inset-inline-end: 1px;
   background-color: var(--color-primary-hover);
   color: var(--color-text-white);
   font-size: 10px;
@@ -139,7 +145,9 @@ export const LogoutButton = styled.button`
   align-items: center;
   justify-content: center;
   gap: 6px;
-  transition: background-color 0.3s ease, opacity 0.2s ease;
+  transition:
+    background-color 0.3s ease,
+    opacity 0.2s ease;
 
   &:hover:not(:disabled) {
     background-color: var(--color-primary-hover);
@@ -157,11 +165,30 @@ export const MenuButton = styled.button`
   border: none;
   color: var(--color-text-white);
   font-size: 1.5rem;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
   display: none;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   padding: 0;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+`;
+
+export const MenuBackdrop = styled.div`
+  display: none;
+  position: fixed;
+  top: var(--header-height);
+  inset-inline: 0;
+  bottom: 0;
+  background-color: rgba(11, 31, 58, 0.55);
+  backdrop-filter: blur(2px);
+  z-index: 1049;
 `;
 
 export const MobileMenu = styled.div`
@@ -169,46 +196,128 @@ export const MobileMenu = styled.div`
   flex-direction: column;
   position: absolute;
   top: var(--header-height);
-  left: 0;
+  inset-inline: 0;
   width: 100%;
+  max-height: calc(100dvh - var(--header-height));
+  overflow-y: auto;
   background-color: var(--color-navy);
-  padding: 10px 20px 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  padding: 8px 20px 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  z-index: 1051;
 `;
 
 export const MobileNavItem = styled(NavLink)`
   color: var(--color-text-white);
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 500;
-  padding: 15px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 13px 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
   transition: color 0.3s ease;
 
   &.active,
   &:hover {
     color: var(--color-primary);
   }
+`;
 
-  &:last-child {
-    border-bottom: none;
+export const MobileItemLeft = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  svg {
+    font-size: 17px;
+    color: var(--color-accent);
+  }
+`;
+
+export const MobileBadge = styled.span`
+  background-color: var(--color-primary);
+  color: var(--color-text-white);
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const MobileDivider = styled.div`
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.14);
+  margin: 6px 0;
+`;
+
+export const MobileAuthGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+`;
+
+export const MobileLoginLink = styled(Link)`
+  flex: 1;
+  text-align: center;
+  color: var(--color-text-white);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+`;
+
+export const MobileRegisterButton = styled(Link)`
+  flex: 1;
+  text-align: center;
+  background-color: var(--color-primary);
+  color: var(--color-text-white);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--color-primary);
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--color-primary-hover);
+    color: var(--color-text-white);
   }
 `;
 
 export const MobileLogoutButton = styled.button`
-  background: none;
-  border: none;
-  color: var(--color-text-white);
-  text-align: start;
-  font-size: 1rem;
-  font-weight: 500;
-  padding: 15px 0;
+  width: 100%;
+  background-color: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 11px 14px;
+  border-radius: 10px;
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: all 0.2s ease;
 
   &:hover:not(:disabled) {
-    color: var(--color-primary);
+    background-color: #ef4444;
+    border-color: #ef4444;
+    color: var(--color-text-white);
   }
 
   &:disabled {
@@ -229,6 +338,7 @@ export const HeaderWrapper = styled.header`
 
   @media ${devicesBreakpoints.portable} {
     ${NavSection},
+    ${IconButton},
     ${Divider},
     ${AuthGroup} {
       display: none;
@@ -238,6 +348,10 @@ export const HeaderWrapper = styled.header`
       display: flex;
     }
 
+    ${MenuBackdrop} {
+      display: ${({ $isOpen }) => ($isOpen ? "block" : "none")};
+    }
+
     ${MobileMenu} {
       display: ${({ $isOpen }) => ($isOpen ? "flex" : "none")};
     }
@@ -245,11 +359,7 @@ export const HeaderWrapper = styled.header`
 
   @media ${devicesBreakpoints.thumb} {
     ${RightSection} {
-      gap: 12px;
-    }
-
-    ${IconGroup} {
-      gap: 12px;
+      gap: 8px;
     }
   }
 `;

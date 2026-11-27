@@ -132,3 +132,52 @@ export const SummaryCard = styled.div`
     padding: 18px;
   }
 `;
+
+export const MobileCheckoutBar = styled.div`
+  display: none;
+
+  @media ${devicesBreakpoints.pocket} {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    bottom: 0;
+    inset-inline: 0;
+    z-index: 1030;
+    background-color: var(--color-bg-white);
+    border-top: 1px solid #e5e7eb;
+    box-shadow: 0 -4px 16px rgba(11, 31, 58, 0.08);
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  }
+`;
+
+export const MobileBarRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+`;
+
+export const MobileTotalGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+`;
+
+export const MobileTotalLabel = styled.span`
+  font-size: 11px;
+  color: var(--color-text-gray);
+`;
+
+export const MobileTotalValue = styled.strong`
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1.2;
+`;
+
+export const MobileCheckoutButton = styled(CheckoutButton)`
+  flex: 1;
+  width: auto;
+  min-height: 44px;
+  padding: 10px 18px;
+`;

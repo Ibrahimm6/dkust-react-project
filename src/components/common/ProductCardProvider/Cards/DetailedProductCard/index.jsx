@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import CustomButton from "../../../custom-button";
-import { DetailedCardWrapper } from "./styles";
+import { DetailedCardWrapper, MobileProductBar } from "./styles";
 import PathConstants from "../../../../../routes/pathConstants";
 import { getProductBgColor } from "../../../../../helpers/product.helpers";
 import { addToCart } from "../../../../../store/cart/cartSlice";
@@ -41,71 +41,88 @@ function DetailedProductCard({ product }) {
       : defaultFeatures;
 
   return (
-    <DetailedCardWrapper
-      className="container"
-      $bgColor={getProductBgColor(product.category, product.color)}
-    >
-      <div className="image-area">
-        <i className="fas fa-cube product-icon"></i>
-        {product.badge && <span className="badge-pill">{product.badge}</span>}
-      </div>
-      <div className="info-area">
-        <span className="category-tag">{product.category}</span>
-        <h1 className="product-title">{product.name}</h1>
-        <div className="rating-box">
-          <div className="stars">
-            <i className="fas fa-star"></i>
-            <i className="fas fa-star"></i>
-            <i className="fas fa-star"></i>
-            <i className="fas fa-star"></i>
-            <i className="fas fa-star"></i>
+    <>
+      <DetailedCardWrapper
+        className="container"
+        $bgColor={getProductBgColor(product.category, product.color)}
+      >
+        <div className="image-area">
+          <i className="fas fa-cube product-icon"></i>
+          {product.badge && <span className="badge-pill">{product.badge}</span>}
+        </div>
+        <div className="info-area">
+          <span className="category-tag">{product.category}</span>
+          <h1 className="product-title">{product.name}</h1>
+          <div className="rating-box">
+            <div className="stars">
+              <i className="fas fa-star"></i>
+              <i className="fas fa-star"></i>
+              <i className="fas fa-star"></i>
+              <i className="fas fa-star"></i>
+              <i className="fas fa-star"></i>
+            </div>
+            <span>
+              {product.rating} ({product.reviewsCount} reviews)
+            </span>
           </div>
-          <span>
-            {product.rating} ({product.reviewsCount} reviews)
-          </span>
-        </div>
-        <p className="description">{product.description}</p>
-        <ul className="features-list">
-          {featuresToRender.map((feature, idx) => (
-            <li key={idx}>
-              <i className="far fa-check-circle"></i>
-              <span>{feature}</span>
-            </li>
-          ))}
-        </ul>
-        <div className="price-box">
-          ${product.price} <span>/mo</span>
-        </div>
-        <div className="quantity-control">
-          <span className="qty-label">Qty</span>
-          <div className="controls">
-            <button
-              type="button"
-              onClick={handleDecrease}
-              disabled={quantity === 1}
-            >
-              -
-            </button>
-            <div className="qty-value">{quantity}</div>
-            <button type="button" onClick={handleIncrease}>
-              +
-            </button>
+          <p className="description">{product.description}</p>
+          <ul className="features-list">
+            {featuresToRender.map((feature, idx) => (
+              <li key={idx}>
+                <i className="far fa-check-circle"></i>
+                <span>{feature}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="price-box">
+            ${product.price} <span>/mo</span>
+          </div>
+          <div className="quantity-control">
+            <span className="qty-label">Qty</span>
+            <div className="controls">
+              <button
+                type="button"
+                onClick={handleDecrease}
+                disabled={quantity === 1}
+              >
+                -
+              </button>
+              <div className="qty-value">{quantity}</div>
+              <button type="button" onClick={handleIncrease}>
+                +
+              </button>
+            </div>
+          </div>
+          <div className="action-buttons">
+            <CustomButton
+              title={
+                <>
+                  <i className="fas fa-shopping-cart"></i> Add to Cart
+                </>
+              }
+              onClickFunction={handleAddToCart}
+              bgColor="#00a651"
+            />
+            <CustomButton title="Buy Now" onClickFunction={handleBuyNow} />
           </div>
         </div>
-        <div className="action-buttons">
-          <CustomButton
-            title={
-              <>
-                <i className="fas fa-shopping-cart"></i> Add to Cart
-              </>
-            }
-            onClickFunction={handleAddToCart}
-            bgColor="#00a651"
-          />
-          <CustomButton title="Buy Now" onClickFunction={handleBuyNow} />
+      </DetailedCardWrapper>
+
+      <MobileProductBar>
+        <div className="mobile-price">
+          <strong>${(product.price * quantity).toLocaleString()}</strong>
+          <span>/mo</span>
         </div>
-      </div>
-    </DetailedCardWrapper>
+        <button
+          type="button"
+          className="mobile-add-btn"
+          onClick={handleAddToCart}
+        >
+          <i className="fas fa-shopping-cart"></i>
+          <span>Add to Cart</span>
+        </button>
+      </MobileProductBar>
+    </>
   );
 }
 
