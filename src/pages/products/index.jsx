@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 import {
   PageWrapper,
   HeroSection,
@@ -21,8 +21,11 @@ import {
 import AppTemplate from "../../components/app-template";
 import PathConstants from "../../routes/pathConstants";
 import ProductCardProvider from "../../components/common/ProductCardProvider";
+import {
+  ProductCardSkeleton,
+  ProductListSkeleton,
+} from "../../components/common/skeleton";
 import { getProducts } from "../../services/products/products.service";
-import MainLoader from "../../components/main-loader";
 import { mapProductData } from "../../helpers/product.helpers";
 
 const categories = [
@@ -45,27 +48,27 @@ const ProductsPage = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-const getData = async () => {
-    setLoading(true);
-    const response = await getProducts();
-
-    if (response.status === 200 && Array.isArray(response.data)) {
-      const mappedData = response.data.map((p) => mapProductData(p, lang));
-      setData(mappedData);
-    } else {
-      setData([]);
-    }
-    setLoading(false);
-  };
-
   useEffect(() => {
+    const getData = async () => {
+      setLoading(true);
+      const response = await getProducts();
+
+      if (response.status === 200 && Array.isArray(response.data)) {
+        const mappedData = response.data.map((p) => mapProductData(p, lang));
+        setData(mappedData);
+      } else {
+        setData([]);
+      }
+      setLoading(false);
+    };
+
     getData();
   }, [lang]);
 
   const filteredProducts = useMemo(() => {
     const filtered = data.filter(
       (product) =>
-        selectedCategory === "All" || product.category === selectedCategory
+        selectedCategory === "All" || product.category === selectedCategory,
     );
 
     if (sortOption === "price-asc") {
@@ -134,10 +137,24 @@ const getData = async () => {
         </FilterSection>
 
         <ContentContainer className="container">
-          <ResultsText>{filteredProducts.length} products found</ResultsText>
+          {!loading && (
+            <ResultsText>{filteredProducts.length} products found</ResultsText>
+          )}
 
           {loading ? (
-            <MainLoader />
+            viewMode === "grid" ? (
+              <ProductsGrid>
+                {Array.from({ length: 6 }).map((_, idx) => (
+                  <ProductCardSkeleton key={idx} />
+                ))}
+              </ProductsGrid>
+            ) : (
+              <ProductsList>
+                {Array.from({ length: 4 }).map((_, idx) => (
+                  <ProductListSkeleton key={idx} />
+                ))}
+              </ProductsList>
+            )
           ) : filteredProducts.length === 0 ? (
             <div style={{ textAlign: "center", padding: "40px", color: "#888" }}>
               No products found.

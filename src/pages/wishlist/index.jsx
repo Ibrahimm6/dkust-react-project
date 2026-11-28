@@ -7,7 +7,7 @@ import AppTemplate from "../../components/app-template";
 import PathConstants from "../../routes/pathConstants";
 import CustomButton from "../../components/common/custom-button";
 import ProductCardProvider from "../../components/common/ProductCardProvider";
-import MainLoader from "../../components/main-loader";
+import { ProductCardSkeleton } from "../../components/common/skeleton";
 import {
   selectWishlistItems,
   selectWishlistLoading,
@@ -48,7 +48,11 @@ const WishlistPage = () => {
 
         <ContentContainer className="container">
           {loading ? (
-            <MainLoader />
+            <ProductsGrid>
+              {Array.from({ length: 3 }).map((_, idx) => (
+                <ProductCardSkeleton key={idx} />
+              ))}
+            </ProductsGrid>
           ) : wishlist.length > 0 ? (
             <ProductsGrid>
               {wishlist.map((product) => (

@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import PathConstants from "../../../routes/pathConstants";
 import ProductsSwiper from "../../common/ProductsSwiper";
-import MainLoader from "../../main-loader";
+import {
+  ProductCardSkeleton,
+  SkeletonSwiperGrid,
+} from "../../common/skeleton";
 import { getProducts } from "../../../services/products/products.service";
 import { mapProductData } from "../../../helpers/product.helpers";
 import { TrendingWrapper } from "./styles";
@@ -44,7 +47,11 @@ const TrendingProducts = () => {
 
       <div className="container">
         {loading ? (
-          <MainLoader />
+          <SkeletonSwiperGrid>
+            {Array.from({ length: 3 }).map((_, idx) => (
+              <ProductCardSkeleton key={idx} />
+            ))}
+          </SkeletonSwiperGrid>
         ) : (
           <ProductsSwiper
             products={products}

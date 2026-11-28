@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -14,13 +14,13 @@ import {
   SubmitQuizButton,
   ResultCard,
   ButtonsRow,
-} from './styles';
-import QuestionCard from '../../components/question-card';
-import AppTemplate from '../../components/app-template';
-import PathConstants from '../../routes/pathConstants';
-import MainLoader from "../../components/main-loader";
+} from "./styles";
+import QuestionCard from "../../components/question-card";
+import AppTemplate from "../../components/app-template";
+import PathConstants from "../../routes/pathConstants";
+import { QuizQuestionSkeleton } from "../../components/common/skeleton";
 
-import { getQuiz } from "../../services/quiz/quiz.service"; 
+import { getQuiz } from "../../services/quiz/quiz.service";
 
 const QuizPage = () => {
   const navigate = useNavigate();
@@ -29,35 +29,39 @@ const QuizPage = () => {
 
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [score, setScore] = useState(0);
 
-  const getData = async () => {
-    setLoading(true);
-    const response = await getQuiz(lang);
-    
-    if (response.status === 200 && Array.isArray(response.data)) {
-      const mappedData = response.data.map((q) => ({
-        id: q.id,
-        question: q.question || "",
-        options: Array.isArray(q.options) ? q.options.map(opt => opt.label) : [],
-        
-        answer: (q.options && q.options.find(opt => opt.value === q.correct)?.label) || "",
-      }));
-      setQuestions(mappedData);
-    } else {
-      setQuestions([]);
-    }
-    
-    setSelectedAnswers({});
-    setIsSubmitted(false);
-    setScore(0);
-    setLoading(false);
-  };
-
   useEffect(() => {
+    const getData = async () => {
+      setLoading(true);
+      const response = await getQuiz(lang);
+
+      if (response.status === 200 && Array.isArray(response.data)) {
+        const mappedData = response.data.map((q) => ({
+          id: q.id,
+          question: q.question || "",
+          options: Array.isArray(q.options)
+            ? q.options.map((opt) => opt.label)
+            : [],
+          answer:
+            (q.options &&
+              q.options.find((opt) => opt.value === q.correct)?.label) ||
+            "",
+        }));
+        setQuestions(mappedData);
+      } else {
+        setQuestions([]);
+      }
+
+      setSelectedAnswers({});
+      setIsSubmitted(false);
+      setScore(0);
+      setLoading(false);
+    };
+
     getData();
   }, [lang]);
 
@@ -84,7 +88,7 @@ const QuizPage = () => {
     setSelectedAnswers({});
     setIsSubmitted(false);
     setScore(0);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -95,7 +99,7 @@ const QuizPage = () => {
           <HeroSubtitle>
             Answer the questions below and click Submit to check your score.
           </HeroSubtitle>
-          <ScoreBadge $isPassed={isSubmitted && score >= (questions.length / 2)}>
+          <ScoreBadge $isPassed={isSubmitted && score >= questions.length / 2}>
             Score: {score} / {questions.length}
           </ScoreBadge>
         </HeroSection>
@@ -103,9 +107,13 @@ const QuizPage = () => {
           <SectionTitle>Choose the Correct Answer</SectionTitle>
 
           {loading ? (
-            <MainLoader />
+            <>
+              {Array.from({ length: 3 }).map((_, idx) => (
+                <QuizQuestionSkeleton key={idx} />
+              ))}
+            </>
           ) : questions.length === 0 ? (
-             <div style={{ textAlign: "center", padding: "40px", color: "#888" }}>
+            <div style={{ textAlign: "center", padding: "40px", color: "#888" }}>
               No questions found.
             </div>
           ) : (
@@ -114,7 +122,7 @@ const QuizPage = () => {
                 <QuestionCard
                   key={question.id}
                   questionData={question}
-                  selectedOption={selectedAnswers[question.id] || ''}
+                  selectedOption={selectedAnswers[question.id] || ""}
                   onOptionChange={(val) => handleOptionChange(question.id, val)}
                   isSubmitted={isSubmitted}
                 />
@@ -127,10 +135,15 @@ const QuizPage = () => {
                   </SubmitQuizButton>
                 </SubmitButtonWrapper>
               ) : (
-                <ResultCard $isPassed={score >= (questions.length / 2)}>
-                  <h2>{score >= (questions.length / 2) ? 'Great Job!' : 'Keep Practicing!'}</h2>
+                <ResultCard $isPassed={score >= questions.length / 2}>
+                  <h2>
+                    {score >= questions.length / 2
+                      ? "Great Job!"
+                      : "Keep Practicing!"}
+                  </h2>
                   <p>
-                    You answered {score} out of {questions.length} questions correctly.
+                    You answered {score} out of {questions.length} questions
+                    correctly.
                   </p>
                   <ButtonsRow>
                     <button className="btn-primary" onClick={handleRestart}>
