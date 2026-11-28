@@ -6,7 +6,7 @@ import AppTemplate from "../../components/app-template";
 import PathConstants from "../../routes/pathConstants";
 import ProductCardProvider from "../../components/common/ProductCardProvider";
 import ProductsSwiper from "../../components/common/ProductsSwiper";
-import MainLoader from "../../components/main-loader";
+import { ProductDetailsSkeleton } from "../../components/common/skeleton";
 import {
   getProductById,
   getProducts,
@@ -66,7 +66,7 @@ const ProductDetails = () => {
     >
       <ProductDetailsWrapper>
         {loading ? (
-          <MainLoader />
+          <ProductDetailsSkeleton />
         ) : !product ? (
           <div className="container not-found-box">
             <h2>Product not found!</h2>

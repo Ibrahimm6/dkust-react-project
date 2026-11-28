@@ -6,7 +6,7 @@ import PathConstants from "../../routes/pathConstants";
 import CartItem from "../../components/cart/cart-item";
 import OrderSummary from "../../components/cart/order-summary";
 import EmptyCart from "../../components/cart/empty-cart";
-import MainLoader from "../../components/main-loader";
+import { CartSkeleton } from "../../components/common/skeleton";
 import {
   selectCartItems,
   selectCartCount,
@@ -46,7 +46,7 @@ const CartPage = () => {
 
         <ContentContainer>
           {loading ? (
-            <MainLoader />
+            <CartSkeleton />
           ) : cart.length > 0 ? (
             <CartGrid>
               <ItemsColumn>

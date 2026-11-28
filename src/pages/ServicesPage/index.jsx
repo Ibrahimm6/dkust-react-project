@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import AppTemplate from "../../components/app-template";
 import HeroSection from "../../components/common/HeroSection";
 import InfoCard from "../../components/common/InfoCard";
-import MainLoader from "../../components/main-loader";
+import { InfoCardSkeleton } from "../../components/common/skeleton";
 import PathConstants from "../../routes/pathConstants";
 import { getServices } from "../../services/services-page/servicesPage.service";
 import { getLocalizedText } from "../../helpers/product.helpers";
@@ -65,7 +65,11 @@ function ServicesPage() {
       <ServicesPageStyles>
         <div className="container">
           {loading ? (
-            <MainLoader />
+            <div className="services-grid">
+              {Array.from({ length: 6 }).map((_, idx) => (
+                <InfoCardSkeleton key={idx} />
+              ))}
+            </div>
           ) : hasError ? (
             <p className="empty-state">{t("services.loadError")}</p>
           ) : displayedServices.length === 0 ? (

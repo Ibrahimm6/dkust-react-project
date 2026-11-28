@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import AppTemplate from "../../components/app-template";
-import MainLoader from "../../components/main-loader";
+import { ProfileSkeleton } from "../../components/common/skeleton";
 import PathConstants from "../../routes/pathConstants";
 import ProfileHero from "../../components/profile/hero-section";
 import ProfileStats from "../../components/profile/stats-section";
@@ -11,11 +11,7 @@ import UpdatePassword from "../../components/profile/update-password";
 import OrderHistory from "../../components/profile/order-history";
 import QuickActions from "../../components/profile/quick-actions";
 import { getLocalizedText } from "../../helpers/product.helpers";
-import {
-  PageWrapper,
-  ContentContainer,
-  TwoColumnGrid,
-} from "./styles";
+import { PageWrapper, ContentContainer, TwoColumnGrid } from "./styles";
 import {
   getProfile,
   updateProfile,
@@ -42,7 +38,8 @@ const mapOrderData = (order, lang = "en") => {
   return {
     id: order.id,
     orderNumber: order.orderNumber || "",
-    name: getLocalizedText(order.product, lang) || `Product #${order.productId}`,
+    name:
+      getLocalizedText(order.product, lang) || `Product #${order.productId}`,
     date: order.date || "",
     price: order.amount ?? order.price ?? 0,
     status: getLocalizedText(order.status, lang) || "Active",
@@ -107,7 +104,7 @@ const ProfilePage = () => {
     <AppTemplate pageTitle="Profile" path={PathConstants.PROFILE}>
       <PageWrapper>
         {loading || !profile ? (
-          <MainLoader />
+          <ProfileSkeleton />
         ) : (
           <>
             <ProfileHero fullName={profile.fullName} email={profile.email} />
